@@ -1,2 +1,2 @@
-controllers\RegistrationController.class
-application\Application.class
+main\RegistrationController.class
+main\Application.class
