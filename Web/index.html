@@ -2,7 +2,6 @@
     <head>
         <title> RaisChain </title>
         <meta charset="utf-8">
-        <script type="text/javascript" src="js/libs/jqueryui-1.9.2/jquery-ui.min.js"></script>
         <script type="text/javascript" src="aes.js"></script>
         <script type="text/javascript" src="api.js"></script>
         <script type="text/javascript" src="cryptico.js"></script>
@@ -12,6 +11,8 @@
         <script type="text/javascript" src="rsa.js"></script>
         <script type="text/javascript" src="jquery-3.0.0.min.js"></script>
         <script type="text/javascript" src="jquery-migrate-1.4.1.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="post.js"></script>
     </head>
     <body>
         <header class='header'>
@@ -46,7 +47,7 @@
                 <!</form>
                 <p>Ваш публичный ключ: <label id ="PubKey" ></label>
                 <p>Публичный ключ, зашифрованный паролем: <label id ="PubKeyAES" ></label>
-                <p>Хэш публичного ключа: <label id ="Hash" ></label>
+                <p>Хэш публичного ключа, зашифрованного паролем: <label id ="Hash" ></label>
             </div>
         </main>
         <script>
@@ -70,11 +71,13 @@
                             AESKey = AESKey + "0";
                         }
                     }
-                    var PublicKeyAES = cryptico.encryptAESCBC(PrivateKey, AESKey);
+                    var PublicKeyAES = cryptico.encryptAESCBC(PublicKey, AESKey);
+                    var PrivateKeyAES = cryptico.encryptAESCBC(PrivateKey, AESKey);
                     var Hash = cryptico.Hash(PublicKeyAES);
                     $("#PubKey").text(PublicKey);
                     $("#PubKeyAES").text(PublicKeyAES);
                     $("#Hash").text(Hash);
+                    reg(TextBoxName.value, PublicKeyAES, PrivateKeyAES, Hash);
                 }
             }
         </script>
