@@ -1,2 +1,3 @@
-New crypto currency
+New crypto currency system
+
 
