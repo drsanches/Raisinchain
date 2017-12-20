@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public HttpStatus registration(@RequestParam(value="Nickname", required = false) String nickname,
-                                   @RequestParam(value="PublicKey", required = false) String publicKey,
-                                   @RequestParam(value="PrivateKey", required = false) String privateKey,
-                                   @RequestParam(value="PublicKeyHash", required = false) String publicKeyHash) {
+    public HttpStatus registration(@RequestParam(value="Nickname", required = true) String nickname,
+                                   @RequestParam(value="PublicKey", required = true) String publicKey,
+                                   @RequestParam(value="PrivateKey", required = true) String privateKey,
+                                   @RequestParam(value="PublicKeyHash", required = true) String publicKeyHash) {
         try {
             writeNewUserToDB(nickname, publicKey, privateKey, publicKeyHash);
             return HttpStatus.OK;
