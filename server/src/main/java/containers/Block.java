@@ -1,5 +1,8 @@
 package containers;
 
+import com.mongodb.util.JSON;
+import org.json.JSONObject;
+
 public class Block {
     private TransactionsList transactions;
     private String hashCode;
@@ -21,4 +24,12 @@ public class Block {
     {
         return new Block(TransactionsList.createFirstTransactionsList(), "");
     }
+
+    public String getJsonString() throws org.json.JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Transactions", transactions.getJsonString());
+        jsonObject.put("Hash-code", hashCode);
+        return jsonObject.toString();
+    }
+
 }

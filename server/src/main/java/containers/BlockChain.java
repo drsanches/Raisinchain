@@ -23,5 +23,13 @@ public class BlockChain {
         chain.add(block);
     }
 
+    public String getJsonString() throws  org.json.JSONException {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Block block: chain)
+            jsonArray.put(block.getJsonString());
+
+        return jsonArray.toString();
+    }
 
 }

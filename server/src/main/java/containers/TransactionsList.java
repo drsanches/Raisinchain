@@ -1,5 +1,7 @@
 package containers;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 public class TransactionsList{
@@ -35,6 +37,15 @@ public class TransactionsList{
         TransactionsList tr = new TransactionsList();
         tr.addTransaction(new Transaction("Hello, world!"));
         return tr;
+    }
+
+    public String getJsonString() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction transaction: transactions)
+            jsonArray.put(transaction.getJsonString());
+
+        return jsonArray.toString();
     }
 }
 
