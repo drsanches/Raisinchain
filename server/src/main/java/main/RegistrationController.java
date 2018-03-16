@@ -23,7 +23,7 @@ public class RegistrationController {
 
 
         try {
-            writeNewUserToDB(nickname, publicKey, privateKey, publicKeyHash);
+            //writeNewUserToDB(nickname, publicKey, privateKey, publicKeyHash);
             return new ResponseEntity<String>(HttpStatus.OK.toString(), responseHeaders, HttpStatus.CREATED);
         }
         catch(Exception e) {
