@@ -2,6 +2,10 @@ package containers;
 
 import org.json.JSONArray;
 
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class TransactionsList{
@@ -16,22 +20,22 @@ public class TransactionsList{
         transactions = tr;
     }
 
-    public void addTransaction(Transaction tr){
-        try{
-            if (!tr.equals(null))
-                transactions.add(tr);
-        }catch(Exception e){
-            e.printStackTrace();
+    public TransactionsList(String jsonArrayString) throws org.json.JSONException {
+        transactions = new ArrayList<Transaction>();
+        JSONArray jsonArray = new JSONArray(jsonArrayString);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String transactionJsonString = jsonArray.get(i).toString();
+            Transaction transaction = new Transaction(transactionJsonString);
+            addTransaction(transaction);
         }
+    }
 
+    public void addTransaction(Transaction tr) {
+        transactions.add(tr);
     }
 
     public void removeTransaction(Transaction tr){
-      try{
         transactions.remove(tr);
-      }catch(Exception e){
-        e.printStackTrace();
-      }
     }
 
     //this function creates a list of transactions for the first block of the chain
@@ -41,13 +45,31 @@ public class TransactionsList{
         return tr;
     }
 
-    public String getJsonString() {
+    public JSONArray getJsonArray() {
         JSONArray jsonArray = new JSONArray();
 
         for (Transaction transaction: transactions)
             jsonArray.put(transaction.getJsonString());
 
-        return jsonArray.toString();
+        return jsonArray;
+    }
+
+    public void saveToJsonFile(String filename) throws java.io.IOException {
+        FileWriter writer = new FileWriter(filename);
+        writer.write(getJsonArray().toString());
+        writer.close();
+    }
+
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException {
+        transactions.clear();
+        String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+        JSONArray jsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String transactionJsonString = jsonArray.get(i).toString();
+            Transaction newTransaction = new Transaction(transactionJsonString);
+            addTransaction(newTransaction);
+        }
     }
 }
 

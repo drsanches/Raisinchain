@@ -11,6 +11,13 @@ public class Block {
         hashCode = hash;
     }
 
+    public Block(String jsonObjectString) throws org.json.JSONException {
+        JSONObject jsonObject = new JSONObject(jsonObjectString);
+        String transactionsJsonString = jsonObject.getJSONArray("Transactions").toString();
+        transactions = new TransactionsList(transactionsJsonString);
+        hashCode = jsonObject.getString("Hash-code");
+    }
+
     public String getHashCode() {
         return hashCode;
     }
@@ -24,11 +31,10 @@ public class Block {
         return new Block(TransactionsList.createFirstTransactionsList(), "");
     }
 
-    public String getJsonString() throws org.json.JSONException {
+    public JSONObject getJsonObject() throws org.json.JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Transactions", transactions.getJsonString());
+        jsonObject.put("Transactions", transactions.getJsonArray());
         jsonObject.put("Hash-code", hashCode);
-        return jsonObject.toString();
+        return jsonObject;
     }
-
 }
