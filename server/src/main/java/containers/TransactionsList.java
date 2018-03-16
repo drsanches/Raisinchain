@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class TransactionsList{
     private ArrayList<Transaction> transactions;
 
+    //constructors for lists of transactions
     public TransactionsList() {
         transactions = new ArrayList<Transaction>();
     }
@@ -33,6 +34,7 @@ public class TransactionsList{
       }
     }
 
+    //this function creates a list of transactions for the first block of the chain
     public static TransactionsList createFirstTransactionsList(){
         TransactionsList tr = new TransactionsList();
         tr.addTransaction(new Transaction("Hello, world!"));
