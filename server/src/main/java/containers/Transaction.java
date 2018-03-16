@@ -1,13 +1,18 @@
 package containers;
 
 public class Transaction{
-    private String value;
+    private String transaction;
 
-    public Transaction(String str){
-        value = str;
+    public Transaction(String tr){
+        if (!tr.equals(null))
+            transaction = tr;
     }
-    public String getValue(){
-        return value;
+
+    public String getTransaction(){
+        return transaction;
+    }
+
+    public String getJsonString() {
+        return transaction;
     }
 }
-
