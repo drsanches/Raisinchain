@@ -4,7 +4,8 @@ public class Transaction{
     private String transaction;
 
     public Transaction(String tr){
-        transaction = tr;
+        if (!tr.equals(null))
+            transaction = tr;
     }
 
     public String getTransaction(){
