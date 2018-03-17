@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class GetChainController extends Exception{
 
     @RequestMapping(value = "/getchain", method = RequestMethod.POST)
+<<<<<<< HEAD
     public ResponseEntity getChain(@RequestParam(value="Hash-code", required = false) String hashCode) throws Exception {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
+=======
+    public String getChain(@RequestParam(value="Hash-code", required = false) String hashCode) {
+>>>>>>> 034d0766a01d5a1504741c05f51c01905cec3343
 
         try {
         String responseBody = Application.blockChain.getJsonArray().toString();
