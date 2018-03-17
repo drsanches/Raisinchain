@@ -12,8 +12,6 @@ public class getChainController {
 
     @RequestMapping(value = "/getchain", method = RequestMethod.POST)
     public String getChain(@RequestParam(value="Hash-code", required = false) String hashCode) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
 
         try {
             return Application.blockChain.getJsonArray().toString();
