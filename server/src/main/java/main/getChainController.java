@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class getChainController {
 
     @RequestMapping(value = "/getchain", method = RequestMethod.POST)
-    public String registration(@RequestParam(value="Hash-code", required = false) String hashCode) {
+    public String getChain(@RequestParam(value="Hash-code", required = false) String hashCode) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
 
