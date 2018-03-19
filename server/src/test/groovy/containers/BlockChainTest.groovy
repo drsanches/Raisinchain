@@ -1,4 +1,4 @@
-package groovy.containers
+/**package groovy.containers
 
 import containers.Block
 import containers.BlockChain
@@ -44,3 +44,4 @@ class BlockChainTest extends Specification {
     def "LoadFromJsonFile"() {
     }
 }
+**/
