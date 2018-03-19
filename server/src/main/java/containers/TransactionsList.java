@@ -17,18 +17,20 @@ public class TransactionsList{
 
     //constructors for lists of transactions
     public TransactionsList() {
+
         transactions = new ArrayList<Transaction>();
     }
 
     public TransactionsList(ArrayList<Transaction> tr) {
+
         transactions = tr;
     }
-    
+
     public int sizeOfList(){
-        
+
         return transactions.size();
     }
-    
+
     public boolean equals(TransactionsList tr){
 
         if (this.sizeOfList() == tr.sizeOfList()){
@@ -69,6 +71,18 @@ public class TransactionsList{
         if (transactions.indexOf(tr) == -1)
             throw new TransactionListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
+    }
+    
+    public int sizeOfList(){
+
+        return transactions.size();
+    }
+
+    //compares 2 lists considering places
+
+    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
+
+        return tr1.equals(tr2);
     }
 
     public JSONArray getJsonArray() {

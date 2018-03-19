@@ -80,3 +80,9 @@ class BlockChainTest extends Specification {
         a.equals(Block_Chain.getJsonArray().toString())
     }
 }
+
+    def "getPartOfChain"(){
+
+
+    }
+}
