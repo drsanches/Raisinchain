@@ -51,6 +51,6 @@ class BlockTest extends Specification {
 
     def "Ensure that method getJsonObject returnes right json object"() {
 
-        
+
     }
 }
