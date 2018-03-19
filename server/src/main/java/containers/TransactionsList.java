@@ -23,6 +23,17 @@ public class TransactionsList{
     public TransactionsList(ArrayList<Transaction> tr) {
         transactions = tr;
     }
+    
+    public boolean equals(TransactionsList tr){
+
+        if (this.sizeOfList() == tr.sizeOfList()){
+            for (int i=0; i<tr.sizeOfList(); i++){
+                if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
