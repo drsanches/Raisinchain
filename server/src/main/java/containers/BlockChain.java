@@ -19,13 +19,9 @@ public class BlockChain {
         chain = ch;
     }
 
-    public ArrayList<Block> getChain() {
-        return chain;
-    }
+    public ArrayList<Block> getChain() { return chain; }
 
-    public void add(Block block) {
-        chain.add(block);
-    }
+    public void add(Block block) { chain.add(block); }
 
     public JSONArray getJsonArray() throws  org.json.JSONException {
         JSONArray jsonArray = new JSONArray();
