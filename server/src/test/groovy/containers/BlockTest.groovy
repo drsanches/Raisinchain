@@ -44,8 +44,13 @@ class BlockTest extends Specification {
         ArrayList<Transaction> transactions = new ArrayList<Transaction>()
         transactions.add(text)
         TransactionsList tr = new TransactionsList(transactions);
-        FirstBlock.getHashCode().equals("")
+        FirstBlock.getHashCode().equals("First hash")
         tr.equals(FirstBlock.getTransactions())
 
+    }
+
+    def "Ensure that method getJsonObject returnes right json object"() {
+
+        
     }
 }
