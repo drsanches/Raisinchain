@@ -42,7 +42,7 @@ public class BlockChain {
         writer.close();
     }
 
-    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException {
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
         chain.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
         JSONArray jsonArray = new JSONArray(jsonString);
@@ -54,7 +54,7 @@ public class BlockChain {
         }
     }
 
-    public ArrayList<Block> getPartOfChain(String hashCode) throws Exception{
+    public ArrayList<Block> getPartOfChain(String hashCode) throws BlockChainException {
         ArrayList<Block> newChain = new ArrayList<Block>();
 
         Boolean isFind = false;
@@ -70,13 +70,19 @@ public class BlockChain {
             return newChain;
         else {
             //TODO: Throw some exception
-            throw new Exception("Wrong hash");
+            throw new BlockChainException("Wrong hash");
         }
     }
 
-    public JSONArray getPartOfJsonArray(String hashCode) throws Exception{
+    public JSONArray getPartOfJsonArray(String hashCode) throws BlockChainException {
         ArrayList<Block> partOfChain = getPartOfChain(hashCode);
         BlockChain partOfBlockChain = new BlockChain(partOfChain);
         return partOfBlockChain.getJsonArray();
+    }
+}
+
+class BlockChainException extends Exception {
+    public BlockChainException(String message) {
+        super(message);
     }
 }

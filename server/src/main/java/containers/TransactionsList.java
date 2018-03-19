@@ -13,7 +13,6 @@ public class TransactionsList{
 
     //constructors for lists of transactions
     public TransactionsList() {
-
         transactions = new ArrayList<Transaction>();
     }
 
@@ -21,12 +20,12 @@ public class TransactionsList{
         transactions = tr;
     }
 
-    public TransactionsList(String jsonArrayString) throws org.json.JSONException {
+    public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
         JSONArray jsonArray = new JSONArray(jsonArrayString);
         for (int i = 0; i < jsonArray.length(); i++) {
-            String transactionJsonString = jsonArray.get(i).toString();
-            Transaction transaction = new Transaction(transactionJsonString);
+            String transactionString = jsonArray.get(i).toString();
+            Transaction transaction = new Transaction(transactionString);
             addTransaction(transaction);
         }
     }
@@ -35,15 +34,25 @@ public class TransactionsList{
         transactions.add(tr);
     }
 
-    public void removeTransaction(Transaction tr){
-
+    public void removeTransaction(Transaction tr) throws TransactionListException {
+        if (transactions.indexOf(tr) == -1)
+            throw new TransactionListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
+    }
+    
+    public int sizeOfList(){
+        return transactions.size();
+    }
+    
+    //compares 2 lists considering places
+    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
+        return tr1.equals(tr2);
     }
 
     //this function creates a list of transactions for the first block of the chain
-    public static TransactionsList createFirstTransactionsList(){
+    public static TransactionsList createFirstTransactionsList() {
         TransactionsList tr = new TransactionsList();
-        tr.addTransaction(new Transaction("Hello, world!"));
+        tr.addTransaction(Transaction.createFirstTransaction());
         return tr;
     }
 
@@ -62,16 +71,21 @@ public class TransactionsList{
         writer.close();
     }
 
-    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException {
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
         transactions.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
         JSONArray jsonArray = new JSONArray(jsonString);
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            String transactionJsonString = jsonArray.get(i).toString();
-            Transaction newTransaction = new Transaction(transactionJsonString);
+            String transactionString = jsonArray.get(i).toString();
+            Transaction newTransaction = new Transaction(transactionString);
             addTransaction(newTransaction);
         }
     }
 }
 
+class TransactionListException extends Exception {
+    public TransactionListException(String message) {
+        super(message);
+    }
+}

@@ -34,6 +34,18 @@ class BlockTest extends Specification {
         block.getTransactions() == transcriptions;
     }
 
-    def "CreateFirstBlock"() {
+    def "Ensure that method CreateFirstBlock returnes right block"() {
+
+        when: "We run method CreateFirstBlock"
+        def  FirstBlock = Block.createFirstBlock()
+
+        then: "The first block should fit the right first block"
+        Transaction text = new Transaction("Hello, world!")
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>()
+        transactions.add(text)
+        TransactionsList tr = new TransactionsList(transactions);
+        FirstBlock.getHashCode().equals("")
+        tr.equals(FirstBlock.getTransactions())
+
     }
 }

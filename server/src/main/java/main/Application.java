@@ -16,17 +16,14 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-        transactionsList.loadFromJsonFile(TRANSACTIONS_FILENAME);
-        blockChain.loadFromJsonFile(BLOCKCHAIN_FILENAME);
+            transactionsList.loadFromJsonFile(TRANSACTIONS_FILENAME);
+            blockChain.loadFromJsonFile(BLOCKCHAIN_FILENAME);
         }
-        catch(java.io.IOException e) {
+        catch(Exception e) {
             //TODO: write code
             System.out.println(e.toString());
         }
-        catch(org.json.JSONException e) {
-            //TODO: write code
-            System.out.println(e.toString());
-        }
+
 
         SpringApplication.run(Application.class, args);
     }
