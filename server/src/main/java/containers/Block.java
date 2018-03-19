@@ -29,7 +29,7 @@ public class Block {
 
     public static Block createFirstBlock()
     {
-        return new Block(TransactionsList.createFirstTransactionsList(), "");
+        return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
     public JSONObject getJsonObject() throws org.json.JSONException {
