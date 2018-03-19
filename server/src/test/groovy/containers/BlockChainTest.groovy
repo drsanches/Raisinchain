@@ -54,10 +54,14 @@ class BlockChainTest extends Specification {
 
     def "Ensure that save and load works correctly"() {
         given: "BlockChain object that contains some blocks"
+        TransactionsList transactionsList = new TransactionsList()
+        transactionsList.addTransaction(new Transaction("tr1"))
+        transactionsList.addTransaction(new Transaction("tr2"))
+
         BlockChain blockChain = new BlockChain()
-        blockChain.add(block())
-        blockChain.add(block())
-        blockChain.add(block())
+        blockChain.add(new Block(transactionsList, "1"))
+        blockChain.add(new Block(transactionsList, "2"))
+        blockChain.add(new Block(transactionsList, "3"))
 
         when: "BlockChain saves to file"
         blockChain.saveToJsonFile("BlockChainTestJsonFile.json")
