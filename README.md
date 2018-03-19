@@ -17,7 +17,7 @@ Raisinchain is a toy project to understand how the blockchain works.
 *  **Marina Krylova** - [extralucile](https://github.com/extralucile)
 *  **Anastasiia Shalygina** - [ShalyginaA](https://github.com/ShalyginaA)
 *  **Irina Tokareva** - [IrinaTokareva](https://github.com/IrinaTokareva)
-*  **Ilya Kreshkov** 
+*  **Ilya Kreshkov**  - [ilushakr](https://github.com/ilushakr)
 
 See also the list of [contributors](https://github.com/drsanches/Raisinchain/graphs/contributors) who participated in this project.
 
