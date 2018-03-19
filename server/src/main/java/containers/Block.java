@@ -11,7 +11,7 @@ public class Block {
         hashCode = hash;
     }
 
-    public Block(String jsonObjectString) throws org.json.JSONException {
+    public Block(String jsonObjectString) throws org.json.JSONException, TransactionException {
         JSONObject jsonObject = new JSONObject(jsonObjectString);
         String transactionsJsonString = jsonObject.getJSONArray("Transactions").toString();
         transactions = new TransactionsList(transactionsJsonString);
@@ -23,12 +23,10 @@ public class Block {
     }
 
     public TransactionsList getTransactions() {
-
         return transactions;
     }
 
-    public static Block createFirstBlock()
-    {
+    public static Block createFirstBlock() {
         return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
