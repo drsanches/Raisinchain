@@ -2,6 +2,9 @@ package containers
 
 import spock.lang.Specification
 
+/**
+ * @author Anastasiia Shalygina
+ */
 
 class TransactionTest extends Specification {
   def "Ensure that method getTransaction returns transaction"() {

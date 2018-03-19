@@ -100,11 +100,24 @@ class TransactionsListTest extends Specification {
         list1.equals(list)
 
     }
-    def "Test for saveToJsonFile method"() {
+
+    def "Ensure that save and load to JSON file works correctly"() {
+        given: "non-empty list of transactions"
+        Transaction tr1 = new Transaction("1transaction")
+        Transaction tr2 = new Transaction("2transaction")
+        TransactionsList list = new TransactionsList()
+        list.addTransaction(tr1)
+        list.addTransaction(tr2)
 
 
-    }
+        when: "we save list of transactions to JSON file"
+        list.saveToJsonFile("TransactionListTestFile.json")
 
-    def "loadFromJsonFile"() {
+        and: "list of transactions loads from the file"
+        TransactionsList list2 = new TransactionsList()
+        list2.loadFromJsonFile("TransactionListTestFile.json")
+
+        then: "lists are equals"
+        list2.equals(list)
     }
 }
