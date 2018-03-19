@@ -39,6 +39,10 @@ public class TransactionsList{
             throw new TransactionListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
     }
+    
+    public int sizeOfList(){
+        return transactions.size();
+    }
 
     //this function creates a list of transactions for the first block of the chain
     public static TransactionsList createFirstTransactionsList() {
