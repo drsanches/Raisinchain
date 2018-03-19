@@ -2,6 +2,7 @@ package containers;
 
 import org.json.JSONArray;
 
+import javax.transaction.TransactionRequiredException;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -37,6 +38,10 @@ public class TransactionsList{
         return tr;
     }
 
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
     public void addTransaction(Transaction tr) {
         transactions.add(tr);
     }
@@ -45,15 +50,6 @@ public class TransactionsList{
         if (transactions.indexOf(tr) == -1)
             throw new TransactionListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
-    }
-    
-    public int sizeOfList(){
-        return transactions.size();
-    }
-    
-    //compares 2 lists considering places
-    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
-        return tr1.equals(tr2);
     }
 
     public JSONArray getJsonArray() {
