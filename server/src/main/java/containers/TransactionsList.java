@@ -13,6 +13,7 @@ public class TransactionsList{
 
     //constructors for lists of transactions
     public TransactionsList() {
+
         transactions = new ArrayList<Transaction>();
     }
 
@@ -35,6 +36,7 @@ public class TransactionsList{
     }
 
     public void removeTransaction(Transaction tr){
+
         transactions.remove(tr);
     }
 

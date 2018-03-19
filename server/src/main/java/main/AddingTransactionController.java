@@ -13,8 +13,7 @@ public class AddingTransactionController {
 
     @RequestMapping(value = "/addtransaction", method = RequestMethod.POST)
     public ResponseEntity<String> addTransaction(@RequestBody String transaction) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
 
 
         try {

@@ -23,6 +23,7 @@ public class Block {
     }
 
     public TransactionsList getTransactions() {
+
         return transactions;
     }
 
