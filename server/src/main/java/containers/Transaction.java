@@ -10,6 +10,11 @@ public class Transaction{
             throw new TransactionException("Incorrect transaction");
         transaction = tr;
     }
+    
+    public boolean equals(Transaction tr){
+        
+        return transaction.equals(tr.transaction);
+    }
 
     public String getTransaction() {
         return transaction;
