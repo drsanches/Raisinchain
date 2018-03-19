@@ -69,4 +69,14 @@ class BlockChainTest extends Specification {
         then: "BlockChain objects are equals"
         newBlockChain.equals(blockChain)
     }
+
+    def "Get json array"(){
+        given:
+        List<Block> list = new ArrayList<Block>()
+        String a
+        when:
+        BlockChain Block_Chain=new BlockChain(list)
+        then:
+        a.equals(Block_Chain.getJsonArray().toString())
+    }
 }
