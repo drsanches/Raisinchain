@@ -4,6 +4,9 @@ import jdk.nashorn.api.scripting.JSObject
 import org.json.JSONArray
 import spock.lang.Specification
 
+/**
+ * @author Anastasiia Shalygina
+ */
 class TransactionsListTest extends Specification {
     def "Test for AddTransaction method"() {
         given: "list of transactions"
@@ -49,7 +52,7 @@ class TransactionsListTest extends Specification {
 
     }
 
- 
+
 
     /*def "CreateFirstTransactionsList"() {
     }*/
@@ -82,7 +85,23 @@ class TransactionsListTest extends Specification {
         list.sizeOfList() == 2
     }
 
+    def "Test for equals method" () {
+        given: "2 equal list of transactions"
+        Transaction tr1 = new Transaction("1transaction")
+        Transaction tr2 = new Transaction("2transaction")
+        TransactionsList list = new TransactionsList()
+        list.addTransaction(tr1)
+        list.addTransaction(tr2)
+        TransactionsList list1 = new TransactionsList()
+        list1.addTransaction(tr1)
+        list1.addTransaction(tr2)
+
+        expect: "method equals return true"
+        list1.equals(list)
+
+    }
     def "Test for saveToJsonFile method"() {
+
 
     }
 
