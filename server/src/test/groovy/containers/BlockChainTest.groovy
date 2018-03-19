@@ -29,12 +29,12 @@ class BlockChainTest extends Specification {
     }
 
     def "Ensure that method getJsonArray returns array of blocks"() {
-        given:"Array of blocks"
+       /* given:"Array of blocks"
         ArrayList<Block> Array_List =Mock()
         when:"put values to new chain, add new block"
         BlockChain Block_Chain= new BlockChain(Array_List)
         then: "Method add new block"
-        Array_List.
+        Array_List.*/
 
     }
 
@@ -42,6 +42,18 @@ class BlockChainTest extends Specification {
     }
 
     def "LoadFromJsonFile"() {
+    }
+    def "saveToJsonFile"(){
+
+    }
+
+    def " loadFromJsonFile"(){
+
+    }
+
+    def "getPartOfChain"(){
+
+
     }
 }
 **/
