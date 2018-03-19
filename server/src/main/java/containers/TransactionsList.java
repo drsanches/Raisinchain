@@ -24,6 +24,11 @@ public class TransactionsList{
         transactions = tr;
     }
     
+    public int sizeOfList(){
+        
+        return transactions.size();
+    }
+    
     public boolean equals(TransactionsList tr){
 
         if (this.sizeOfList() == tr.sizeOfList()){
