@@ -12,7 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
 
 @RestController
-public class GetChainController extends Exception{
+public class getChainController extends Exception{
 
     @RequestMapping(value = "/getchain", method = RequestMethod.POST)
     public ResponseEntity getChain(WebRequest webRequest) {

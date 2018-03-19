@@ -45,6 +45,15 @@
             <artifactId>groovy-all</artifactId>
             <version>2.4.13</version>
         </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2</version>
+        </dependency>
     </dependencies>
 
     <build>
