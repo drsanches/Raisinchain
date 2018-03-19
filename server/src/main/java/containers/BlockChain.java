@@ -31,8 +31,7 @@ public class BlockChain {
             add(newBlock);
         }
     }
-    
-        
+
     public int sizeOfChain(){
         
         return chain.size();

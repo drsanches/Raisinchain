@@ -18,7 +18,6 @@ class BlockChainTest extends Specification {
         list.equals(Block_Chain.getChain())
     }
 
-
     def "Ensure that method getPartChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -51,5 +50,23 @@ class BlockChainTest extends Specification {
         then: "Method add new block"
         block.equals(Block_Chain.getChain().last())
 
+    }
+
+    def "Ensure that save and load works correctly"() {
+        given: "BlockChain object that contains some blocks"
+        BlockChain blockChain = new BlockChain()
+        blockChain.add(block())
+        blockChain.add(block())
+        blockChain.add(block())
+
+        when: "BlockChain saves to file"
+        blockChain.saveToJsonFile("BlockChainTestJsonFile.json")
+
+        and: "New BlockChain object loads from file"
+        BlockChain newBlockChain = new BlockChain()
+        newBlockChain.loadFromJsonFile("BlockChainTestJsonFile.json")
+
+        then: "BlockChain objects are equals"
+        newBlockChain.equals(blockChain)
     }
 }
