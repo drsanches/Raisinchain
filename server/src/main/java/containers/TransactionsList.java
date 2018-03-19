@@ -43,6 +43,11 @@ public class TransactionsList{
     public int sizeOfList(){
         return transactions.size();
     }
+    
+    //compares 2 lists considering places
+    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
+        return tr1.equals(tr2);
+    }
 
     //this function creates a list of transactions for the first block of the chain
     public static TransactionsList createFirstTransactionsList() {
