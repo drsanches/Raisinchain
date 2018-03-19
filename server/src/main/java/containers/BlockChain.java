@@ -4,6 +4,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import containers_exceptions.BlockChainException;
+import containers_exceptions.TransactionException;
 import org.json.*;
 import java.io.*;
 
@@ -61,8 +64,7 @@ public class BlockChain {
         if (isFind)
             return newChain;
         else {
-            //TODO: Throw some exception
-            throw new BlockChainException("Wrong hash");
+            throw new BlockChainException("The chain does not contain this hash");
         }
     }
 
@@ -91,8 +93,3 @@ public class BlockChain {
     }
 }
 
-class BlockChainException extends Exception {
-    public BlockChainException(String message) {
-        super(message);
-    }
-}

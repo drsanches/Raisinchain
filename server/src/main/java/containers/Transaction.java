@@ -1,9 +1,11 @@
 package containers;
 
+import containers_exceptions.TransactionException;
+
 public class Transaction{
     private String transaction;
 
-    public Transaction(String tr) throws TransactionException{
+    public Transaction(String tr) throws TransactionException {
         if (tr == null)
             throw new TransactionException("Incorrect transaction");
         transaction = tr;
@@ -29,9 +31,3 @@ public class Transaction{
     }
 }
 
-class TransactionException extends Exception {
-
-    public TransactionException(String message) {
-        super(message);
-    }
-}

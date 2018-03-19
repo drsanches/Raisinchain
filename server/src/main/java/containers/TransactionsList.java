@@ -1,8 +1,9 @@
 package containers;
 
+import containers_exceptions.TransactionException;
+import containers_exceptions.TransactionListException;
 import org.json.JSONArray;
 
-import javax.transaction.TransactionRequiredException;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -80,8 +81,3 @@ public class TransactionsList{
     }
 }
 
-class TransactionListException extends Exception {
-    public TransactionListException(String message) {
-        super(message);
-    }
-}

@@ -1,7 +1,6 @@
 package main;
 
-import containers.Transaction;
-import containers.TransactionsList;
+import containers_exceptions.BlockChainException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +38,9 @@ public class GetChainController {
                             .body(responseBody);
                 }
         }
-        catch(Exception e) {
+        catch(BlockChainException e) {
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .status(HttpStatus.BAD_REQUEST)
                     .headers(responseHeaders)
                     .body(e.getMessage());
         }

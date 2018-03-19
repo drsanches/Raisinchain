@@ -1,5 +1,6 @@
 package containers;
 
+import containers_exceptions.TransactionException;
 import org.json.JSONObject;
 
 public class Block {
