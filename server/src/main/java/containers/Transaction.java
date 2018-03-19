@@ -9,10 +9,12 @@ public class Transaction{
     }
 
     public String getTransaction(){
+
         return transaction;
     }
 
     public String getJsonString() {
+
         return transaction;
     }
 }

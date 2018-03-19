@@ -18,9 +18,12 @@ public class Block {
         hashCode = jsonObject.getString("Hash-code");
     }
 
-    public String getHashCode() { return hashCode; }
+    public String getHashCode() {
+        return hashCode;
+    }
 
     public TransactionsList getTransactions() {
+
         return transactions;
     }
 
