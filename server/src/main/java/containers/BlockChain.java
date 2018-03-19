@@ -53,4 +53,30 @@ public class BlockChain {
             add(newBlock);
         }
     }
+
+    public ArrayList<Block> getPartOfChain(String hashCode) throws Exception{
+        ArrayList<Block> newChain = new ArrayList<Block>();
+
+        Boolean isFind = false;
+        for (int i = 0; i < chain.size(); i++) {
+            if (isFind)
+                newChain.add(chain.get(i));
+
+            if (chain.get(i).getHashCode().equals(hashCode))
+                isFind = true;
+        }
+
+        if (isFind)
+            return newChain;
+        else {
+            //TODO: Throw some exception
+            throw new Exception("Wrong hash");
+        }
+    }
+
+    public JSONArray getPartOfJsonArray(String hashCode) throws Exception{
+        ArrayList<Block> partOfChain = getPartOfChain(hashCode);
+        BlockChain partOfBlockChain = new BlockChain(partOfChain);
+        return partOfBlockChain.getJsonArray();
+    }
 }
