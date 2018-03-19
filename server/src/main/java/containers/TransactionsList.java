@@ -30,6 +30,13 @@ public class TransactionsList{
         }
     }
 
+    //this function creates a list of transactions for the first block of the chain
+    public static TransactionsList createFirstTransactionsList() {
+        TransactionsList tr = new TransactionsList();
+        tr.addTransaction(Transaction.createFirstTransaction());
+        return tr;
+    }
+
     public void addTransaction(Transaction tr) {
         transactions.add(tr);
     }
@@ -42,13 +49,6 @@ public class TransactionsList{
     
     public int sizeOfList(){
         return transactions.size();
-    }
-
-    //this function creates a list of transactions for the first block of the chain
-    public static TransactionsList createFirstTransactionsList() {
-        TransactionsList tr = new TransactionsList();
-        tr.addTransaction(Transaction.createFirstTransaction());
-        return tr;
     }
 
     public JSONArray getJsonArray() {

@@ -24,7 +24,6 @@ public class Application {
             System.out.println(e.toString());
         }
 
-
         SpringApplication.run(Application.class, args);
     }
 

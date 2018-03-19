@@ -19,12 +19,12 @@ public class BlockChain {
         chain = ch;
     }
 
-    public ArrayList<Block> getChain() {
-        return chain;
-    }
-
     public void add(Block block) {
         chain.add(block);
+    }
+
+    public ArrayList<Block> getChain() {
+        return chain;
     }
 
     public JSONArray getJsonArray() throws  org.json.JSONException {
@@ -34,24 +34,6 @@ public class BlockChain {
             jsonArray.put(block.getJsonObject());
 
         return jsonArray;
-    }
-
-    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException{
-        FileWriter writer = new FileWriter(filename);
-        writer.write(getJsonArray().toString());
-        writer.close();
-    }
-
-    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
-        chain.clear();
-        String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
-        JSONArray jsonArray = new JSONArray(jsonString);
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            String blockJsonString = jsonArray.get(i).toString();
-            Block newBlock = new Block(blockJsonString);
-            add(newBlock);
-        }
     }
 
     public ArrayList<Block> getPartOfChain(String hashCode) throws BlockChainException {
@@ -78,6 +60,24 @@ public class BlockChain {
         ArrayList<Block> partOfChain = getPartOfChain(hashCode);
         BlockChain partOfBlockChain = new BlockChain(partOfChain);
         return partOfBlockChain.getJsonArray();
+    }
+
+    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException{
+        FileWriter writer = new FileWriter(filename);
+        writer.write(getJsonArray().toString());
+        writer.close();
+    }
+
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
+        chain.clear();
+        String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
+        JSONArray jsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String blockJsonString = jsonArray.get(i).toString();
+            Block newBlock = new Block(blockJsonString);
+            add(newBlock);
+        }
     }
 }
 
