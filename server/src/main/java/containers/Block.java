@@ -27,7 +27,7 @@ public class Block {
         return hashCode;
     }
 
-    public TransactionsList getTransactions() {
+    public TransactionsList getTransactionsList() {
         return transactions;
     }
 

@@ -40,12 +40,11 @@ class BlockTest extends Specification {
         def  FirstBlock = Block.createFirstBlock()
 
         then: "The first block should fit the right first block"
-        Transaction text = new Transaction("Hello, world!")
+        Transaction text = new Transaction("First transaction")
         ArrayList<Transaction> transactions = new ArrayList<Transaction>()
         transactions.add(text)
-        TransactionsList tr = new TransactionsList(transactions);
         FirstBlock.getHashCode().equals("First hash")
-        tr.equals(FirstBlock.getTransactions())
+        transactions.equals(FirstBlock.getTransactionsList().getTransactions())
 
     }
 
