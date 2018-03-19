@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static containers.Transaction.*;
+
 public class TransactionsList{
     private ArrayList<Transaction> transactions;
 
@@ -35,7 +37,7 @@ public class TransactionsList{
     //this function creates a list of transactions for the first block of the chain
     public static TransactionsList createFirstTransactionsList() {
         TransactionsList tr = new TransactionsList();
-        tr.addTransaction(Transaction.createFirstTransaction());
+        tr.addTransaction(createFirstTransaction());
         return tr;
     }
 
