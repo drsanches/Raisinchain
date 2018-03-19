@@ -1,5 +1,7 @@
 package containers
 
+import jdk.nashorn.api.scripting.JSObject
+import org.json.JSONArray
 import spock.lang.Specification
 
 class TransactionsListTest extends Specification {
@@ -49,15 +51,41 @@ class TransactionsListTest extends Specification {
 
  
 
-    def "CreateFirstTransactionsList"() {
+    /*def "CreateFirstTransactionsList"() {
+    }*/
+
+    def "Test for getJsonArray method"() {
+        given: "non-empty list of transactions"
+        Transaction tr1 = new Transaction("1transaction")
+        Transaction tr2 = new Transaction("2transaction")
+        TransactionsList list = new TransactionsList()
+        list.addTransaction(tr1)
+        list.addTransaction(tr2)
+
+        when: "we apply the method to the list"
+        Object jarray = list.getJsonArray()
+
+        then: "returns non-empty JASONArray"
+        jarray instanceof JSONArray
+
     }
 
-    def "GetJsonArray"() {
+    def "Test for sizeOfList method" () {
+        given: "list of 2 transactions"
+        Transaction tr1 = new Transaction("1transaction")
+        Transaction tr2 = new Transaction("2transaction")
+        TransactionsList list = new TransactionsList()
+        list.addTransaction(tr1)
+        list.addTransaction(tr2)
+
+        expect: "size of list = 2"
+        list.sizeOfList() == 2
     }
 
-    def "SaveToJsonFile"() {
+    def "Test for saveToJsonFile method"() {
+
     }
 
-    def "LoadFromJsonFile"() {
+    def "loadFromJsonFile"() {
     }
 }
