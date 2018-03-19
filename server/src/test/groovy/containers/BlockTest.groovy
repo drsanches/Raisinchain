@@ -40,7 +40,8 @@ class BlockTest extends Specification {
 
         then: "The first block should fit the right first block"
         String text = "First transaction"
-        text.equals(FirstBlock.getTransactionsList().getTransactions().last().getTransaction())
+        List<Transaction> TransactionList = [new Transaction(text)]
+        TransactionList.equals(FirstBlock.getTransactionsList().getTransactions())
 
     }
 
@@ -54,7 +55,6 @@ class BlockTest extends Specification {
 
         then: "The block that we get from made json object should be original block"
         Block CreatedBlock = new Block(jsonObject.toString())
-        String a = ""
         CreatedBlock.equals(block)
     }
 }
