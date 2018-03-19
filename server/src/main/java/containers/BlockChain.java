@@ -19,6 +19,16 @@ public class BlockChain {
         chain = ch;
     }
 
+    public BlockChain(String jsonString) throws TransactionException {
+        JSONArray jsonArray = new JSONArray(jsonString);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String blockJsonString = jsonArray.get(i).toString();
+            Block newBlock = new Block(blockJsonString);
+            add(newBlock);
+        }
+    }
+
     public void add(Block block) {
         chain.add(block);
     }
