@@ -5,8 +5,6 @@ import containers.TransactionsList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.swing.table.TableRowSorter;
-
 
 @SpringBootApplication
 public class Application {
