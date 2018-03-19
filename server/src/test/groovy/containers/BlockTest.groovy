@@ -1,8 +1,7 @@
 package containers
-import spock.lang.*
 
-import containers.Block
-import javax.validation.constraints.Null
+import org.json.JSONObject
+import spock.lang.*
 
 //TO DO: write tests for exceptions
 
@@ -12,10 +11,10 @@ class BlockTest extends Specification {
 
         given: "String hash-code and list of transactions"
         String hash = "qwerty";
-        def transactions = Mock(TransactionsList);
+        def transactions = Mock(TransactionsList)
 
         when: "We put its values to new block"
-        Block block = new Block(transactions, hash);
+        Block block = new Block(transactions, hash)
 
         then: "Method getHashCode should return value of field hashCode"
         hash.equals(block.getHashCode());
@@ -25,15 +24,37 @@ class BlockTest extends Specification {
 
         given: "String hash-code and list of transactions"
         String hash = "qwerty";
-        def transcriptions = Mock(TransactionsList);
+        def transcriptions = Mock(TransactionsList)
 
         when: "We put its values to new block"
-        Block block = new Block(transcriptions, hash);
+        Block block = new Block(transcriptions, hash)
 
         then: "Method getTransactions should return value of field transactions"
         block.getTransactions() == transcriptions;
     }
 
-    def "CreateFirstBlock"() {
+    def "Ensure that method CreateFirstBlock returnes right block"() {
+
+        when: "We run method CreateFirstBlock"
+        def  FirstBlock = Block.createFirstBlock()
+
+        then: "The first block should fit the right first block"
+        String text = "First transaction"
+        List<Transaction> TransactionList = [new Transaction(text)]
+        TransactionList.equals(FirstBlock.getTransactionsList().getTransactions())
+
+    }
+
+    def "Ensure that method getJsonObject returnes right json object"() {
+
+        given: "Create some block"
+        Block block = Block.createFirstBlock()
+
+        when: "We make json object from this block"
+        JSONObject jsonObject = block.getJsonObject()
+
+        then: "The block that we get from made json object should be original block"
+        Block CreatedBlock = new Block(jsonObject.toString())
+        CreatedBlock.equals(block)
     }
 }

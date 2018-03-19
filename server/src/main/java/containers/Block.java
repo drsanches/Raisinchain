@@ -1,5 +1,6 @@
 package containers;
 
+import containers_exceptions.TransactionException;
 import org.json.JSONObject;
 
 public class Block {
@@ -11,25 +12,27 @@ public class Block {
         hashCode = hash;
     }
 
-    public Block(String jsonObjectString) throws org.json.JSONException {
+    public Block(String jsonObjectString) throws org.json.JSONException, TransactionException {
         JSONObject jsonObject = new JSONObject(jsonObjectString);
         String transactionsJsonString = jsonObject.getJSONArray("Transactions").toString();
         transactions = new TransactionsList(transactionsJsonString);
         hashCode = jsonObject.getString("Hash-code");
+    }
+    
+    public boolean equals(Block b){
+        return ((transactions.equals(b.transactions))&&(hashCode.equals(b.hashCode)));
+    }
+
+    public static Block createFirstBlock() {
+        return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
     public String getHashCode() {
         return hashCode;
     }
 
-    public TransactionsList getTransactions() {
-
+    public TransactionsList getTransactionsList() {
         return transactions;
-    }
-
-    public static Block createFirstBlock()
-    {
-        return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
     public JSONObject getJsonObject() throws org.json.JSONException {
