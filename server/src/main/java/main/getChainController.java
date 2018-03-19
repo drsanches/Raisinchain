@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GetChainController extends Exception{
+public class getChainController extends Exception{
 
     @RequestMapping(value = "/getchain", method = RequestMethod.POST)
     public ResponseEntity getChain(@RequestParam(value="Hash-code", required = false) String hashCode) throws Exception {

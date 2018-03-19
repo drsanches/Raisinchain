@@ -1,9 +1,13 @@
 package containers
 import spock.lang.*
 
+import containers.Block
 import javax.validation.constraints.Null
 
+//TO DO: write tests for exceptions
+
 class BlockTest extends Specification {
+
     def "Ensure that method getHashCode returns field hashCode"() {
 
         given: "String hash-code and list of transactions"
