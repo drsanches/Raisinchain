@@ -17,7 +17,16 @@ class TransactionTest extends Specification {
         then: "method getTransaction returns the same not null string"
         (str.equals(test_tr.getTransaction())) && (test_tr.getTransaction() != null)
 
-
   }
 
+    def "Test for equals method" () {
+        given: "2 equal transactions"
+        Transaction tr1 = new Transaction("1transaction")
+        Transaction tr2 = new Transaction("1transaction")
+
+        expect: "method equals return true"
+        tr1.equals(tr2)
+
+
+    }
 }
