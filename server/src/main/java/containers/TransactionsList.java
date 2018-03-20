@@ -64,6 +64,16 @@ public class TransactionsList{
         return transactions.size();
     }
 
+    public boolean equals(TransactionsList tr) {
+        if (this.sizeOfList() == tr.sizeOfList()){
+            for (int i=0; i<tr.sizeOfList(); i++){
+                if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     /**
      * This function creates a list of transactions for the first block of the chain
     */

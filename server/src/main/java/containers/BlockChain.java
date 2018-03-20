@@ -27,6 +27,7 @@ public class BlockChain {
     }
 
     public BlockChain(String jsonString) throws TransactionException {
+        chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -38,6 +39,17 @@ public class BlockChain {
 
     public int sizeOfChain(){
         return chain.size();
+    }
+
+    public boolean equals(BlockChain b) {
+        if (this.sizeOfChain() == b.sizeOfChain()) {
+            for (int i=0; i<b.sizeOfChain(); i++) {
+                if (!chain.get(i).equals(b.chain.get(i)))
+                    return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public void add(Block block) {

@@ -32,4 +32,8 @@ public class Transaction{
             return null;
         }
     }
+
+    public boolean equals(Transaction tr) {
+        return transaction.equals(tr.transaction);
+    }
 }
