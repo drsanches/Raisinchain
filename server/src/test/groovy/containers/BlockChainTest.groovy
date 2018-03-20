@@ -36,11 +36,6 @@ class BlockChainTest extends Specification {
         list4.equals(y)
     }
 
-    Block block() {
-        String hash = "${rnd.nextInt()}"
-        new Block(null, hash)
-    }
-
     def "Ensure that method add new block to chain"() {
         given:"List of blocks and block"
         Block block =Mock()
@@ -83,8 +78,27 @@ class BlockChainTest extends Specification {
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
-    def "getPartOfChain"(){
+    def "getPartOfJsonArray"(){
+        given:"List of blocks"
+//        List<Block> Array_List = [block()]
+        List<Block> list1 = [block()]
+        List<Block> list3 = [block()]
+        List<Block> list4 = [*list3, block()]
+        List<Block> list2 = [*list1, *list4,]
 
 
+        when:"put values to new chain"
+        BlockChain Block_Chain= new BlockChain(list2)
+        String h = list1.get(0).hashCode
+        List<Block> y=Block_Chain.getPartOfJsonArray(h)
+
+        then: "Method getPartChain returns value of field ArrayList<Block>"
+        list4.toString().equals(y.toString())
+
+
+    }
+    Block block() {
+        String hash = "${rnd.nextInt()}"
+        new Block(null, hash)
     }
 }
