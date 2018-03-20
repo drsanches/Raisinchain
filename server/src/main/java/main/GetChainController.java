@@ -1,6 +1,6 @@
 package main;
 
-import containersExceptions.BlockChainException;
+import containers_exceptions.BlockChainException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
