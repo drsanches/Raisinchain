@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import static containers.Transaction.*;
 
 /**
- * @author Alexander Voroshilov
+ * @author Marina Krylova
  */
 
 public class TransactionsList{
+
     private ArrayList<Transaction> transactions;
 
     public TransactionsList() {
@@ -26,6 +27,19 @@ public class TransactionsList{
     public TransactionsList(ArrayList<Transaction> tr) {
         transactions = tr;
     }
+
+    public void addTransaction(Transaction tr) {
+        transactions.add(tr);
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
+
+
+/**
+  * @author Alexander Voroshilov
+  */
 
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
@@ -37,9 +51,6 @@ public class TransactionsList{
         }
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
-    }
 
     public JSONArray getJsonArray() {
         JSONArray jsonArray = new JSONArray();
@@ -50,9 +61,7 @@ public class TransactionsList{
         return jsonArray;
     }
 
-    public void addTransaction(Transaction tr) {
-        transactions.add(tr);
-    }
+
 
     public void removeTransaction(Transaction tr) throws TransactionsListException {
         if (transactions.indexOf(tr) == -1)
@@ -88,6 +97,10 @@ public class TransactionsList{
         tr.addTransaction(createFirstTransaction());
         return tr;
     }
+
+    /**
+     * @author Alexander Voroshilov
+     */
 
     public void saveToJsonFile(String filename) throws java.io.IOException {
         FileWriter writer = new FileWriter(filename);
