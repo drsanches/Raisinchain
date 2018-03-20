@@ -1,5 +1,6 @@
 package containers
 
+import containersExceptions.BlockChainException
 import org.json.JSONException
 import spock.lang.Specification
 
@@ -120,5 +121,23 @@ class BlockChainTest extends Specification {
     Block block() {
         String hash = "${rnd.nextInt()}"
         new Block(new TransactionsList([new Transaction("t")]), hash)
+    }
+
+    def "getPartOfArray: throwing BlockChainException"() {
+        given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
+        List<Block> list = [block(), block(), block()]
+        BlockChain blockChain = new BlockChain(list)
+
+        when: "We don't find user's block in our chain by given hash-code"
+        blockChain.getPartOfJsonArray(parameter)
+
+        then: "Method throws an exception"
+        BlockChainException exception = thrown()
+        exception.message == message
+
+        where:
+        parameter | message
+        null      | "The chain does not contain this hash"
+        "qwerty"  | "The chain does not contain this hash"
     }
 }
