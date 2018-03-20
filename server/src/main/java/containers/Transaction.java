@@ -1,12 +1,10 @@
 package containers;
 
-
 import containersExceptions.TransactionException;
 
 /**
  * @author Alexander Voroshilov
  */
-
 
 public class Transaction{
     private String transaction;
@@ -16,8 +14,6 @@ public class Transaction{
             throw new TransactionException("Incorrect transaction");
         transaction = tr;
     }
-    
-
 
     public String getTransaction() {
         return transaction;
@@ -27,8 +23,7 @@ public class Transaction{
         return transaction;
     }
 
-    public static Transaction createFirstTransaction()
-    {
+    public static Transaction createFirstTransaction() {
         //TODO: Think about it
         try {
             return new Transaction("First transaction");
@@ -38,4 +33,3 @@ public class Transaction{
         }
     }
 }
-

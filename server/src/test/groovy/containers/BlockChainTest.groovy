@@ -43,11 +43,6 @@ class BlockChainTest extends Specification {
         list4.equals(y)
     }
 
-    Block block() {
-        String hash = "${rnd.nextInt()}"
-        new Block(null, hash)
-    }
-
     def "Ensure that method add new block to chain"() {
         given:"List of blocks and block"
         Block block =Mock()
@@ -89,7 +84,6 @@ class BlockChainTest extends Specification {
         then:
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
-
     
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
@@ -105,7 +99,7 @@ class BlockChainTest extends Specification {
         exception.message == 'Test'
     }
 
-    def "getPartOfJsonArray"(){
+    /*def "getPartOfJsonArray"(){
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
         List<Block> list1 = [block()]
@@ -117,11 +111,17 @@ class BlockChainTest extends Specification {
         when:"put values to new chain"
         BlockChain Block_Chain= new BlockChain(list2)
         String h = list1.get(0).hashCode
-        List<Block> y=Block_Chain.getPartOfJsonArray(h)
+        String y = Block_Chain.getPartOfJsonArray(h).toString()
+        BlockChain w = new BlockChain(list4)
+        BlockChain q = new BlockChain(y)
 
         then: "Method getPartChain returns value of field ArrayList<Block>"
-        list4.toString().equals(y.toString())
+        w.equals(q)
 
+    }*/
+    Block block() {
+        String hash = "${rnd.nextInt()}"
+        new Block(new TransactionsList([new Transaction("t")]), hash)
     }
 
     def "getPartOfArray: throwing BlockChainException"() {

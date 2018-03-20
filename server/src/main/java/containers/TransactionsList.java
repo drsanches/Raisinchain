@@ -16,26 +16,16 @@ import static containers.Transaction.*;
  * @authors Alexander Voroshilov, Marina Krylova
  */
 
-
 public class TransactionsList{
     private ArrayList<Transaction> transactions;
 
-    //constructors for lists of transactions
     public TransactionsList() {
-
         transactions = new ArrayList<Transaction>();
     }
 
     public TransactionsList(ArrayList<Transaction> tr) {
-
         transactions = tr;
     }
-
-    public int sizeOfList(){
-
-        return transactions.size();
-    }
-
 
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
@@ -47,15 +37,17 @@ public class TransactionsList{
         }
     }
 
-    //this function creates a list of transactions for the first block of the chain
-    public static TransactionsList createFirstTransactionsList() {
-        TransactionsList tr = new TransactionsList();
-        tr.addTransaction(createFirstTransaction());
-        return tr;
-    }
-
     public ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public JSONArray getJsonArray() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction transaction: transactions)
+            jsonArray.put(transaction.getJsonString());
+
+        return jsonArray;
     }
 
     public void addTransaction(Transaction tr) {
@@ -68,19 +60,17 @@ public class TransactionsList{
         transactions.remove(tr);
     }
 
-    //compares 2 lists considering places
-    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
-
-        return tr1.equals(tr2);
+    public int sizeOfList(){
+        return transactions.size();
     }
 
-    public JSONArray getJsonArray() {
-        JSONArray jsonArray = new JSONArray();
-
-        for (Transaction transaction: transactions)
-            jsonArray.put(transaction.getJsonString());
-
-        return jsonArray;
+    /**
+     * This function creates a list of transactions for the first block of the chain
+    */
+    public static TransactionsList createFirstTransactionsList() {
+        TransactionsList tr = new TransactionsList();
+        tr.addTransaction(createFirstTransaction());
+        return tr;
     }
 
     public void saveToJsonFile(String filename) throws java.io.IOException {
