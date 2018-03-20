@@ -89,7 +89,10 @@ class BlockChainTest extends Specification {
         then:
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
-    
+
+    /**
+     * @author Irina Tokareva
+     */
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
         Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
@@ -124,6 +127,9 @@ class BlockChainTest extends Specification {
 
     }
 
+    /**
+     * @author Irina Tokareva
+     */
     def "getPartOfArray: throwing BlockChainException"() {
         given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
         List<Block> list = [block(), block(), block()]
@@ -138,6 +144,9 @@ class BlockChainTest extends Specification {
         exception.message == "The chain does not contain this hash"
     }
 
+    /**
+     * @author Irina Tokareva
+     */
     def "getPartOfJsonArray: throwing BlockChainException"() {
         given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
         List<Block> list = [block(), block(), block()]
@@ -150,5 +159,41 @@ class BlockChainTest extends Specification {
         then: "Method throws an exception"
         BlockChainException exception = thrown()
         exception.message == "The chain does not contain this hash"
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    def "saveToJsonFile: throwing an exception"() {
+
+        given: "Blockchain, which method getJsonArray throws an exception and a filename"
+        String filemane = "BlockChainTestJsonFile.json"
+        Block mockedBlock = Mock{getJsonObject() >> { throw new JSONException("Test") }}
+        BlockChain blockChain = new BlockChain()
+        blockChain.add(mockedBlock)
+
+        when: "We run method saveToJsonFile"
+        blockChain.saveToJsonFile(filemane)
+
+        then: "Method throws an exception"
+        JSONException exception = thrown()
+        exception.message == "Test"
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    def "loadFromJsonFile: throwing an exception"() {
+
+        given: "Blockchain, which method getJsonArray throws an exception and a filename"
+        String filemane = "TestForLoad.json"
+        BlockChain blockChain = new BlockChain()
+        blockChain.add(block())
+
+        when: "We run method saveToJsonFile"
+        blockChain.loadFromJsonFile(filemane)
+
+        then: "Method throws an exception"
+        JSONException exception = thrown()
     }
 }
