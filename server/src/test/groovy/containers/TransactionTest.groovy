@@ -19,15 +19,7 @@ class TransactionTest extends Specification {
 
   }
 
-    def "Test for equals method" () {
-        given: "2 equal transactions"
-        Transaction tr1 = new Transaction("1transaction")
-        Transaction tr2 = new Transaction("1transaction")
 
-        expect: "method equals return true"
-        tr1.equals(tr2)
-
-    }
 
     def "Test for createFirstTransaction method" () {
         given: "first transaction"

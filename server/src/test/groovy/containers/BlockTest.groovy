@@ -1,5 +1,9 @@
 package containers
 
+/**
+ * @author Irina Tokareva
+ */
+
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
@@ -34,7 +38,7 @@ class BlockTest extends Specification {
         transactions.equals(block.getTransactionsList());
     }
 
-    def "Ensure that method CreateFirstBlock returnes right block"() {
+    def "Ensure that method CreateFirstBlock returns right block"() {
 
         when: "We run method CreateFirstBlock"
         def  FirstBlock = Block.createFirstBlock()
@@ -46,7 +50,7 @@ class BlockTest extends Specification {
 
     }
 
-    def "Ensure that method getJsonObject returnes right json object"() {
+    def "Ensure that method getJsonObject returns right json object"() {
 
         given: "Create some block"
         Block block = Block.createFirstBlock()
