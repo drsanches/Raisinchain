@@ -23,6 +23,9 @@ class BlockTest extends Specification {
 
     }
 
+    /**
+     * @author Alexander Voroshilov
+     * */
     def "equals"() {
         given: "list of transactions and hash-code"
         TransactionsList transactionsList = new TransactionsList()
