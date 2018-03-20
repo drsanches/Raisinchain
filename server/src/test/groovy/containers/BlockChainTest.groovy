@@ -1,10 +1,5 @@
 package containers
 
-
-/**
- * @author Ilya Kreshkov
- */
-
 import spock.lang.Specification
 
 class BlockChainTest extends Specification {

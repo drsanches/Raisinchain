@@ -1,11 +1,7 @@
 package containers;
 
-/**
- * @authors Alexander Voroshilov, Marina Krylova
- */
-
-import containersExceptions.TransactionException;
-import containersExceptions.TransactionListException;
+import containers_exceptions.TransactionException;
+import containers_exceptions.TransactionListException;
 import org.json.JSONArray;
 
 import java.io.FileWriter;
@@ -35,6 +31,16 @@ public class TransactionsList{
         return transactions.size();
     }
 
+    public boolean equals(TransactionsList tr){
+
+        if (this.sizeOfList() == tr.sizeOfList()){
+            for (int i=0; i<tr.sizeOfList(); i++){
+                if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();

@@ -1,15 +1,10 @@
 package containers
 
-/**
- * @author Irina Tokareva
- */
-
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
 
-/*
-* @author: Irina Tokareva*/
+//TO DO: write tests for exceptions
 
 class BlockTest extends Specification {
 
@@ -39,7 +34,7 @@ class BlockTest extends Specification {
         transactions.equals(block.getTransactionsList());
     }
 
-    def "Ensure that method CreateFirstBlock returns right block"() {
+    def "Ensure that method CreateFirstBlock returnes right block"() {
 
         when: "We run method CreateFirstBlock"
         def  FirstBlock = Block.createFirstBlock()
@@ -51,7 +46,7 @@ class BlockTest extends Specification {
 
     }
 
-    def "Ensure that method getJsonObject returns right json object"() {
+    def "Ensure that method getJsonObject returnes right json object"() {
 
         given: "Create some block"
         Block block = Block.createFirstBlock()
@@ -65,7 +60,7 @@ class BlockTest extends Specification {
     }
 
     def "getJsonObject: throwing an exception"() {
-        given: "Block, which transactions' method getJsonObject throws an exception"
+        given: "Block, which transactions' method getLsonObject throws an exception"
         String hashCode = "qwerty"
         TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
         Block block = new Block(transactions, hashCode)
@@ -74,7 +69,7 @@ class BlockTest extends Specification {
         block.getJsonObject()
 
         then: "Method throws an exception"
-        JSONException exception = thrown()
-        exception.message == 'Test'
+        JSONException e = thrown()
+        e.message == 'Test'
     }
 }

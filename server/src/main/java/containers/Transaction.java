@@ -1,10 +1,6 @@
 package containers;
 
-/**
- * @author Alexander Voroshilov
- */
-
-import containersExceptions.TransactionException;
+import containers_exceptions.TransactionException;
 
 public class Transaction{
     private String transaction;
@@ -15,7 +11,10 @@ public class Transaction{
         transaction = tr;
     }
     
-
+    public boolean equals(Transaction tr){
+        
+        return transaction.equals(tr.transaction);
+    }
 
     public String getTransaction() {
         return transaction;

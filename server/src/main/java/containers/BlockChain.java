@@ -1,16 +1,12 @@
 package containers;
 
-/**
- * @authors Alexander Voroshilov, Marina Krylova
- */
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import containersExceptions.BlockChainException;
-import containersExceptions.TransactionException;
+import containers_exceptions.BlockChainException;
+import containers_exceptions.TransactionException;
 import org.json.*;
 import java.io.*;
 
@@ -41,6 +37,16 @@ public class BlockChain {
         return chain.size();
     }
 
+    public boolean equals(BlockChain b){
+
+        if (this.sizeOfChain() == b.sizeOfChain()){
+            for (int i=0; i<b.sizeOfChain(); i++){
+                if (!chain.get(i).equals(b.chain.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public void add(Block block) {
         chain.add(block);
