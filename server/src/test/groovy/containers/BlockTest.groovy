@@ -1,5 +1,6 @@
 package containers
 
+import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
 
@@ -24,13 +25,13 @@ class BlockTest extends Specification {
 
         given: "String hash-code and list of transactions"
         String hash = "qwerty";
-        def transcriptions = Mock(TransactionsList)
+        TransactionsList transactions = new TransactionsList([new Transaction("1"), new Transaction("2")])
 
         when: "We put its values to new block"
-        Block block = new Block(transcriptions, hash)
+        Block block = new Block(transactions, hash)
 
         then: "Method getTransactions should return value of field transactions"
-        block.getTransactions() == transcriptions;
+        transactions.equals(block.getTransactionsList());
     }
 
     def "Ensure that method CreateFirstBlock returnes right block"() {
@@ -56,5 +57,19 @@ class BlockTest extends Specification {
         then: "The block that we get from made json object should be original block"
         Block CreatedBlock = new Block(jsonObject.toString())
         CreatedBlock.equals(block)
+    }
+
+    def "getJsonObject: throwing an exception"() {
+        given: "Block, which transactions' method getLsonObject throws an exception"
+        String hashCode = "qwerty"
+        TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
+        Block block = new Block(transactions, hashCode)
+
+        when: "We try to make json object from the block"
+        block.getJsonObject()
+
+        then: "Method throws an exception"
+        JSONException e = thrown()
+        e.message == 'Test'
     }
 }
