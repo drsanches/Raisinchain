@@ -4,7 +4,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
 
-//TO DO: write tests for exceptions
+/*
+* @author: Irina Tokareva*/
 
 class BlockTest extends Specification {
 
@@ -60,7 +61,7 @@ class BlockTest extends Specification {
     }
 
     def "getJsonObject: throwing an exception"() {
-        given: "Block, which transactions' method getLsonObject throws an exception"
+        given: "Block, which transactions' method getJsonObject throws an exception"
         String hashCode = "qwerty"
         TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
         Block block = new Block(transactions, hashCode)
@@ -69,7 +70,7 @@ class BlockTest extends Specification {
         block.getJsonObject()
 
         then: "Method throws an exception"
-        JSONException e = thrown()
-        e.message == 'Test'
+        JSONException exception = thrown()
+        exception.message == 'Test'
     }
 }
