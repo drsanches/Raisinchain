@@ -128,17 +128,30 @@ class BlockChainTest extends Specification {
         given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
         List<Block> list = [block(), block(), block()]
         BlockChain blockChain = new BlockChain(list)
+        String hashCode = "qwerty"
 
         when: "We don't find user's block in our chain by given hash-code"
-        blockChain.getPartOfJsonArray(parameter)
+        blockChain.getPartOfJsonArray(hashCode)
 
         then: "Method throws an exception"
         BlockChainException exception = thrown()
-        exception.message == message
+        exception.message == "The chain does not contain this hash"
+    }
 
-        where:
-        parameter | message
-        null      | "The chain does not contain this hash"
-        "qwerty"  | "The chain does not contain this hash"
+    def "getPartOfJsonArray: throwing BlockChainException"() {
+        given: "Hash-code from the user's last block, which is not in that chain"
+//        List<Block> list = [block(), block(), block()]
+//        BlockChain blockChain = new BlockChain(list)
+        String hashCode = "qwerty"
+
+        and: "Blockchain: method getPartOfChain throws an exception"
+        BlockChain blockChain = Mock{ getPartOfChain(hashCode) >> { throw new BlockChainException() } }
+
+        when: "We try to run method getPartOfJsonArray"
+        blockChain.getPartOfJsonArray(hashCode)
+
+        then: "Method throws an exception"
+        BlockChainException exception = thrown()
+        exception.message == "The chain does not contain this hash"
     }
 }
