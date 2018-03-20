@@ -1,9 +1,5 @@
 package containers;
 
-/**
- * @authors Alexander Voroshilov, Marina Krylova
- */
-
 import containersExceptions.TransactionException;
 import containersExceptions.TransactionListException;
 import org.json.JSONArray;
@@ -15,6 +11,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static containers.Transaction.*;
+
+/**
+ * @authors Alexander Voroshilov, Marina Krylova
+ */
+
 
 public class TransactionsList{
     private ArrayList<Transaction> transactions;

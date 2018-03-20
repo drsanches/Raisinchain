@@ -1,11 +1,11 @@
 package containers;
 
+import containersExceptions.TransactionException;
+import org.json.JSONObject;
+
 /**
  * @author Alexander Voroshilov
  */
-
-import containersExceptions.TransactionException;
-import org.json.JSONObject;
 
 public class Block {
     private TransactionsList transactions;

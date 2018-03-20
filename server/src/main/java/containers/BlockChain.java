@@ -1,8 +1,5 @@
 package containers;
 
-/**
- * @authors Alexander Voroshilov, Marina Krylova
- */
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -13,6 +10,10 @@ import containersExceptions.BlockChainException;
 import containersExceptions.TransactionException;
 import org.json.*;
 import java.io.*;
+
+/**
+ * @authors Alexander Voroshilov, Marina Krylova
+ */
 
 public class BlockChain {
     private ArrayList<Block> chain;

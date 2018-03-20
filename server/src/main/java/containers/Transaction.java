@@ -1,10 +1,12 @@
 package containers;
 
+
+import containersExceptions.TransactionException;
+
 /**
  * @author Alexander Voroshilov
  */
 
-import containersExceptions.TransactionException;
 
 public class Transaction{
     private String transaction;

@@ -1,15 +1,13 @@
 package containers
 
-/**
- * @author Irina Tokareva
- */
 
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
 
-/*
-* @author: Irina Tokareva*/
+/**
+ * @author Irina Tokareva
+ */
 
 class BlockTest extends Specification {
 
