@@ -143,23 +143,10 @@ class BlockChainTest extends Specification {
         then: "BlockChain objects are equals"
         newBlockChain.equals(blockChain)
     }
-<<<<<<< HEAD
-
-    def "Get json array"() {
-        given:
-        List<Block> list = new ArrayList<Block>()
-        when:
-        BlockChain Block_Chain=new BlockChain(list)
-        then:
-        list.toString().equals(Block_Chain.getJsonArray().toString())
-    }
 
     /**
      * @author Irina Tokareva
      */
-=======
-    
->>>>>>> 55a67384e17c2f1ef2bfdba324339030073fddac
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
         Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
@@ -174,32 +161,9 @@ class BlockChainTest extends Specification {
         exception.message == 'Test'
     }
 
-<<<<<<< HEAD
-    def "getPartOfJsonArray"() {
-        given:"List of blocks"
-        List<Block> list1 = [block()]
-        List<Block> list3 = [block()]
-        List<Block> list4 = [*list3, block()]
-        List<Block> list2 = [*list1, *list4,]
-
-
-        when:"put values to new chain"
-        BlockChain Block_Chain= new BlockChain(list2)
-        String h = list1.get(0).hashCode
-        String y = Block_Chain.getPartOfJsonArray(h).toString()
-        BlockChain w = new BlockChain(list4)
-        BlockChain q = new BlockChain(y)
-
-        then: "Method getPartChain returns value of field ArrayList<Block>"
-        w.equals(q)
-
-    }
-
     /**
      * @author Irina Tokareva
      */
-=======
->>>>>>> 55a67384e17c2f1ef2bfdba324339030073fddac
     def "getPartOfArray: throwing BlockChainException"() {
         given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
         List<Block> list = [block(), block(), block()]
