@@ -1,5 +1,6 @@
 package containers
 
+import containersExceptions.TransactionException
 import spock.lang.Specification
 
 /**
@@ -35,5 +36,19 @@ class TransactionTest extends Specification {
         expect: "method equals return true"
         tr1.equals(tr2)
 
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
+    def "Transaction constructor: throwing an exception"() {
+        given: "null string of transaction"
+        String transactionString = null
+
+        when: "user creates transaction with this string"
+        Transaction transaction = new Transaction(transactionString)
+
+        then: "method throws an exception"
+        TransactionException exception = thrown()
     }
 }
