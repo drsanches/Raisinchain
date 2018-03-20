@@ -3,7 +3,7 @@ package containers;
 import containersExceptions.TransactionException;
 
 /**
- * @author Alexander Voroshilov
+ * @author Marina Krylova
  */
 
 public class Transaction{
