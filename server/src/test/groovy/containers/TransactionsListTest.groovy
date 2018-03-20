@@ -1,6 +1,8 @@
 package containers
 
+import containersExceptions.TransactionsListException
 import org.json.JSONArray
+import org.json.JSONException
 import spock.lang.Specification
 
 /**
@@ -69,6 +71,23 @@ class TransactionsListTest extends Specification {
 
     }
 
+    /**
+     * @author Irina Tokareva
+     */
+    def "removeTransaction: throwing an exception"() {
+
+        given: "Transactions' list and some transaction, which is not is that list"
+        TransactionsList transactions = new TransactionsList([new Transaction("t"), new Transaction("r")])
+        Transaction tr = new Transaction("a")
+
+        when: "We run method removeTransaction"
+        transactions.removeTransaction(tr)
+
+        then: "Method should throw an exception"
+        TransactionsListException exception = thrown()
+        exception.message == "Transaction list does not contain this transaction."
+    }
+
     def "Test for sizeOfList method" () {
         given: "list of 2 transactions"
         Transaction tr1 = new Transaction("1transaction")
@@ -128,5 +147,21 @@ class TransactionsListTest extends Specification {
 
         then: "lists are equals"
         list2.equals(list)
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    def "loadFromJsonFile: throwing an exception"() {
+
+        given: "Blockchain, which method getJsonArray throws an exception and a filename"
+        String filemane = "TestForLoad.json"
+        TransactionsList transactions = new TransactionsList([new Transaction("t"), new Transaction("r")])
+
+        when: "We run method saveToJsonFile"
+        transactions.loadFromJsonFile(filemane)
+
+        then: "Method throws an exception"
+        JSONException exception = thrown()
     }
 }

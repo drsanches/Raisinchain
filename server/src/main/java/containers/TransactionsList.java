@@ -1,7 +1,7 @@
 package containers;
 
 import containersExceptions.TransactionException;
-import containersExceptions.TransactionListException;
+import containersExceptions.TransactionsListException;
 import org.json.JSONArray;
 
 import java.io.FileWriter;
@@ -54,9 +54,9 @@ public class TransactionsList{
         transactions.add(tr);
     }
 
-    public void removeTransaction(Transaction tr) throws TransactionListException {
+    public void removeTransaction(Transaction tr) throws TransactionsListException {
         if (transactions.indexOf(tr) == -1)
-            throw new TransactionListException("Transaction list does not contain this transaction.");
+            throw new TransactionsListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
     }
 
