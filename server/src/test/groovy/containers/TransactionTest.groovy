@@ -27,6 +27,13 @@ class TransactionTest extends Specification {
         expect: "method equals return true"
         tr1.equals(tr2)
 
+    }
 
+    def "Test for createFirstTransaction method" () {
+        given: "first transaction"
+        Transaction first_tr = Transaction.createFirstTransaction()
+
+        expect: "first transaction is a string and not null"
+        first_tr != null
     }
 }

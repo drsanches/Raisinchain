@@ -53,10 +53,6 @@ class TransactionsListTest extends Specification {
     }
 
 
-
-    /*def "CreateFirstTransactionsList"() {
-    }*/
-
     def "Test for getJsonArray method"() {
         given: "non-empty list of transactions"
         Transaction tr1 = new Transaction("1transaction")
@@ -134,4 +130,6 @@ class TransactionsListTest extends Specification {
         tr_list.equals(first_list)
 
     }
+
+
 }
