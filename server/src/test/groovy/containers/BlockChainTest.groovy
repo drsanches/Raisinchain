@@ -11,7 +11,6 @@ import spock.lang.Specification
 class BlockChainTest extends Specification {
     Random rnd = new Random()
 
-
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -75,7 +74,7 @@ class BlockChainTest extends Specification {
         newBlockChain.equals(blockChain)
     }
 
-    def "Get json array"(){
+    def "Get json array"() {
         given:
         List<Block> list = new ArrayList<Block>()
         when:
@@ -98,9 +97,8 @@ class BlockChainTest extends Specification {
         exception.message == 'Test'
     }
 
-    /*def "getPartOfJsonArray"(){
+    def "getPartOfJsonArray"() {
         given:"List of blocks"
-//        List<Block> Array_List = [block()]
         List<Block> list1 = [block()]
         List<Block> list3 = [block()]
         List<Block> list4 = [*list3, block()]
@@ -117,7 +115,8 @@ class BlockChainTest extends Specification {
         then: "Method getPartChain returns value of field ArrayList<Block>"
         w.equals(q)
 
-    }*/
+    }
+
     Block block() {
         String hash = "${rnd.nextInt()}"
         new Block(new TransactionsList([new Transaction("t")]), hash)
