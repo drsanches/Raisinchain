@@ -82,11 +82,10 @@ class BlockChainTest extends Specification {
     def "Get json array"(){
         given:
         List<Block> list = new ArrayList<Block>()
-        String a
         when:
         BlockChain Block_Chain=new BlockChain(list)
         then:
-        a.equals(Block_Chain.getJsonArray().toString())
+        list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
     def "getPartOfChain"(){
