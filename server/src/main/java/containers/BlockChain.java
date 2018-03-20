@@ -13,7 +13,6 @@ import java.io.*;
 /**
  * @author Alexander Voroshilov
  */
-
 public class BlockChain {
     private ArrayList<Block> chain;
 

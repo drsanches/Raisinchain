@@ -36,11 +36,9 @@ public class TransactionsList{
         return transactions;
     }
 
-
-/**
-  * @author Alexander Voroshilov
-  */
-
+    /**
+    * @author Alexander Voroshilov
+    */
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
         JSONArray jsonArray = new JSONArray(jsonArrayString);
@@ -51,7 +49,9 @@ public class TransactionsList{
         }
     }
 
-
+    /**
+     * @author Alexander Voroshilov
+     */
     public JSONArray getJsonArray() {
         JSONArray jsonArray = new JSONArray();
 
@@ -61,24 +61,19 @@ public class TransactionsList{
         return jsonArray;
     }
 
-
-
+    /**
+     * @author Alexander Voroshilov
+     */
     public void removeTransaction(Transaction tr) throws TransactionsListException {
         if (transactions.indexOf(tr) == -1)
             throw new TransactionsListException("Transaction list does not contain this transaction.");
         transactions.remove(tr);
     }
 
-    /**
-     * @author Marina Krylova
-     */
     public int sizeOfList(){
         return transactions.size();
     }
 
-    /**
-     * @author Marina Krylova
-     */
     public boolean equals(TransactionsList tr) {
         if (this.sizeOfList() == tr.sizeOfList()){
             for (int i=0; i<tr.sizeOfList(); i++){
@@ -90,8 +85,8 @@ public class TransactionsList{
     }
 
     /**
-     * This function creates a list of transactions for the first block of the chain
-    */
+     * @author Alexander Voroshilov
+     */
     public static TransactionsList createFirstTransactionsList() {
         TransactionsList tr = new TransactionsList();
         tr.addTransaction(createFirstTransaction());
@@ -101,13 +96,15 @@ public class TransactionsList{
     /**
      * @author Alexander Voroshilov
      */
-
     public void saveToJsonFile(String filename) throws java.io.IOException {
         FileWriter writer = new FileWriter(filename);
         writer.write(getJsonArray().toString());
         writer.close();
     }
 
+    /**
+     * @author Alexander Voroshilov
+     */
     public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
         transactions.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
