@@ -1,5 +1,6 @@
 package containers
 
+import org.json.JSONException
 import spock.lang.Specification
 
 class BlockChainTest extends Specification {
@@ -76,6 +77,20 @@ class BlockChainTest extends Specification {
         BlockChain Block_Chain=new BlockChain(list)
         then:
         list.toString().equals(Block_Chain.getJsonArray().toString())
+    }
+
+    def "getJsonArray: throwing a json exception"() {
+        given: "Blockchain, which block's method getJsonObject throws an exception"
+        Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
+        BlockChain blockchain = new BlockChain()
+        blockchain.add(block)
+
+        when: "We try to make json object from the blockchain"
+        blockchain.getJsonArray()
+
+        then: "Method throws an exception"
+        JSONException exception = thrown()
+        exception.message == 'Test'
     }
 
     def "getPartOfJsonArray"(){

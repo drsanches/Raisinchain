@@ -60,7 +60,7 @@ class BlockTest extends Specification {
     }
 
     def "getJsonObject: throwing an exception"() {
-        given: "Block, which transactions' method getLsonObject throws an exception"
+        given: "Block, which transactions' method getJsonObject throws an exception"
         String hashCode = "qwerty"
         TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
         Block block = new Block(transactions, hashCode)
