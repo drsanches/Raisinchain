@@ -21,20 +21,6 @@ class TransactionsListTest extends Specification {
 
     }
 
-    /*  def "Test for AddTransaction method"() {
-           given: "list of transactions"
-           TransactionsList tr_list = Mock()
-           //int size = tr_list.sizeOfList()
-   
-           when: "we add new transaction to list of transactions"
-           Transaction new_tr = new Transaction("new_transaction")
-           1*tr_list.addTransaction() >> 'new_tr'
-   
-           then: "transaction added to the list"
-           tr_list.addTransaction() == 'new_tr'
-   
-   
-       }*/
 
     def "Test for removeTransaction method"() {
         given: "non-empty list of transactions"
@@ -81,7 +67,7 @@ class TransactionsListTest extends Specification {
         list.sizeOfList() == 2
     }
 
-    def "Test for equals method" () {
+    def "Test for areListsEqual method method" () {
         given: "2 equal list of transactions"
         Transaction tr1 = new Transaction("1transaction")
         Transaction tr2 = new Transaction("2transaction")
@@ -89,11 +75,10 @@ class TransactionsListTest extends Specification {
         list.addTransaction(tr1)
         list.addTransaction(tr2)
         TransactionsList list1 = new TransactionsList()
-        list1.addTransaction(tr1)
-        list1.addTransaction(tr2)
+        list1 = list
 
         expect: "method equals return true"
-        list1.equals(list)
+        list.areListsEqual(list,list1) && list.areListsEqual(list1,list)
 
     }
 
@@ -130,6 +115,5 @@ class TransactionsListTest extends Specification {
         tr_list.equals(first_list)
 
     }
-
 
 }
