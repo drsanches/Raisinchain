@@ -64,7 +64,9 @@ public class TransactionsList{
         return transactions.size();
     }
 
-    //this function creates a list of transactions for the first block of the chain
+    /**
+     * This function creates a list of transactions for the first block of the chain
+    */
     public static TransactionsList createFirstTransactionsList() {
         TransactionsList tr = new TransactionsList();
         tr.addTransaction(createFirstTransaction());
