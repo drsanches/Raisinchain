@@ -4,7 +4,7 @@ import org.json.JSONException
 import spock.lang.Specification
 
 /**
- * @author Ilya Kreshkov
+ * @author Ilya Kreshkov, Irina Tokareva
  */
 
 
@@ -89,7 +89,7 @@ class BlockChainTest extends Specification {
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
-<<<<<<< HEAD
+    
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
         Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
@@ -120,10 +120,6 @@ class BlockChainTest extends Specification {
 
         then: "Method getPartChain returns value of field ArrayList<Block>"
         list4.toString().equals(y.toString())
-=======
-    def "getPartOfChain"(){
->>>>>>> f9b48768d6e38e11c20044399230824f186eddb7
-
 
     }
 }
