@@ -9,16 +9,16 @@ Raisinchain is a toy project to understand how the blockchain works.
     .
     └── server
         ├── src
-        │   ├── main
-        │   │   ├── java
-        │   │   │   ├── containers
+        │   ├── main                                   
+        │   │   ├── java                                #application sourses
+        │   │   │   ├── containers                      
         │   │   │   ├── containersExceptions
         │   │   │   └── main
         │   │   └── resources
-        │   └── test
+        │   └── test                                    #test sources
         │       └── groovy
         │           └── containers
-        └── target
+        └── target                                      #compile sources
             ├── classes
             │   ├── containers
             │   ├── containersExceptions
