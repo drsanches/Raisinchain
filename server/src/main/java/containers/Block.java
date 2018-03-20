@@ -23,17 +23,16 @@ public class Block {
         hashCode = jsonObject.getString("Hash-code");
     }
 
-
     public static Block createFirstBlock() {
         return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
-    public String getHashCode() {
-        return hashCode;
-    }
-
     public TransactionsList getTransactionsList() {
         return transactions;
+    }
+
+    public String getHashCode() {
+        return hashCode;
     }
 
     public JSONObject getJsonObject() throws org.json.JSONException {

@@ -37,10 +37,8 @@ public class BlockChain {
     }
 
     public int sizeOfChain(){
-        
         return chain.size();
     }
-
 
     public void add(Block block) {
         chain.add(block);
@@ -62,16 +60,16 @@ public class BlockChain {
     public ArrayList<Block> getPartOfChain(String hashCode) throws BlockChainException {
         ArrayList<Block> newChain = new ArrayList<Block>();
 
-        Boolean isFind = false;
+        Boolean isFound = false;
         for (int i = 0; i < chain.size(); i++) {
-            if (isFind)
+            if (isFound)
                 newChain.add(chain.get(i));
 
             if (chain.get(i).getHashCode().equals(hashCode))
-                isFind = true;
+                isFound = true;
         }
 
-        if (isFind)
+        if (isFound)
             return newChain;
         else {
             throw new BlockChainException("The chain does not contain this hash");
@@ -84,7 +82,7 @@ public class BlockChain {
         return partOfBlockChain.getJsonArray();
     }
 
-    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException{
+    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException {
         FileWriter writer = new FileWriter(filename);
         writer.write(getJsonArray().toString());
         writer.close();
@@ -102,4 +100,3 @@ public class BlockChain {
         }
     }
 }
-
