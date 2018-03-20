@@ -33,6 +33,9 @@ public class Transaction{
         }
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public boolean equals(Transaction tr) {
         return transaction.equals(tr.transaction);
     }

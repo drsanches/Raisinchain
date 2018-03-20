@@ -11,18 +11,20 @@ import spock.lang.*
 
 class BlockTest extends Specification {
 
-    def "Ensure that method getHashCode returns field hashCode"() {
+    def "Ensure that method CreateFirstBlock returns right block"() {
 
-        given: "String hash-code and list of transactions"
-        String hash = "qwerty";
-        def transactions = Mock(TransactionsList)
+        when: "We run method CreateFirstBlock"
+        def  FirstBlock = Block.createFirstBlock()
 
-        when: "We put its values to new block"
-        Block block = new Block(transactions, hash)
+        then: "The first block should fit the right first block"
+        String text = "First transaction"
+        List<Transaction> TransactionList = [new Transaction(text)]
+        TransactionList.equals(FirstBlock.getTransactionsList().getTransactions())
 
-        then: "Method getHashCode should return value of field hashCode"
-        hash.equals(block.getHashCode());
     }
+
+    //TODO: Write test
+    def "equals"() { }
 
     def "Ensure that method getTransactions returns field transactions"() {
 
@@ -37,16 +39,17 @@ class BlockTest extends Specification {
         transactions.equals(block.getTransactionsList());
     }
 
-    def "Ensure that method CreateFirstBlock returns right block"() {
+    def "Ensure that method getHashCode returns field hashCode"() {
 
-        when: "We run method CreateFirstBlock"
-        def  FirstBlock = Block.createFirstBlock()
+        given: "String hash-code and list of transactions"
+        String hash = "qwerty";
+        def transactions = Mock(TransactionsList)
 
-        then: "The first block should fit the right first block"
-        String text = "First transaction"
-        List<Transaction> TransactionList = [new Transaction(text)]
-        TransactionList.equals(FirstBlock.getTransactionsList().getTransactions())
+        when: "We put its values to new block"
+        Block block = new Block(transactions, hash)
 
+        then: "Method getHashCode should return value of field hashCode"
+        hash.equals(block.getHashCode());
     }
 
     def "Ensure that method getJsonObject returns right json object"() {
