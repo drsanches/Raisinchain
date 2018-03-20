@@ -1,10 +1,15 @@
 package main;
 
+
 import containers.BlockChain;
 import containers.TransactionsList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
+/**
+ * @author Alexander Voroshilov
+ */
 
 @SpringBootApplication
 public class Application {

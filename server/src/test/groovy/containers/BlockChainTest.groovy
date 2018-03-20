@@ -3,6 +3,11 @@ package containers
 import org.json.JSONException
 import spock.lang.Specification
 
+/**
+ * @author Ilya Kreshkov
+ */
+
+
 class BlockChainTest extends Specification {
     Random rnd = new Random()
 
@@ -35,6 +40,11 @@ class BlockChainTest extends Specification {
 
         then: "Method getPartChain returns value of field ArrayList<Block>"
         list4.equals(y)
+    }
+
+    Block block() {
+        String hash = "${rnd.nextInt()}"
+        new Block(null, hash)
     }
 
     def "Ensure that method add new block to chain"() {
@@ -79,6 +89,7 @@ class BlockChainTest extends Specification {
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
+<<<<<<< HEAD
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
         Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
@@ -109,11 +120,10 @@ class BlockChainTest extends Specification {
 
         then: "Method getPartChain returns value of field ArrayList<Block>"
         list4.toString().equals(y.toString())
+=======
+    def "getPartOfChain"(){
+>>>>>>> f9b48768d6e38e11c20044399230824f186eddb7
 
 
-    }
-    Block block() {
-        String hash = "${rnd.nextInt()}"
-        new Block(null, hash)
     }
 }

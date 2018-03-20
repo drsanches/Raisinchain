@@ -10,6 +10,10 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
 
 
+/**
+ * @author Marina Krylova
+ */
+
 @RestController
 public class AddingTransactionController {
 
