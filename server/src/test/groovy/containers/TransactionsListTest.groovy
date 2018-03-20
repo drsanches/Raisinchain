@@ -81,21 +81,6 @@ class TransactionsListTest extends Specification {
         list.sizeOfList() == 2
     }
 
-    def "Test for equals method" () {
-        given: "2 equal list of transactions"
-        Transaction tr1 = new Transaction("1transaction")
-        Transaction tr2 = new Transaction("2transaction")
-        TransactionsList list = new TransactionsList()
-        list.addTransaction(tr1)
-        list.addTransaction(tr2)
-        TransactionsList list1 = new TransactionsList()
-        list1.addTransaction(tr1)
-        list1.addTransaction(tr2)
-
-        expect: "method equals return true"
-        list1.equals(list)
-
-    }
 
     def "Ensure that save and load to JSON file works correctly"() {
         given: "non-empty list of transactions"
