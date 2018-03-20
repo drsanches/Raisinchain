@@ -120,4 +120,18 @@ class TransactionsListTest extends Specification {
         then: "lists are equals"
         list2.equals(list)
     }
+
+    def "Test for createFirstTransactionsList method" () {
+        given: "first transaction list"
+        TransactionsList first_list = TransactionsList.createFirstTransactionsList()
+
+        when: "we create another list with 'first transaction'"
+        Transaction first_tr = Transaction.createFirstTransaction()
+        TransactionsList tr_list = new TransactionsList()
+        tr_list.addTransaction(first_tr)
+
+        then: "lists are equal"
+        tr_list.equals(first_list)
+
+    }
 }
