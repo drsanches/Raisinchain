@@ -139,13 +139,10 @@ class BlockChainTest extends Specification {
     }
 
     def "getPartOfJsonArray: throwing BlockChainException"() {
-        given: "Hash-code from the user's last block, which is not in that chain"
-//        List<Block> list = [block(), block(), block()]
-//        BlockChain blockChain = new BlockChain(list)
+        given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
+        List<Block> list = [block(), block(), block()]
+        BlockChain blockChain = new BlockChain(list)
         String hashCode = "qwerty"
-
-        and: "Blockchain: method getPartOfChain throws an exception"
-        BlockChain blockChain = Mock{ getPartOfChain(hashCode) >> { throw new BlockChainException() } }
 
         when: "We try to run method getPartOfJsonArray"
         blockChain.getPartOfJsonArray(hashCode)
