@@ -9,6 +9,9 @@ import containersExceptions.TransactionException;
 public class Transaction{
     private String transaction;
 
+    /**
+     * @author Alexander Voroshilov
+     */
     public Transaction(String tr) throws TransactionException {
         if (tr == null)
             throw new TransactionException("Incorrect transaction");
@@ -23,6 +26,9 @@ public class Transaction{
         return transaction;
     }
 
+    /**
+     * @author Alexander Voroshilov
+     */
     public static Transaction createFirstTransaction() {
         //TODO: Think about it
         try {
@@ -33,9 +39,6 @@ public class Transaction{
         }
     }
 
-    /**
-     * @author Marina Krylova
-     */
     public boolean equals(Transaction tr) {
         return transaction.equals(tr.transaction);
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static containers.Transaction.*;
 
 /**
- * @authors Alexander Voroshilov
+ * @author Alexander Voroshilov
  */
 
 public class TransactionsList{

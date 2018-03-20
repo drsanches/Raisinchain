@@ -11,7 +11,7 @@ import org.json.*;
 import java.io.*;
 
 /**
- * @authors Alexander Voroshilov
+ * @author Alexander Voroshilov
  */
 
 public class BlockChain {
