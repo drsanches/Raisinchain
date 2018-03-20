@@ -23,8 +23,21 @@ class BlockTest extends Specification {
 
     }
 
-    //TODO: Write test
-    def "equals"() { }
+    def "equals"() {
+        given: "list of transactions and hash-code"
+        TransactionsList transactionsList = new TransactionsList()
+        transactionsList.addTransaction(new Transaction("rt1"))
+        transactionsList.addTransaction(new Transaction("rt2"))
+        transactionsList.addTransaction(new Transaction("rt3"))
+        String hashCode = "hash"
+
+        when: "user creates two blocks with this transactions and hash"
+        Block block1 = new Block(transactionsList, hashCode)
+        Block block2 = new Block(transactionsList, hashCode)
+
+        then: "they are equal"
+        block1.equals(block2)
+    }
 
     def "Ensure that method getTransactions returns field transactions"() {
 
