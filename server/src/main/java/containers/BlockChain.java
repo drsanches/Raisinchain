@@ -11,7 +11,7 @@ import org.json.*;
 import java.io.*;
 
 /**
- * @authors Alexander Voroshilov, Marina Krylova
+ * @author Alexander Voroshilov
  */
 
 public class BlockChain {
@@ -37,10 +37,16 @@ public class BlockChain {
         }
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public int sizeOfChain(){
         return chain.size();
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public boolean equals(BlockChain b) {
         if (this.sizeOfChain() == b.sizeOfChain()) {
             for (int i=0; i<b.sizeOfChain(); i++) {

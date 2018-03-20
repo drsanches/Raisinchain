@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static containers.Transaction.*;
 
 /**
- * @authors Alexander Voroshilov, Marina Krylova
+ * @author Alexander Voroshilov
  */
 
 public class TransactionsList{
@@ -60,10 +60,16 @@ public class TransactionsList{
         transactions.remove(tr);
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public int sizeOfList(){
         return transactions.size();
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public boolean equals(TransactionsList tr) {
         if (this.sizeOfList() == tr.sizeOfList()){
             for (int i=0; i<tr.sizeOfList(); i++){
