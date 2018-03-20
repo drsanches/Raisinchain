@@ -12,6 +12,11 @@ import spock.lang.Specification
 class BlockChainTest extends Specification {
     Random rnd = new Random()
 
+    Block block() {
+        String hash = "${rnd.nextInt()}"
+        new Block(new TransactionsList([new Transaction("t")]), hash)
+    }
+
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -44,13 +49,14 @@ class BlockChainTest extends Specification {
 
     def "Ensure that method add new block to chain"() {
         given:"List of blocks and block"
-        Block block =Mock()
-        when:"put values to new chain, add new block"
-        BlockChain Block_Chain= new BlockChain()
-        Block_Chain.add(block)
-        then: "Method add new block"
-        block.equals(Block_Chain.getChain().last())
+        BlockChain blockChain = new BlockChain()
+        Block block = Block.createFirstBlock()
 
+        when:"put values to new chain, add new block"
+        blockChain.add(block)
+
+        then: "Method add new block"
+        block.equals(blockChain.getChain().last())
     }
 
     def "Ensure that save and load works correctly"() {
@@ -116,11 +122,6 @@ class BlockChainTest extends Specification {
         then: "Method getPartChain returns value of field ArrayList<Block>"
         w.equals(q)
 
-    }
-
-    Block block() {
-        String hash = "${rnd.nextInt()}"
-        new Block(new TransactionsList([new Transaction("t")]), hash)
     }
 
     def "getPartOfArray: throwing BlockChainException"() {
