@@ -71,15 +71,15 @@ class TransactionsListTest extends Specification {
         given: "2 equal list of transactions"
         Transaction tr1 = new Transaction("1transaction")
         Transaction tr2 = new Transaction("2transaction")
-        TransactionsList list = new TransactionsList()
-        list.addTransaction(tr1)
-        list.addTransaction(tr2)
         TransactionsList list1 = new TransactionsList()
-        list1 = list
+        list1.addTransaction(tr1)
+        list1.addTransaction(tr2)
+        TransactionsList list2 = new TransactionsList()
+        list2.addTransaction(tr1)
+        list2.addTransaction(tr2)
 
         expect: "method equals return true"
-        list.areListsEqual(list,list1) && list.areListsEqual(list1,list)
-
+        list1.equals(list2)
     }
 
     def "Ensure that save and load to JSON file works correctly"() {
