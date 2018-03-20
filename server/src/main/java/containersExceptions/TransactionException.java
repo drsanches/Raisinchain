@@ -1,4 +1,4 @@
-package containers_exceptions;
+package containersExceptions;
 
 public class TransactionException extends Exception {
     public TransactionException(String message) {

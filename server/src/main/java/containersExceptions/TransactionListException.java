@@ -1,4 +1,4 @@
-package containers_exceptions;
+package containersExceptions;
 
 public class TransactionListException extends Exception {
     public TransactionListException(String message) {
