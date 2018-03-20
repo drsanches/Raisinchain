@@ -7,7 +7,7 @@ import spock.lang.Specification
  */
 
 class TransactionTest extends Specification {
-  def "Ensure that method getTransaction returns transaction"() {
+    def "Ensure that method getTransaction returns transaction"() {
         given:"the string"
         String str = "test_transaction"
 
@@ -19,6 +19,14 @@ class TransactionTest extends Specification {
 
   }
 
+    def "Test for createFirstTransaction method" () {
+        given: "first transaction"
+        Transaction first_tr = Transaction.createFirstTransaction()
+
+        expect: "first transaction is a string and not null"
+        first_tr != null
+    }
+
     def "Test for equals method" () {
         given: "2 equal transactions"
         Transaction tr1 = new Transaction("1transaction")
@@ -27,13 +35,5 @@ class TransactionTest extends Specification {
         expect: "method equals return true"
         tr1.equals(tr2)
 
-    }
-
-    def "Test for createFirstTransaction method" () {
-        given: "first transaction"
-        Transaction first_tr = Transaction.createFirstTransaction()
-
-        expect: "first transaction is a string and not null"
-        first_tr != null
     }
 }

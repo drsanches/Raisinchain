@@ -5,16 +5,62 @@ import org.json.JSONException
 import spock.lang.Specification
 
 /**
- * @author Ilya Kreshkov, Irina Tokareva
+ * @author Ilya Kreshkov
  */
-
-
 class BlockChainTest extends Specification {
     Random rnd = new Random()
 
     Block block() {
         String hash = "${rnd.nextInt()}"
         new Block(new TransactionsList([new Transaction("t")]), hash)
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
+    def "size"() {
+        given: "BlockChain object"
+        BlockChain blockChain = new BlockChain()
+
+        when: "user adds count of blocks into block chain"
+        int count = 5
+        for (int i = 0; i < count; i++)
+            blockChain.add(Block.createFirstBlock())
+
+        then: "size of blockchain and size of chain are equals"
+            blockChain.sizeOfChain().equals(blockChain.getChain().size())
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
+    def "equals"() {
+        given: "BlockChain object with count of blocks"
+        BlockChain blockChain1 = new BlockChain()
+        blockChain1.add(block())
+        blockChain1.add(block())
+        blockChain1.add(block())
+
+        when: "user creates BlockChain object with similar chain"
+        BlockChain blockChain2 = new BlockChain(blockChain1.getChain())
+
+        then: "They are equals"
+        blockChain1.equals(blockChain2)
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
+    def "Ensure that method add new block to chain"() {
+        given:"List of blocks and block"
+        BlockChain blockChain = new BlockChain()
+        Block block = block()
+
+        when:"put values to new chain, add new block"
+        blockChain.add(block)
+
+        then: "Method add new block"
+        block.equals(blockChain.getChain().last())
     }
 
     def "Ensure that method getChain returns field ArrayList<Block>"() {
@@ -27,6 +73,15 @@ class BlockChainTest extends Specification {
 
         then: "Method getChain returns value of field ArrayList<Block>"
         list.equals(Block_Chain.getChain())
+    }
+
+    def "Get json array"() {
+        given:
+        List<Block> list = new ArrayList<Block>()
+        when:
+        BlockChain Block_Chain=new BlockChain(list)
+        then:
+        list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
     def "Ensure that method getPartChain returns field ArrayList<Block>"() {
@@ -47,16 +102,24 @@ class BlockChainTest extends Specification {
         list4.equals(y)
     }
 
-    def "Ensure that method add new block to chain"() {
-        given:"List of blocks and block"
-        BlockChain blockChain = new BlockChain()
-        Block block = Block.createFirstBlock()
+    def "getPartOfJsonArray"() {
+        given:"List of blocks"
+        List<Block> list1 = [block()]
+        List<Block> list3 = [block()]
+        List<Block> list4 = [*list3, block()]
+        List<Block> list2 = [*list1, *list4,]
 
-        when:"put values to new chain, add new block"
-        blockChain.add(block)
 
-        then: "Method add new block"
-        block.equals(blockChain.getChain().last())
+        when:"put values to new chain"
+        BlockChain Block_Chain= new BlockChain(list2)
+        String h = list1.get(0).hashCode
+        String y = Block_Chain.getPartOfJsonArray(h).toString()
+        BlockChain w = new BlockChain(list4)
+        BlockChain q = new BlockChain(y)
+
+        then: "Method getPartChain returns value of field ArrayList<Block>"
+        w.equals(q)
+
     }
 
     def "Ensure that save and load works correctly"() {
@@ -80,15 +143,6 @@ class BlockChainTest extends Specification {
         then: "BlockChain objects are equals"
         newBlockChain.equals(blockChain)
     }
-
-    def "Get json array"() {
-        given:
-        List<Block> list = new ArrayList<Block>()
-        when:
-        BlockChain Block_Chain=new BlockChain(list)
-        then:
-        list.toString().equals(Block_Chain.getJsonArray().toString())
-    }
     
     def "getJsonArray: throwing a json exception"() {
         given: "Blockchain, which block's method getJsonObject throws an exception"
@@ -102,26 +156,6 @@ class BlockChainTest extends Specification {
         then: "Method throws an exception"
         JSONException exception = thrown()
         exception.message == 'Test'
-    }
-
-    def "getPartOfJsonArray"() {
-        given:"List of blocks"
-        List<Block> list1 = [block()]
-        List<Block> list3 = [block()]
-        List<Block> list4 = [*list3, block()]
-        List<Block> list2 = [*list1, *list4,]
-
-
-        when:"put values to new chain"
-        BlockChain Block_Chain= new BlockChain(list2)
-        String h = list1.get(0).hashCode
-        String y = Block_Chain.getPartOfJsonArray(h).toString()
-        BlockChain w = new BlockChain(list4)
-        BlockChain q = new BlockChain(y)
-
-        then: "Method getPartChain returns value of field ArrayList<Block>"
-        w.equals(q)
-
     }
 
     def "getPartOfArray: throwing BlockChainException"() {

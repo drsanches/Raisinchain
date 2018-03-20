@@ -27,6 +27,9 @@ public class Block {
         return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public boolean equals(Block b){
         return ((transactions.equals(b.transactions))&&(hashCode.equals(b.hashCode)));
     }

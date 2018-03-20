@@ -1,6 +1,5 @@
 package containers
 
-import jdk.nashorn.api.scripting.JSObject
 import org.json.JSONArray
 import spock.lang.Specification
 
@@ -8,36 +7,22 @@ import spock.lang.Specification
  * @author Anastasiia Shalygina
  */
 class TransactionsListTest extends Specification {
-    def "Test for AddTransaction method"() {
-        given: "list of transactions"
-        TransactionsList tr_list = new TransactionsList()
+    /**
+     * @author Alexander Voroshilov
+     */
+    def "getTransactions"() {
+        given: "not empty List of transactions"
+        ArrayList<Transaction> transactions = new ArrayList<>()
+        transactions.add(new Transaction("tr1"))
+        transactions.add(new Transaction("tr2"))
+        transactions.add(new Transaction("tr3"))
 
-        when: "we add new transaction to list of transactions"
-        Transaction new_tr = new Transaction("new_transaction")
-        tr_list.addTransaction(new_tr)
+        when: "user creates TransactionsList with this list of transactions"
+        TransactionsList transactionsList = new TransactionsList(transactions)
 
-        then: "transaction added to the list"
-        tr_list.sizeOfList() == 1
-
+        then: "TransactionsList contains this list of transactions"
+        transactionsList.getTransactions().equals(transactions)
     }
-
-
-    def "Test for removeTransaction method"() {
-        given: "non-empty list of transactions"
-        TransactionsList tr_list = new TransactionsList()
-        Transaction new_tr = new Transaction("new_transaction")
-        Transaction new_tr2 = new Transaction("second_transaction")
-        tr_list.addTransaction(new_tr)
-        tr_list.addTransaction(new_tr2)
-
-        when: "we remove a transaction"
-        tr_list.removeTransaction(new_tr)
-
-        then: "the list became shorter for one transaction"
-        tr_list.sizeOfList() == 1
-
-    }
-
 
     def "Test for getJsonArray method"() {
         given: "non-empty list of transactions"
@@ -55,6 +40,35 @@ class TransactionsListTest extends Specification {
 
     }
 
+    def "Test for AddTransaction method"() {
+        given: "list of transactions"
+        TransactionsList tr_list = new TransactionsList()
+
+        when: "we add new transaction to list of transactions"
+        Transaction new_tr = new Transaction("new_transaction")
+        tr_list.addTransaction(new_tr)
+
+        then: "transaction added to the list"
+        tr_list.sizeOfList() == 1
+
+    }
+
+    def "Test for removeTransaction method"() {
+        given: "non-empty list of transactions"
+        TransactionsList tr_list = new TransactionsList()
+        Transaction new_tr = new Transaction("new_transaction")
+        Transaction new_tr2 = new Transaction("second_transaction")
+        tr_list.addTransaction(new_tr)
+        tr_list.addTransaction(new_tr2)
+
+        when: "we remove a transaction"
+        tr_list.removeTransaction(new_tr)
+
+        then: "the list became shorter for one transaction"
+        tr_list.sizeOfList() == 1
+
+    }
+
     def "Test for sizeOfList method" () {
         given: "list of 2 transactions"
         Transaction tr1 = new Transaction("1transaction")
@@ -67,7 +81,7 @@ class TransactionsListTest extends Specification {
         list.sizeOfList() == 2
     }
 
-    def "Test for areListsEqual method method" () {
+    def "Test for equals method" () {
         given: "2 equal list of transactions"
         Transaction tr1 = new Transaction("1transaction")
         Transaction tr2 = new Transaction("2transaction")
@@ -80,6 +94,20 @@ class TransactionsListTest extends Specification {
 
         expect: "method equals return true"
         list1.equals(list2)
+    }
+
+    def "Test for createFirstTransactionsList method" () {
+        given: "first transaction list"
+        TransactionsList first_list = TransactionsList.createFirstTransactionsList()
+
+        when: "we create another list with 'first transaction'"
+        Transaction first_tr = Transaction.createFirstTransaction()
+        TransactionsList tr_list = new TransactionsList()
+        tr_list.addTransaction(first_tr)
+
+        then: "lists are equal"
+        tr_list.equals(first_list)
+
     }
 
     def "Ensure that save and load to JSON file works correctly"() {
@@ -101,19 +129,4 @@ class TransactionsListTest extends Specification {
         then: "lists are equals"
         list2.equals(list)
     }
-
-    def "Test for createFirstTransactionsList method" () {
-        given: "first transaction list"
-        TransactionsList first_list = TransactionsList.createFirstTransactionsList()
-
-        when: "we create another list with 'first transaction'"
-        Transaction first_tr = Transaction.createFirstTransaction()
-        TransactionsList tr_list = new TransactionsList()
-        tr_list.addTransaction(first_tr)
-
-        then: "lists are equal"
-        tr_list.equals(first_list)
-
-    }
-
 }
