@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
 
-
 /**
  * @author Alexander Voroshilov
  */
-
 @RestController
 public class GetChainController {
 
@@ -25,15 +23,15 @@ public class GetChainController {
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
         try {
-            if ((parameters.size() == 1) && (parameters.containsKey("Hash-code"))) {
-                String hashCode = parameters.get("Hash-code")[0];
-                String responseBody = Application.blockChain.getPartOfJsonArray(hashCode).toString();
-
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .headers(responseHeaders)
-                        .body(responseBody);
-            }
+            if (parameters.size() == 1)
+                if (parameters.containsKey("Hash-code") && (parameters.get("Hash-code").length == 1)) {
+                    String hashCode = parameters.get("Hash-code")[0];
+                    String responseBody = Application.blockChain.getPartOfJsonArray(hashCode).toString();
+                    return ResponseEntity
+                            .status(HttpStatus.OK)
+                            .headers(responseHeaders)
+                            .body(responseBody);
+                }
             else
                 if (parameters.size() == 0) {
                     String responseBody = Application.blockChain.getJsonArray().toString();
