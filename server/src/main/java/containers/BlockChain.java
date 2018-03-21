@@ -1,6 +1,5 @@
 package containers;
 
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,9 +11,8 @@ import org.json.*;
 import java.io.*;
 
 /**
- * @authors Alexander Voroshilov, Marina Krylova
+ * @author Alexander Voroshilov
  */
-
 public class BlockChain {
     private ArrayList<Block> chain;
 
@@ -28,6 +26,7 @@ public class BlockChain {
     }
 
     public BlockChain(String jsonString) throws TransactionException {
+        chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -37,11 +36,26 @@ public class BlockChain {
         }
     }
 
+    /**
+     * @author Marina Krylova
+     */
     public int sizeOfChain(){
-        
         return chain.size();
     }
 
+    /**
+     * @author Marina Krylova
+     */
+    public boolean equals(BlockChain b) {
+        if (this.sizeOfChain() == b.sizeOfChain()) {
+            for (int i=0; i<b.sizeOfChain(); i++) {
+                if (!chain.get(i).equals(b.chain.get(i)))
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
     public void add(Block block) {
         chain.add(block);
@@ -63,16 +77,16 @@ public class BlockChain {
     public ArrayList<Block> getPartOfChain(String hashCode) throws BlockChainException {
         ArrayList<Block> newChain = new ArrayList<Block>();
 
-        Boolean isFind = false;
+        Boolean isFound = false;
         for (int i = 0; i < chain.size(); i++) {
-            if (isFind)
+            if (isFound)
                 newChain.add(chain.get(i));
 
             if (chain.get(i).getHashCode().equals(hashCode))
-                isFind = true;
+                isFound = true;
         }
 
-        if (isFind)
+        if (isFound)
             return newChain;
         else {
             throw new BlockChainException("The chain does not contain this hash");
@@ -85,7 +99,7 @@ public class BlockChain {
         return partOfBlockChain.getJsonArray();
     }
 
-    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException{
+    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException {
         FileWriter writer = new FileWriter(filename);
         writer.write(getJsonArray().toString());
         writer.close();
@@ -103,4 +117,3 @@ public class BlockChain {
         }
     }
 }
-
