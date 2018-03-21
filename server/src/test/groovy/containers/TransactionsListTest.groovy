@@ -5,9 +5,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import spock.lang.Specification
 
-/**
- * @author Anastasiia Shalygina
- */
 class TransactionsListTest extends Specification {
     /**
      * @author Alexander Voroshilov
@@ -25,6 +22,11 @@ class TransactionsListTest extends Specification {
         then: "TransactionsList contains this list of transactions"
         transactionsList.getTransactions().equals(transactions)
     }
+
+
+   /**
+    * @author Anastasiia Shalygina
+    */
 
     def "Test for getJsonArray method"() {
         given: "non-empty list of transactions"
@@ -88,6 +90,9 @@ class TransactionsListTest extends Specification {
         exception.message == "Transaction list does not contain this transaction."
     }
 
+   /**
+    * @author Anastasiia Shalygina
+    */
     def "Test for sizeOfList method" () {
         given: "list of 2 transactions"
         Transaction tr1 = new Transaction("1transaction")
