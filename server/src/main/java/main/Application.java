@@ -1,20 +1,17 @@
 package main;
 
-
 import containers.BlockChain;
 import containers.TransactionsList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 /**
  * @author Alexander Voroshilov
  */
-
 @SpringBootApplication
 public class Application {
-    final static String TRANSACTIONS_FILENAME = "transactions.json";
-    private final static String BLOCKCHAIN_FILENAME = "blockchain.json";
+    public final static String TRANSACTIONS_FILENAME = "transactions.json";
+    public final static String BLOCKCHAIN_FILENAME = "blockchain.json";
 
     public static TransactionsList transactionsList = new TransactionsList();
     public static BlockChain blockChain = new BlockChain();
@@ -31,6 +28,4 @@ public class Application {
 
         SpringApplication.run(Application.class, args);
     }
-
-
 }

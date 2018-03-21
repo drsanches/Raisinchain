@@ -23,7 +23,7 @@ public class GetChainController {
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
         try {
-            if (parameters.size() == 1)
+            if (parameters.size() == 1) {
                 if (parameters.containsKey("Hash-code") && (parameters.get("Hash-code").length == 1)) {
                     String hashCode = parameters.get("Hash-code")[0];
                     String responseBody = Application.blockChain.getPartOfJsonArray(hashCode).toString();
@@ -32,6 +32,7 @@ public class GetChainController {
                             .headers(responseHeaders)
                             .body(responseBody);
                 }
+            }
             else
                 if (parameters.size() == 0) {
                     String responseBody = Application.blockChain.getJsonArray().toString();
