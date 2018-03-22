@@ -2,12 +2,11 @@ package controllers;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import javafx.util.Pair;
 import org.testng.annotations.BeforeMethod;
-
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Map;
 
 /**
  * @author Alexander Voroshilov
@@ -44,12 +43,11 @@ public class BaseTest {
         return response;
     }
 
-    protected Response sendPost(String path, ArrayList<Pair<String, String>> query) {
+    protected Response sendPost(String path, ArrayList<HashMap.SimpleEntry<String, String>> query) {
         String body = "";
 
-        for (Pair<String, String> pair: query) {
+        for (HashMap.SimpleEntry<String, String> pair: query)
             body += pair.getKey() + "=" + pair.getValue() + "&";
-        }
 
         body = body.substring(0, body.length() - 1);
         return sendPost(path, body);

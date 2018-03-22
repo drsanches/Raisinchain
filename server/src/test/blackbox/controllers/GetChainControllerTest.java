@@ -2,16 +2,13 @@ package controllers;
 
 import containers.BlockChain;
 import io.restassured.response.Response;
-import javafx.util.Pair;
 import main.Application;
 import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Alexander Voroshilov
@@ -58,9 +55,9 @@ public class GetChainControllerTest extends BaseTest {
             blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
             String hashCode = blockChain.getChain().get(0).getHashCode();
 
-            ArrayList<Pair<String, String>> query = new ArrayList<>();
-            query.add(new Pair<>("Hash-code", hashCode));
-            query.add(new Pair<>("Hash-code", hashCode));
+            ArrayList<HashMap.SimpleEntry<String, String>> query = new ArrayList<>();
+            query.add(new HashMap.SimpleEntry<>("Hash-code", hashCode));
+            query.add(new HashMap.SimpleEntry<>("Hash-code", hashCode));
 
             Response response = sendPost("/getchain", query);
 
