@@ -25,7 +25,7 @@ public class BlockChain {
         chain = ch;
     }
 
-    public BlockChain(String jsonString) throws TransactionException {
+    public BlockChain(String jsonString) throws TransactionException, JSONException {
         chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 

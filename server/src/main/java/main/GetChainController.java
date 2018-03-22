@@ -22,36 +22,48 @@ public class GetChainController {
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
-        try {
-            if (parameters.size() == 1) {
-                if (parameters.containsKey("Hash-code") && (parameters.get("Hash-code").length == 1)) {
-                    String hashCode = parameters.get("Hash-code")[0];
-                    String responseBody = Application.blockChain.getPartOfJsonArray(hashCode).toString();
-                    return ResponseEntity
-                            .status(HttpStatus.OK)
-                            .headers(responseHeaders)
-                            .body(responseBody);
-                }
-            }
-            else
-                if (parameters.size() == 0) {
-                    String responseBody = Application.blockChain.getJsonArray().toString();
-                    return ResponseEntity
-                            .status(HttpStatus.OK)
-                            .headers(responseHeaders)
-                            .body(responseBody);
-                }
-        }
-        catch(BlockChainException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .headers(responseHeaders)
-                    .body(e.getMessage());
-        }
 
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .headers(responseHeaders)
-                .body("Wrong parameter's name or count of parameters.");
+        String responseBody = "";
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            switch (parameters.size()) {
+                case 0:
+                    httpStatus = HttpStatus.OK;
+                    responseBody = Application.blockChain.getJsonArray().toString();
+                    break;
+                case 1:
+                    if (parameters.containsKey("Hash-code")) {
+                        if (parameters.get("Hash-code").length == 1) {
+                            String hashCode = parameters.get("Hash-code")[0];
+                            httpStatus = HttpStatus.OK;
+                            responseBody = Application.blockChain.getPartOfJsonArray(hashCode).toString();
+                        }
+                        else {
+                            httpStatus = HttpStatus.BAD_REQUEST;
+                            responseBody = "The server expects only one hash-code.";
+                        }
+                    }
+                    else {
+                        httpStatus = HttpStatus.BAD_REQUEST;
+                        responseBody = "Wrong parameter's name.";
+                    }
+                    break;
+                default:
+                    httpStatus = HttpStatus.BAD_REQUEST;
+                    responseBody = "Wrong count of parameters.";
+                    break;
+            }
+        }
+        catch (BlockChainException e) {
+            httpStatus = HttpStatus.NOT_FOUND;
+            responseBody = e.getMessage();
+        }
+        finally {
+            return ResponseEntity
+                    .status(httpStatus)
+                    .headers(responseHeaders)
+                    .body(responseBody);
+        }
     }
 }
