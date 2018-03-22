@@ -2,6 +2,7 @@ package containers;
 
 import containersExceptions.TransactionException;
 import org.json.JSONObject;
+import java.util.List;
 
 /**
  * @author Alexander Voroshilov
@@ -46,5 +47,12 @@ public class Block {
         jsonObject.put("Transactions", transactions.getJsonArray());
         jsonObject.put("Hash-code", hashCode);
         return jsonObject;
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    public String  CalculateHashCode() {
+        return String.valueOf(getJsonObject().toString().hashCode());
     }
 }
