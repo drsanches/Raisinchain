@@ -7,7 +7,13 @@ import containersExceptions.TransactionException;
  */
 
 public class Transaction{
+
     private String transaction;
+
+//    public Transaction(){
+//        transaction = "Hello, world!";
+//    }
+
 
     /**
      * @author Alexander Voroshilov

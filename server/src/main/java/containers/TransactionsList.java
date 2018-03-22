@@ -29,12 +29,19 @@ public class TransactionsList{
     }
 
     public void addTransaction(Transaction tr) {
+
         transactions.add(tr);
     }
 
     public ArrayList<Transaction> getTransactions() {
+
         return transactions;
     }
+//
+//    public boolean contains(Transaction tr){
+//
+//        return transactions.contains(tr);
+//    }
 
     /**
     * @author Alexander Voroshilov
