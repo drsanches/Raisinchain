@@ -7,7 +7,10 @@ import containersExceptions.TransactionException;
  */
 
 public class Transaction{
+
     private String transaction;
+
+
 
     /**
      * @author Alexander Voroshilov
