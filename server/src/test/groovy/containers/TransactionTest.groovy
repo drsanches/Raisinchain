@@ -38,6 +38,7 @@ class TransactionTest extends Specification {
 
     }
 
+
     /**
      * @author Alexander Voroshilov
      */
