@@ -21,13 +21,6 @@ import static java.net.HttpURLConnection.HTTP_OK;
 
 public class AddingTransactionControllerTest extends BaseTest {
 
-    private Response sendPost(HashMap<String, String> query) {
-        Response response = RestAssured
-                .given().log().all().queryParams(query)
-                .when().post("/addtransaction");
-        response.prettyPrint();
-        return response;
-    }
 
     @DataProvider
     private Object[][] badRequestProvider() throws Exception {
@@ -64,7 +57,7 @@ public class AddingTransactionControllerTest extends BaseTest {
     @Test(dataProvider = "badRequestProvider")
     public void checkBadRequest(HashMap<String, String> query) {
 
-        Response response = sendPost(query);
+        Response response = sendPost("/addtransaction", query);
         int responseStatus = response.statusCode();
         String responseHeader = response.getHeader("Access-Control-Allow-Origin");
         Assert.assertEquals(responseHeader, "*", "error: wrong header");
@@ -81,7 +74,7 @@ public class AddingTransactionControllerTest extends BaseTest {
             trList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
             int size1 = trList.sizeOfList() + 1;
 
-            Response response = sendPost(query);
+            Response response = sendPost("/addtransaction", query);
 
 
             trList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
@@ -107,7 +100,7 @@ public class AddingTransactionControllerTest extends BaseTest {
 //    @Test(dataProvider = "transactionProvider")
 //    public void checkInternalServerErrorRequest(HashMap<String, String> query){
 //
-//        TO DO:  to write a test for HTTP_INTERNAL_SERVER_ERROR case
+//        TO DO: write a test for HTTP_INTERNAL_SERVER_ERROR case
 //
 //    }
 //

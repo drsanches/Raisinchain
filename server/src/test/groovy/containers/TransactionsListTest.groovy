@@ -24,6 +24,20 @@ class TransactionsListTest extends Specification {
     }
 
 
+    /**
+     * @author Irina Tokareva
+     */
+    def "Test for contains method" () {
+        given: "A list of 1 transaction"
+        Transaction tr1 = new Transaction("1transaction")
+        TransactionsList list = new TransactionsList([tr1])
+
+        expect: "method contains return true"
+        list.contains(tr1)
+
+    }
+
+
    /**
     * @author Anastasiia Shalygina
     */
