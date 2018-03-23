@@ -87,8 +87,7 @@ public class TransactionsList{
                 if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
             }
             return true;
-        }
-        return false;
+        } else return false;
     }
 
     /**
