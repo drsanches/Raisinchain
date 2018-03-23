@@ -14,6 +14,10 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * @author Anastasiia Shalygina
+ */
+
 @RestController
 public class MiningController {
 
@@ -45,7 +49,7 @@ public class MiningController {
                     .headers(responseHeaders)
                     .body("Something is wrong with our server.");
         }
-        
+
     }
 
 }

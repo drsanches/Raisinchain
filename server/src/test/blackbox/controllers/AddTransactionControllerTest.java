@@ -51,7 +51,6 @@ public class AddTransactionControllerTest extends BaseTest {
 
         return new Object[][]{{query}};
 
-
     }
 
     @Test(dataProvider = "badRequestProvider")
