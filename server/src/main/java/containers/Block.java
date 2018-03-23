@@ -46,8 +46,9 @@ public class Block {
     /**
      * @author Marina Krylova
      */
-    public boolean equals(Block b){
-        return ((transactions.equals(b.transactions))&&(hashCode.equals(b.hashCode)));
+    @Override
+    public boolean equals(Object b){
+        return ((transactions.equals(((Block) b).transactions))&&(hashCode.equals(((Block) b).hashCode)));
     }
 
     public TransactionsList getTransactionsList() {

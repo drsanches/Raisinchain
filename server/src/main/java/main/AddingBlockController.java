@@ -2,7 +2,6 @@ package main;
 
 import containers.Block;
 import containers.BlockChain;
-import containers.Transaction;
 import containers.TransactionsList;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,6 +43,7 @@ public class AddingBlockController {
                 TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
                 String hashCode = parameters.get("Hash")[0];
                 Block block = new Block(blockTransactions, hashCode);
+
                 String LastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).CalculateHashCode();
                 // check whether hash code of the last blockchain's block match hash in received block or not
                 if (LastBlockHash.equals(block.getHashCode())) {
@@ -69,7 +69,10 @@ public class AddingBlockController {
                             .headers(responseHeaders)
                             .body("Wrong hash code was sent or block where you wanted to connect has already been connected.");
                 }
-                return new ResponseEntity<String>(HttpStatus.OK);
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .headers(responseHeaders)
+                        .body("Your block has been connected to chain.");
             }
             else return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
