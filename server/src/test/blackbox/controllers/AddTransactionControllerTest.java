@@ -19,7 +19,7 @@ import static java.net.HttpURLConnection.HTTP_OK;
  * @author Marina Krylova
  * */
 
-public class AddingTransactionControllerTest extends BaseTest {
+public class AddTransactionControllerTest extends BaseTest {
 
 
     @DataProvider

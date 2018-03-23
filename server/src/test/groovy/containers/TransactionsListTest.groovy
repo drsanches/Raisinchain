@@ -80,7 +80,7 @@ class TransactionsListTest extends Specification {
         tr_list.addTransaction(new_tr2)
 
         when: "we remove a transaction"
-        tr_list.removeTransaction(new_tr)
+        tr_list.removeTransaction(new Transaction("new_transaction"))
 
         then: "the list became shorter for one transaction"
         tr_list.sizeOfList() == 1

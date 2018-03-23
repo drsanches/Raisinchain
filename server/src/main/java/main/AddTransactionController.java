@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class AddingTransactionController {
+public class AddTransactionController {
 
     @RequestMapping(value = "/addtransaction", method = RequestMethod.POST)
     public ResponseEntity<String> addTransaction(WebRequest webrequest) {

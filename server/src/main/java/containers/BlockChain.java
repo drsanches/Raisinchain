@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import containersExceptions.BlockChainException;
+import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import org.json.*;
 import java.io.*;
@@ -25,7 +26,7 @@ public class BlockChain {
         chain = ch;
     }
 
-    public BlockChain(String jsonString) throws TransactionException, JSONException {
+    public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException {
         chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 
@@ -105,7 +106,7 @@ public class BlockChain {
         writer.close();
     }
 
-    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException, BlockException {
         chain.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
         JSONArray jsonArray = new JSONArray(jsonString);
