@@ -3,9 +3,12 @@ package containers;
 import containersExceptions.BlockChainException;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
-
 import java.util.Random;
 
+
+/**
+ * @author Alexander Voroshilov
+ * */
 public class RandomContainerCreator {
     public final static int MIN_TRANSACTION_LENGTH = 1;
     public final static int MAX_TRANSACTION_LENGTH = 10;
