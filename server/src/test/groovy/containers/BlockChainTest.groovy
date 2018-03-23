@@ -244,6 +244,4 @@ class BlockChainTest extends Specification {
         then: "Method throws an exception"
         JSONException exception = thrown()
     }
-
 }
-

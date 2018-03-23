@@ -1,7 +1,7 @@
 package containers;
 
 import containersExceptions.TransactionException;
-import containersExceptions.TransactionListException;
+import containersExceptions.TransactionsListException;
 import org.json.JSONArray;
 
 import java.io.FileWriter;
@@ -13,30 +13,39 @@ import java.util.ArrayList;
 import static containers.Transaction.*;
 
 /**
- * @authors Alexander Voroshilov, Marina Krylova
+ * @author Marina Krylova
  */
 
-
 public class TransactionsList{
+
     private ArrayList<Transaction> transactions;
 
-    //constructors for lists of transactions
     public TransactionsList() {
-
         transactions = new ArrayList<Transaction>();
     }
 
     public TransactionsList(ArrayList<Transaction> tr) {
-
         transactions = tr;
     }
 
     public void addTransaction(Transaction tr) {
+
         transactions.add(tr);
     }
 
     public ArrayList<Transaction> getTransactions() {
+
         return transactions;
+    }
+
+    public boolean contains(Transaction tr){
+
+        for (int i = 0; i < transactions.size(); i++) {
+            if (tr.equals(transactions.get(i)))
+                return true;
+        }
+        return false;
+        //return transactions.contains(tr);
     }
 
     /**
@@ -52,39 +61,9 @@ public class TransactionsList{
         }
     }
 
-    //this function creates a list of transactions for the first block of the chain
-    public static TransactionsList createFirstTransactionsList() {
-        TransactionsList tr = new TransactionsList();
-        tr.addTransaction(createFirstTransaction());
-        return tr;
-    }
-
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void addTransaction(Transaction tr) {
-        transactions.add(tr);
-    }
-
-    public void removeTransaction(Transaction tr) throws TransactionListException {
-        if (transactions.indexOf(tr) == -1)
-            throw new TransactionListException("Transaction list does not contain this transaction.");
-        transactions.remove(tr);
-    }
-    
-    public int sizeOfList(){
-
-        return transactions.size();
-    }
-
-    //compares 2 lists considering places
-
-    public boolean areListsEqual(TransactionsList tr1, TransactionsList tr2){
-
-        return tr1.equals(tr2);
-    }
-
+    /**
+     * @author Alexander Voroshilov
+     */
     public JSONArray getJsonArray() {
         JSONArray jsonArray = new JSONArray();
 
@@ -113,8 +92,7 @@ public class TransactionsList{
                 if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
             }
             return true;
-        }
-        return false;
+        } else return false;
     }
 
     /**
@@ -135,6 +113,9 @@ public class TransactionsList{
         writer.close();
     }
 
+    /**
+     * @author Alexander Voroshilov
+     */
     public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException {
         transactions.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
