@@ -40,7 +40,12 @@ public class TransactionsList{
 
     public boolean contains(Transaction tr){
 
-        return transactions.contains(tr);
+        for (int i = 0; i < transactions.size(); i++) {
+            if (tr.equals(transactions.get(i)))
+                return true;
+        }
+        return false;
+        //return transactions.contains(tr);
     }
 
     /**
