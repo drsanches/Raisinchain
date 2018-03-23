@@ -23,10 +23,12 @@ public class BlockChain {
     }
 
     public BlockChain(ArrayList<Block> ch) throws BlockChainException {
-        if (!isCorrect())
-            throw new BlockChainException("Chain is not correct.");
-
         chain = ch;
+
+        if (!isCorrect()) {
+            chain = null;
+            throw new BlockChainException("Chain is not correct.");
+        }
     }
 
     public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException, BlockChainException {
