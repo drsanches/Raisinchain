@@ -12,9 +12,9 @@ import spock.lang.Unroll
 class BlockChainTest extends Specification {
     private static final Random rnd = new Random()
 
-    private static final List<Block> LIST1 = [block()]
+    private static final List<Block> LIST1 = [block(), block()]
     private static final List<Block> LIST2 = [*LIST1, block(), block()]
-    private static final List<Block> LIST3 = [block()]
+    private static final List<Block> LIST3 = [block(), block()]
 
 
     static Block block() {
@@ -52,7 +52,7 @@ class BlockChainTest extends Specification {
         then: "They are equals"
         result == blockChain.equals(new BlockChain(blocks))
 
-        where: "..."
+        where: "Check the parameters"
         blocks | result
         LIST1  | true   //same chain
         LIST2  | false  //different length
