@@ -3,7 +3,6 @@ package containers;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import org.json.JSONObject;
-import java.util.List;
 
 /**
  * @author Alexander Voroshilov
@@ -11,7 +10,7 @@ import java.util.List;
 public class Block {
     private TransactionsList transactions;
     private String hashCode;
-    private final int MAX_TRANSACTIONS_COUNT = 10;
+    public static final int MAX_TRANSACTIONS_COUNT = 10;
 
     public Block(TransactionsList transactionsList, String hash) throws BlockException {
         if (transactionsList.sizeOfList() > MAX_TRANSACTIONS_COUNT)
@@ -68,7 +67,11 @@ public class Block {
     /**
      * @author Irina Tokareva
      */
-    public String  CalculateHashCode() {
+    public String calculateHashCode() {
         return String.valueOf(getJsonObject().toString().hashCode());
+    }
+
+    public boolean isCorrect(Block previousBlock) {
+        return hashCode == previousBlock.calculateHashCode();
     }
 }
