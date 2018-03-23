@@ -1,7 +1,9 @@
 package containers;
 
+import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import org.json.JSONObject;
+import java.util.List;
 
 /**
  * @author Alexander Voroshilov
@@ -9,21 +11,36 @@ import org.json.JSONObject;
 public class Block {
     private TransactionsList transactions;
     private String hashCode;
+    private final int MAX_TRANSACTIONS_COUNT = 10;
 
-    public Block(TransactionsList trs, String hash) {
-        transactions = trs;
+    public Block(TransactionsList transactionsList, String hash) throws BlockException {
+        if (transactionsList.sizeOfList() > MAX_TRANSACTIONS_COUNT)
+            throw new BlockException("Too many transactions. Maximum count of transactions is " + MAX_TRANSACTIONS_COUNT);
+
+        transactions = transactionsList;
         hashCode = hash;
     }
 
-    public Block(String jsonObjectString) throws org.json.JSONException, TransactionException {
+    public Block(String jsonObjectString) throws org.json.JSONException, TransactionException, BlockException {
         JSONObject jsonObject = new JSONObject(jsonObjectString);
         String transactionsJsonString = jsonObject.getJSONArray("Transactions").toString();
-        transactions = new TransactionsList(transactionsJsonString);
+        TransactionsList transactionsList = new TransactionsList(transactionsJsonString);
+
+        if (transactionsList.sizeOfList() > MAX_TRANSACTIONS_COUNT)
+            throw new BlockException("Too many transactions. Maximum count of transactions is " + MAX_TRANSACTIONS_COUNT);
+
+        transactions = transactionsList;
         hashCode = jsonObject.getString("Hash-code");
     }
 
     public static Block createFirstBlock() {
-        return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
+        //TODO: Think about it
+        try {
+            return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
+        }
+        catch (BlockException e) {
+            return null;
+        }
     }
 
     /**
@@ -46,5 +63,12 @@ public class Block {
         jsonObject.put("Transactions", transactions.getJsonArray());
         jsonObject.put("Hash-code", hashCode);
         return jsonObject;
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    public String  CalculateHashCode() {
+        return String.valueOf(getJsonObject().toString().hashCode());
     }
 }

@@ -5,17 +5,18 @@ import containers.Transaction;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Marina Krylova
  */
 
 @RestController
-public class AddingTransactionController {
+public class AddTransactionController {
 
     @RequestMapping(value = "/addtransaction", method = RequestMethod.POST)
     public ResponseEntity<String> addTransaction(WebRequest webrequest) {
@@ -32,12 +33,22 @@ public class AddingTransactionController {
                 list.addTransaction(new Transaction(parameters.get("Transaction")[0]));
                 list.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
 
-                return new ResponseEntity<String>(HttpStatus.OK);
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .headers(responseHeaders)
+                        .body("Transaction was created.");
+
                 //return bad_request if bumber of parameters or parameter name are wrong
-            } else  return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            } else  return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .headers(responseHeaders)
+                    .body("Wrong parameter's name or count of parameters.");
         }
         catch(Exception ex){
-            return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .headers(responseHeaders)
+                    .body("Something is wrong with our server.");
         }
     }
 

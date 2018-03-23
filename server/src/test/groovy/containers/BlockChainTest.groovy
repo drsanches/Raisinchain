@@ -3,14 +3,21 @@ package containers
 import containersExceptions.BlockChainException
 import org.json.JSONException
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * @author Ilya Kreshkov
  */
+@Unroll
 class BlockChainTest extends Specification {
-    Random rnd = new Random()
+    private static final Random rnd = new Random()
 
-    Block block() {
+    private static final List<Block> LIST1 = [block(), block()]
+    private static final List<Block> LIST2 = [*LIST1, block(), block()]
+    private static final List<Block> LIST3 = [block(), block()]
+
+
+    static Block block() {
         String hash = "${rnd.nextInt()}"
         new Block(new TransactionsList([new Transaction("t")]), hash)
     }
@@ -32,21 +39,28 @@ class BlockChainTest extends Specification {
     }
 
     /**
-     * @author Alexander Voroshilov
+     * @author Marina Krylova
      */
     def "equals"() {
         given: "BlockChain object with count of blocks"
         BlockChain blockChain1 = new BlockChain()
-        blockChain1.add(block())
-        blockChain1.add(block())
-        blockChain1.add(block())
+
 
         when: "user creates BlockChain object with similar chain"
-        BlockChain blockChain2 = new BlockChain(blockChain1.getChain())
+        BlockChain blockChain = new BlockChain(LIST1)
 
         then: "They are equals"
-        blockChain1.equals(blockChain2)
+        result == blockChain.equals(new BlockChain(blocks))
+
+        where: "Check the parameters"
+        blocks | result
+        LIST1  | true   //same chain
+        LIST2  | false  //different length
+        LIST3  | false  //same length, different blocks
+
     }
+
+
 
     /**
      * @author Alexander Voroshilov

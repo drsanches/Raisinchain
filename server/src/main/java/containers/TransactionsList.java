@@ -31,12 +31,17 @@ public class TransactionsList{
         transactions = tr;
     }
 
-    public int sizeOfList(){
-
-        return transactions.size();
+    public void addTransaction(Transaction tr) {
+        transactions.add(tr);
     }
 
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
 
+    /**
+    * @author Alexander Voroshilov
+    */
     public TransactionsList(String jsonArrayString) throws org.json.JSONException, TransactionException {
         transactions = new ArrayList<Transaction>();
         JSONArray jsonArray = new JSONArray(jsonArrayString);
@@ -89,6 +94,41 @@ public class TransactionsList{
         return jsonArray;
     }
 
+    /**
+     * @author Alexander Voroshilov
+     */
+    public void removeTransaction(Transaction tr) throws TransactionsListException {
+        if (transactions.indexOf(tr) == -1)
+            throw new TransactionsListException("Transaction list does not contain this transaction.");
+        transactions.remove(tr);
+    }
+
+    public int sizeOfList(){
+        return transactions.size();
+    }
+
+    public boolean equals(TransactionsList tr) {
+        if (this.sizeOfList() == tr.sizeOfList()){
+            for (int i=0; i<tr.sizeOfList(); i++){
+                if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
+    public static TransactionsList createFirstTransactionsList() {
+        TransactionsList tr = new TransactionsList();
+        tr.addTransaction(createFirstTransaction());
+        return tr;
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     */
     public void saveToJsonFile(String filename) throws java.io.IOException {
         FileWriter writer = new FileWriter(filename);
         writer.write(getJsonArray().toString());

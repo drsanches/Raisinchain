@@ -7,7 +7,10 @@ import containersExceptions.TransactionException;
  */
 
 public class Transaction{
+
     private String transaction;
+
+
 
     /**
      * @author Alexander Voroshilov
@@ -39,7 +42,8 @@ public class Transaction{
         }
     }
 
-    public boolean equals(Transaction tr) {
-        return transaction.equals(tr.transaction);
+    @Override
+    public boolean equals(Object tr) {
+        return transaction.equals(((Transaction) tr).transaction);
     }
 }
