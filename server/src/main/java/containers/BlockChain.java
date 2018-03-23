@@ -103,8 +103,12 @@ public class BlockChain {
 
     public JSONArray getPartOfJsonArray(String hashCode) throws BlockChainException {
         ArrayList<Block> partOfChain = getPartOfChain(hashCode);
-        BlockChain partOfBlockChain = new BlockChain(partOfChain);
-        return partOfBlockChain.getJsonArray();
+        JSONArray jsonArray = new JSONArray();
+
+        for (Block block: partOfChain)
+            jsonArray.put(block.getJsonObject());
+
+        return jsonArray;
     }
 
     public boolean isCorrect() {
