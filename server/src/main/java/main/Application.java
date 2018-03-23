@@ -1,6 +1,7 @@
 package main;
 
 import containers.BlockChain;
+import containers.RandomContainerCreator;
 import containers.TransactionsList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,7 @@ public class Application {
         }
         catch(Exception e) {
             //TODO: write code
-            System.out.println(e.toString());
+            System.err.println(e.getMessage());
         }
 
         SpringApplication.run(Application.class, args);

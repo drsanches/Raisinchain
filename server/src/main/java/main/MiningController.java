@@ -31,7 +31,7 @@ public class MiningController {
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .headers(responseHeaders)
-                        .body(block.CalculateHashCode());
+                        .body(block.calculateHashCode());
 
                 //return bad_request if number of parameters or parameter name are wrong
             } else  return ResponseEntity
