@@ -22,11 +22,16 @@ public class BlockChain {
         chain.add(Block.createFirstBlock());
     }
 
-    public BlockChain(ArrayList<Block> ch) {
+    public BlockChain(ArrayList<Block> ch) throws BlockChainException {
         chain = ch;
+
+        if (!isCorrect()) {
+            chain = null;
+            throw new BlockChainException("Chain is not correct.");
+        }
     }
 
-    public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException {
+    public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException, BlockChainException {
         chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 
@@ -60,7 +65,11 @@ public class BlockChain {
         return false;
     }
 
-    public void add(Block block) {
+    public void add(Block block) throws BlockChainException {
+        String a = chain.get(chain.size() - 1).calculateHashCode();
+        if (!block.getHashCode().equals(chain.get(chain.size() - 1).calculateHashCode()))
+            throw new BlockChainException("Wrong hash-code.");
+
         chain.add(block);
     }
 
@@ -98,8 +107,19 @@ public class BlockChain {
 
     public JSONArray getPartOfJsonArray(String hashCode) throws BlockChainException {
         ArrayList<Block> partOfChain = getPartOfChain(hashCode);
-        BlockChain partOfBlockChain = new BlockChain(partOfChain);
-        return partOfBlockChain.getJsonArray();
+        JSONArray jsonArray = new JSONArray();
+
+        for (Block block: partOfChain)
+            jsonArray.put(block.getJsonObject());
+
+        return jsonArray;
+    }
+
+    public boolean isCorrect() {
+        for (int i = 1; i < sizeOfChain(); i++)
+            if (!chain.get(i).isCorrect(chain.get(i - 1)))
+                return false;
+        return true;
     }
 
     public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException {
@@ -108,12 +128,14 @@ public class BlockChain {
         writer.close();
     }
 
-    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException, BlockException {
+    public void loadFromJsonFile(String filename) throws java.io.IOException, org.json.JSONException, TransactionException, BlockException, BlockChainException {
         chain.clear();
         String jsonString = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
         JSONArray jsonArray = new JSONArray(jsonString);
 
-        for (int i = 0; i < jsonArray.length(); i++) {
+        chain.add(new Block(jsonArray.get(0).toString()));
+
+        for (int i = 1; i < jsonArray.length(); i++) {
             String blockJsonString = jsonArray.get(i).toString();
             Block newBlock = new Block(blockJsonString);
             add(newBlock);

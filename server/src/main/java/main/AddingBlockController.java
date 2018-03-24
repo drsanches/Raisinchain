@@ -44,7 +44,8 @@ public class AddingBlockController {
                 String hashCode = parameters.get("Hash")[0];
                 Block block = new Block(blockTransactions, hashCode);
 
-                String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).CalculateHashCode();
+                String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
+
                 // check whether hash code of the last blockchain's block match hash in received block or not
                 if (lastBlockHash.equals(block.getHashCode())) {
                     //check whether all transactions from received block are in the list of transactions or not

@@ -14,6 +14,10 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * @author Anastasiia Shalygina
+ */
+
 @RestController
 public class MiningController {
 
@@ -31,7 +35,7 @@ public class MiningController {
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .headers(responseHeaders)
-                        .body(block.CalculateHashCode());
+                        .body(block.calculateHashCode());
 
                 //return bad_request if number of parameters or parameter name are wrong
             } else  return ResponseEntity
@@ -45,7 +49,7 @@ public class MiningController {
                     .headers(responseHeaders)
                     .body("Something is wrong with our server.");
         }
-        
+
     }
 
 }
