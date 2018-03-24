@@ -21,7 +21,7 @@ public class AddingBlockControllerTest extends BaseTest {
     private Object[][] httpCodesProvider() throws Exception {
         BlockChain blockChain = new BlockChain();
         blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
-        String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).CalculateHashCode();
+        String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
         TransactionsList transactionsList = new TransactionsList();
         transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
         TransactionsList transactions = new TransactionsList();
@@ -139,7 +139,7 @@ public class AddingBlockControllerTest extends BaseTest {
 
             BlockChain blockChain = new BlockChain();
             blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
-            String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).CalculateHashCode();
+            String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
             int chainSize = blockChain.sizeOfChain();
 
             TransactionsList transactionsList = new TransactionsList();
