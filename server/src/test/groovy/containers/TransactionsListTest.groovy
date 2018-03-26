@@ -1,5 +1,6 @@
 package containers
 
+import containersExceptions.TransactionException
 import containersExceptions.TransactionsListException
 import org.json.JSONArray
 import org.json.JSONException
@@ -96,23 +97,6 @@ class TransactionsListTest extends Specification {
 
     }
 
-    /**
-     * @author Irina Tokareva
-     */
-    def "removeTransaction: throwing an exception"() {
-
-        given: "Transactions' list and some transaction, which is not is that list"
-        TransactionsList transactions = new TransactionsList([new Transaction("t"), new Transaction("r")])
-        Transaction tr = new Transaction("a")
-
-        when: "We run method removeTransaction"
-        transactions.removeTransaction(tr)
-
-        then: "Method should throw an exception"
-        TransactionsListException exception = thrown()
-        exception.message == "Transaction list does not contain this transaction."
-    }
-
    /**
     * @author Anastasiia Shalygina
     */
@@ -189,16 +173,48 @@ class TransactionsListTest extends Specification {
     /**
      * @author Irina Tokareva
      */
+    def "removeTransaction: throwing an exception"() {
+
+        given: "Transactions' list and some transaction, which is not is that list"
+        TransactionsList transactions = new TransactionsList([new Transaction("t"), new Transaction("r")])
+        Transaction tr = new Transaction("a")
+
+        when: "We run method removeTransaction"
+        transactions.removeTransaction(tr)
+
+        then: "Method should throw an exception"
+        TransactionsListException exception = thrown()
+        exception.message == "Transaction list does not contain this transaction."
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
     def "loadFromJsonFile: throwing an exception"() {
 
-        given: "Blockchain, which method getJsonArray throws an exception and a filename"
+        given: "Name of file with incorrect json"
         String filemane = "TestForLoad.json"
-        TransactionsList transactions = new TransactionsList([new Transaction("t"), new Transaction("r")])
+        TransactionsList transactions = new TransactionsList()
 
-        when: "We run method saveToJsonFile"
+        when: "We run method loadFromJsonFile"
         transactions.loadFromJsonFile(filemane)
 
         then: "Method throws an exception"
+        JSONException exception = thrown()
+    }
+
+    /**
+     * @author Irina Tokareva
+     */
+    def "TransactionsList constructor: throwing json exception"() {
+
+        given: "Incorrect json"
+        String str = "sdfghjkl"
+
+        when: "We try to create TransactionsList object"
+        TransactionsList trL = new TransactionsList(str)
+
+        then: "Constructor throws an exception"
         JSONException exception = thrown()
     }
 }

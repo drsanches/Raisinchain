@@ -1,6 +1,6 @@
 package containers
 
-
+import containersExceptions.BlockException
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
@@ -81,6 +81,35 @@ class BlockTest extends Specification {
         CreatedBlock.equals(block)
     }
 
+    def "Block constructor with transactionsList and Hash: throwing an exception"() {
+
+        given: "Hash and transactions list, which length is more than maximum length for transactions in block"
+        TransactionsList transactionsList = RandomContainerCreator.createTransactionsList(Block.MAX_TRANSACTIONS_COUNT + 5)
+        String hash = "qwerty"
+
+        when: "We try to create a block with these parameters"
+        Block block = new Block(transactionsList, hash)
+
+        then: "Constructor throws an exception"
+        BlockException exception = thrown()
+        exception.message == "Too many transactions. Maximum count of transactions is " + Block.MAX_TRANSACTIONS_COUNT
+    }
+
+    def "Block constructor with String json object: throwing an exception"() {
+        // Assuming max_transactions_count = 10
+
+        given: "String of json object, where length of transactions list is more than maximum length for transactions in block"
+        String str = "{\"Transactions\":[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"," +
+                " \"12\", \"13\",\"14\", \"15\"],\"Hash-code\":\"728335462\"}"
+
+        when: "We try to create a block with this parameter"
+        Block block = new Block(str)
+
+        then: "Constructor throws an exception"
+        BlockException exception = thrown()
+        exception.message == "Too many transactions. Maximum count of transactions is " + Block.MAX_TRANSACTIONS_COUNT
+    }
+
     def "getJsonObject: throwing an exception"() {
         given: "Block, which transactions' method getJsonObject throws an exception"
         String hashCode = "qwerty"
@@ -94,20 +123,5 @@ class BlockTest extends Specification {
         JSONException exception = thrown()
         exception.message == 'Test'
     }
-
-//
-//    def "calculate hash-code method"() {
-//        given: "a block"
-//        String hashCode = "qwerty"
-//        TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
-//        Block block = new Block(transactions, hashCode)
-//
-//        when: "We try to make json object from the block"
-//        block.getJsonObject()
-//
-//        then: "Method throws an exception"
-//        JSONException exception = thrown()
-//        exception.message == 'Test'
-//    }
 
 }

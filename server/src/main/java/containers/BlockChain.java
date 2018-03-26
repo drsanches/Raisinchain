@@ -22,7 +22,6 @@ public class BlockChain {
         chain.add(Block.createFirstBlock());
     }
 
-
     public BlockChain(ArrayList<Block> ch) throws BlockChainException {
         chain = ch;
 
@@ -33,12 +32,20 @@ public class BlockChain {
     }
 
     public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException, BlockChainException {
-        chain = new ArrayList<Block>();
         JSONArray jsonArray = new JSONArray(jsonString);
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            String blockJsonString = jsonArray.get(i).toString();
-            Block newBlock = new Block(blockJsonString);
+        if (jsonArray.length() == 0)
+            throw new BlockChainException("The string representation of the chain does not contain blocks.\n" +
+                    "The chain must contain at least one block.");
+
+        chain = new ArrayList<Block>();
+        String blockJsonString = jsonArray.get(0).toString();
+        Block newBlock = new Block(blockJsonString);
+        chain.add(newBlock);
+
+        for (int i = 1; i < jsonArray.length(); i++) {
+            blockJsonString = jsonArray.get(i).toString();
+            newBlock = new Block(blockJsonString);
             add(newBlock);
         }
     }
@@ -46,7 +53,7 @@ public class BlockChain {
     /**
      * @author Marina Krylova
      */
-    public int sizeOfChain(){
+    public int sizeOfChain() {
         return chain.size();
     }
 
@@ -55,7 +62,6 @@ public class BlockChain {
      */
     @Override
     public boolean equals(Object b) {
-
         BlockChain ch = (BlockChain) b;
         if (this.sizeOfChain() == ch.sizeOfChain()) {
             for (int i=0; i<ch.sizeOfChain(); i++) {
