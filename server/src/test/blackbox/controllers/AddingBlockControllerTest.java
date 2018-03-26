@@ -64,15 +64,20 @@ public class AddingBlockControllerTest extends BaseTest {
 
     @Test(dataProvider = "httpCodesProvider")
     public void checkHttpCodes(HashMap<String, String> query, int rightStatus, String rightBody) {
-        Response response = sendPost("/addblock", query);
+        try {
+            Response response = sendPost("/addblock", query);
 
-        int responseStatus = response.statusCode();
-        String responseHeader = response.getHeader("Access-Control-Allow-Origin");
-        String responseBody = response.getBody().print().toString();
+            int responseStatus = response.statusCode();
+            String responseHeader = response.getHeader("Access-Control-Allow-Origin");
+            String responseBody = response.getBody().print().toString();
 
-        Assert.assertEquals(responseStatus, rightStatus, "error");
-        Assert.assertEquals(responseHeader, "*", "error");
-        Assert.assertEquals(responseBody, rightBody, "error");
+            Assert.assertEquals(responseStatus, rightStatus, "error");
+            Assert.assertEquals(responseHeader, "*", "error");
+            Assert.assertEquals(responseBody, rightBody, "error");
+        }
+        catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
