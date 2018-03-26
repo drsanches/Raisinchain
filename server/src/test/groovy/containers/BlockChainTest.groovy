@@ -11,7 +11,26 @@ import spock.lang.Unroll
  */
 @Unroll
 class BlockChainTest extends Specification {
-    private static final Random rnd = new Random()
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by string works correctly"() {
+        given: "blockchain and his json string"
+        BlockChain blockChain1 = RandomContainerCreator.createBlockChain()
+        String jsonString = blockChain1.getJsonArray().toString()
+
+        when: "user creates blockchain with this string"
+        BlockChain blockChain2 = new BlockChain(jsonString)
+
+        then: "they are equal"
+        blockChain1.equals(blockChain2)
+    }
+
+    private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
+    private static final BLOCKCHAIN2 = BLOCKCHAIN1;
+    private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
+    private static final BLOCKCHAIN4 = RandomContainerCreator.createBlockChain(5)
 
     /**
      * @author Marina Krylova
@@ -32,19 +51,19 @@ class BlockChainTest extends Specification {
      * @author Marina Krylova
      */
     def "equals"() {
-        given: "one blockchain with one block"
-        BlockChain blockChain = new BlockChain()
+        given: "Blockchain of 3 blocks"
+        BlockChain blockChain = BLOCKCHAIN1;
 
 
-        when: "add one more block into blockchain and create a new one with one block"
-        TransactionsList tr = new TransactionsList()
-        blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
+        expect: "compare this blockchain with params"
 
-        BlockChain blockChain1 = new BlockChain()
+        result == blockChain.equals(param)
 
-
-        then: "They are not equal"
-        !blockChain.equals(blockChain1)
+        where: "list of parameters and result"
+        param       | result
+        BLOCKCHAIN2 | true  //same blockchain
+        BLOCKCHAIN3 | false //different blockchain with the same length
+        BLOCKCHAIN4 | false //blockchain of different length
 
     }
 
@@ -65,9 +84,6 @@ class BlockChainTest extends Specification {
         b.equals(blockChain.getChain().last())
     }
 
-    /**
-     * @author Alexander Voroshilov
-     */
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -147,6 +163,21 @@ class BlockChainTest extends Specification {
 
     /**
      * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by ArrayList throws an exception"() {
+        given: "wrong ArrayList of blocks"
+        ArrayList<Block> wrongList = RandomContainerCreator.createBlockChain().getChain()
+        wrongList.add(RandomContainerCreator.createBlockWithRandomHashCode())
+
+        when: "user creates blockchain with this list"
+        BlockChain blockChain = new BlockChain(wrongList)
+
+        then: "constructor throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
      */
     def "getJsonArray: throwing a json exception"() {
         given: "blockchain with block that throws an exception in getJsonObject method"
@@ -217,7 +248,7 @@ class BlockChainTest extends Specification {
     }
 
     /**
-     * @author Irina Tokareva
+     * @authors Irina Tokareva, Marina Krylova
      */
     def "loadFromJsonFile: throwing an exception"() {
 

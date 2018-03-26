@@ -7,6 +7,15 @@ import org.json.JSONException
 import spock.lang.Specification
 
 class TransactionsListTest extends Specification {
+
+    private static final TransactionsList LIST1 = RandomContainerCreator.createTransactionsList(2);
+    private static final TransactionsList LIST2 = RandomContainerCreator.createTransactionsList(2);
+    private static final TransactionsList LIST3 = RandomContainerCreator.createTransactionsList(3);
+    private static final TransactionsList LIST4 = LIST3;
+
+
+
+
     /**
      * @author Alexander Voroshilov
      */
@@ -103,20 +112,29 @@ class TransactionsListTest extends Specification {
         list.sizeOfList() == 2
     }
 
+    /**
+     * @author Marina Krylova
+     */
+
     def "Test for equals method" () {
         given: "2 equal list of transactions"
-        Transaction tr1 = new Transaction("1transaction")
-        Transaction tr2 = new Transaction("2transaction")
-        TransactionsList list1 = new TransactionsList()
-        list1.addTransaction(tr1)
-        list1.addTransaction(tr2)
-        TransactionsList list2 = new TransactionsList()
-        list2.addTransaction(tr1)
-        list2.addTransaction(tr2)
+        TransactionsList tr1 = LIST3;
 
-        expect: "method equals return true"
-        list1.equals(list2)
+        expect: "compare different lists"
+
+        result == tr1.equals(param)
+
+        where:" parameters and result"
+        param | result
+        LIST1 | false
+        LIST2 | false
+        LIST4 | true
+
     }
+
+    /**
+     * @author Anastasiia Shalygina
+     */
 
     def "Test for createFirstTransactionsList method" () {
         given: "first transaction list"
