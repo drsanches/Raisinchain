@@ -12,7 +12,6 @@ import spock.lang.Unroll
 class BlockChainTest extends Specification {
     private static final Random rnd = new Random()
 
-
     /**
      * @author Marina Krylova
      */
@@ -48,8 +47,6 @@ class BlockChainTest extends Specification {
 
     }
 
-
-
     /**
      * @author Marina Krylova
      */
@@ -70,7 +67,6 @@ class BlockChainTest extends Specification {
     /**
      * @author Alexander Voroshilov
      */
-
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -95,7 +91,6 @@ class BlockChainTest extends Specification {
     /**
      * @author Marina Krylova
      */
-
     def "Ensure that save and load works correctly"() {
         given: "BlockChain object that contains some blocks"
         BlockChain blockChain = RandomContainerCreator.createBlockChain(3)
@@ -110,7 +105,6 @@ class BlockChainTest extends Specification {
         then: "BlockChain objects are equals"
         newBlockChain.equals(blockChain)
     }
-
 
     def "Ensure that method getPartChain returns field ArrayList<Block>"() {
 
@@ -150,39 +144,38 @@ class BlockChainTest extends Specification {
 
     }
 
-
     /**
-     * @author Irina Tokareva
+     * @author Alexander Voroshilov
      */
     def "getJsonArray: throwing a json exception"() {
-        given: "Blockchain, which block's method getJsonObject throws an exception"
-        Block block = Mock{getJsonObject() >> { throw new JSONException("Test") }}
-        BlockChain blockchain = new BlockChain()
-        blockchain.add(block)
+        given: "blockchain with block that throws an exception in getJsonObject method"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain()
+        def block1 = Mock(Block)
+        block1.getHashCode() >> blockChain.getChain().get(blockChain.sizeOfChain() - 1).calculateHashCode()
+        block1.getJsonObject() >> { throw new org.json.JSONException("Test") }
+        blockChain.add(block1)
 
-        when: "We try to make json object from the blockchain"
-        blockchain.getJsonArray()
+        when: "user try to make json object from the blockchain"
+        blockChain.getJsonArray()
 
-        then: "Method throws an exception"
+        then: "method throws an exception"
         JSONException exception = thrown()
-        exception.message == 'Test'
+        exception.message.equals('Test')
     }
 
     /**
-     * @author Irina Tokareva
+     * @author Alexander Voroshilov
      */
     def "getPartOfArray: throwing BlockChainException"() {
-        given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
-        List<Block> list = [block(), block(), block()]
-        BlockChain blockChain = new BlockChain(list)
-        String hashCode = "qwerty"
+        given: "Whole blockchain and invalid hash-code"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain()
+        String hashCode = "Invalid hash-code"
 
-        when: "We don't find user's block in our chain by given hash-code"
+        when: "user try to get part of the chain for this hash"
         blockChain.getPartOfJsonArray(hashCode)
 
-        then: "Method throws an exception"
+        then: "method throws an exception"
         BlockChainException exception = thrown()
-        exception.message == "The chain does not contain this hash"
     }
 
     /**
