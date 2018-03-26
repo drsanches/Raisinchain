@@ -1,10 +1,14 @@
 package controllers;
 
 
+import containers.Block;
+import containers.Transaction;
+import containers.TransactionsList;
 import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 
 import java.util.HashMap;
 
@@ -47,8 +51,8 @@ public class MiningControllerTest extends BaseTest {
         Assert.assertEquals(responseStatus, HttpStatus.BAD_REQUEST.value(), "error");
         Assert.assertEquals(responseHeader, "*", "error");
     }
-
-   /* @Test
+/*
+    @Test
     public void checkRequestData() {
         Response response = sendPost("/gethash");
 
@@ -69,7 +73,7 @@ public class MiningControllerTest extends BaseTest {
         catch(Exception e) {
             Assert.fail(e.getMessage());
         }
-    }*/
+    }
 
-
+*/
 }

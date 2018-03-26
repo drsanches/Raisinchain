@@ -158,11 +158,17 @@ public class AddingBlockControllerTest extends BaseTest {
             String responseHeader = response.getHeader("Access-Control-Allow-Origin");
             String responseBody = response.getBody().asString();
 
+            blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
+            int newChainSize = blockChain.sizeOfChain();
+
+            transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
+            int newTransactionsListSize = transactionsList.sizeOfList();
+
             Assert.assertEquals(responseStatus, HttpStatus.OK.value(), "error");
             Assert.assertEquals(responseHeader, "*", "error");
             Assert.assertEquals(responseBody, "Your block has been connected to chain.", "error");
-//            Assert.assertEquals(blockChain.sizeOfChain(), chainSize + 1, "error");
-//            Assert.assertEquals(transactionsList.sizeOfList(), transactionsListSize - 1, "error");
+            Assert.assertEquals(newChainSize, chainSize + 1, "error");
+            Assert.assertEquals(newTransactionsListSize, transactionsListSize - 1, "error");
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
