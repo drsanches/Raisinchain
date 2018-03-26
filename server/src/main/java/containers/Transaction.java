@@ -11,6 +11,15 @@ public class Transaction{
     private String transaction;
 
 
+    public String getTransaction() {
+        return transaction;
+    }
+
+    public String getJsonString() {
+        return transaction;
+    }
+
+
 
     /**
      * @author Alexander Voroshilov
@@ -19,14 +28,6 @@ public class Transaction{
         if (tr == null)
             throw new TransactionException("Incorrect transaction");
         transaction = tr;
-    }
-
-    public String getTransaction() {
-        return transaction;
-    }
-
-    public String getJsonString() {
-        return transaction;
     }
 
     /**

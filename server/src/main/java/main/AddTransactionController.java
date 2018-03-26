@@ -26,7 +26,7 @@ public class AddTransactionController {
         Map<String, String[]> parameters = webrequest.getParameterMap();
 
         try {
-            //return ok if webrequest containes only one key 'Transaction" with one String value
+//            return ok if webrequest containes only one key 'Transaction" with one String value
             if ((parameters.size() == 1)&&(parameters.containsKey("Transaction"))&&(parameters.get("Transaction").length == 1)) {
                 //get a list of transactions, add a new one and save them all to json file
                 TransactionsList list = Application.transactionsList;

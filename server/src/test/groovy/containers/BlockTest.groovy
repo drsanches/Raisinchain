@@ -94,4 +94,20 @@ class BlockTest extends Specification {
         JSONException exception = thrown()
         exception.message == 'Test'
     }
+
+//
+//    def "calculate hash-code method"() {
+//        given: "a block"
+//        String hashCode = "qwerty"
+//        TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
+//        Block block = new Block(transactions, hashCode)
+//
+//        when: "We try to make json object from the block"
+//        block.getJsonObject()
+//
+//        then: "Method throws an exception"
+//        JSONException exception = thrown()
+//        exception.message == 'Test'
+//    }
+
 }
