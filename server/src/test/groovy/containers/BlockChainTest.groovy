@@ -11,7 +11,21 @@ import spock.lang.Unroll
  */
 @Unroll
 class BlockChainTest extends Specification {
-    private static final Random rnd = new Random()
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by string works correctly"() {
+        given: "blockchain and his json string"
+        BlockChain blockChain1 = RandomContainerCreator.createBlockChain()
+        String jsonString = blockChain1.getJsonArray().toString()
+
+        when: "user creates blockchain with this string"
+        BlockChain blockChain2 = new BlockChain(jsonString)
+
+        then: "they are equal"
+        blockChain1.equals(blockChain2)
+    }
 
     /**
      * @author Marina Krylova
@@ -143,6 +157,21 @@ class BlockChainTest extends Specification {
         then: "Method getPartChain returns value of field ArrayList<Block>"
         w.equals(q)
 
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by ArrayList throws an exception"() {
+        given: "wrong ArrayList of blocks"
+        ArrayList<Block> wrongList = RandomContainerCreator.createBlockChain().getChain()
+        wrongList.add(RandomContainerCreator.createBlockWithRandomHashCode())
+
+        when: "user creates blockchain with this list"
+        BlockChain blockChain = new BlockChain(wrongList)
+
+        then: "constructor throws an exception"
+        BlockChainException exception = thrown()
     }
 
     /**
