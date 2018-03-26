@@ -28,10 +28,8 @@ public class AddBlockController {
             if ((parameters.size() == 2)&&(parameters.containsKey("Transactions"))&&(parameters.get("Transactions").length == 1
             &&(parameters.containsKey("Hash"))&&(parameters.get("Hash")).length == 1)) {
 
-                BlockChain blockChain = new BlockChain();
-                blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
-                TransactionsList transactionsList = new TransactionsList();
-                transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
+                BlockChain blockChain = Application.blockChain;
+                TransactionsList transactionsList = Application.transactionsList;
 
                 try {
                     TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
@@ -48,7 +46,6 @@ public class AddBlockController {
                 Block block = new Block(blockTransactions, hashCode);
 
                 String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
-                Block bl = blockChain.getChain().get(blockChain.getChain().size() - 1);
 
                 // check whether hash code of the last blockchain's block match hash in received block or not
                 if (lastBlockHash.equals(block.getHashCode())) {
