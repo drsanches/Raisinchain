@@ -2,7 +2,6 @@ package main;
 
 import containers.Block;
 import containers.BlockChain;
-import containers.Transaction;
 import containers.TransactionsList;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,10 @@ public class AddingBlockController {
             if ((parameters.size() == 2)&&(parameters.containsKey("Transactions"))&&(parameters.get("Transactions").length == 1
             &&(parameters.containsKey("Hash"))&&(parameters.get("Hash")).length == 1)) {
 
-                BlockChain blockChain = Application.blockChain;
+                BlockChain blockChain = new BlockChain();
+                blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
+                TransactionsList transactionsList = new TransactionsList();
+                transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
 
                 try {
                     TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
@@ -44,12 +46,15 @@ public class AddingBlockController {
                 TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
                 String hashCode = parameters.get("Hash")[0];
                 Block block = new Block(blockTransactions, hashCode);
-                String LastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
+
+                String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
+                Block bl = blockChain.getChain().get(blockChain.getChain().size() - 1);
+
                 // check whether hash code of the last blockchain's block match hash in received block or not
-                if (LastBlockHash.equals(block.getHashCode())) {
+                if (lastBlockHash.equals(block.getHashCode())) {
                     //check whether all transactions from received block are in the list of transactions or not
                     for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                        if(!Application.transactionsList.contains(blockTransactions.getTransactions().get(i))) {
+                        if(!transactionsList.contains(blockTransactions.getTransactions().get(i))) {
                             return ResponseEntity
                                     .status(HttpStatus.BAD_REQUEST)
                                     .headers(responseHeaders)
@@ -57,9 +62,9 @@ public class AddingBlockController {
                         }
                     }
                     for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                        Application.transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
+                        transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
                     }
-                    Application.transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
+                    transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
                     blockChain.add(block);
                     blockChain.saveToJsonFile(Application.BLOCKCHAIN_FILENAME);
                 }
@@ -69,7 +74,10 @@ public class AddingBlockController {
                             .headers(responseHeaders)
                             .body("Wrong hash code was sent or block where you wanted to connect has already been connected.");
                 }
-                return new ResponseEntity<String>(HttpStatus.OK);
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .headers(responseHeaders)
+                        .body("Your block has been connected to chain.");
             }
             else return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)

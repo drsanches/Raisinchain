@@ -81,10 +81,12 @@ public class TransactionsList{
         return transactions.size();
     }
 
-    public boolean equals(TransactionsList tr) {
-        if (this.sizeOfList() == tr.sizeOfList()){
-            for (int i=0; i<tr.sizeOfList(); i++){
-                if (!transactions.get(i).equals(tr.transactions.get(i))) return false;
+    @Override
+    public boolean equals(Object tr) {
+        TransactionsList trans = (TransactionsList) tr;
+        if (this.sizeOfList() == trans.sizeOfList()){
+            for (int i=0; i<trans.sizeOfList(); i++){
+                if (!transactions.get(i).equals(trans.transactions.get(i))) return false;
             }
             return true;
         } else return false;

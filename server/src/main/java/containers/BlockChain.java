@@ -23,10 +23,12 @@ public class BlockChain {
     }
 
     public BlockChain(ArrayList<Block> ch) throws BlockChainException {
-        if (!isCorrect())
-            throw new BlockChainException("Chain is not correct.");
-
         chain = ch;
+
+        if (!isCorrect()) {
+            chain = null;
+            throw new BlockChainException("Chain is not correct.");
+        }
     }
 
     public BlockChain(String jsonString) throws TransactionException, JSONException, BlockException, BlockChainException {
@@ -50,10 +52,12 @@ public class BlockChain {
     /**
      * @author Marina Krylova
      */
-    public boolean equals(BlockChain b) {
-        if (this.sizeOfChain() == b.sizeOfChain()) {
-            for (int i=0; i<b.sizeOfChain(); i++) {
-                if (!chain.get(i).equals(b.chain.get(i)))
+    @Override
+    public boolean equals(Object b) {
+        BlockChain ch = (BlockChain) b;
+        if (this.sizeOfChain() == ch.sizeOfChain()) {
+            for (int i=0; i<ch.sizeOfChain(); i++) {
+                if (!chain.get(i).equals(ch.chain.get(i)))
                     return false;
             }
             return true;
