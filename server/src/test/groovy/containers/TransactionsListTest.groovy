@@ -1,6 +1,5 @@
 package containers
 
-import containersExceptions.TransactionException
 import containersExceptions.TransactionsListException
 import org.json.JSONArray
 import org.json.JSONException
@@ -77,7 +76,7 @@ class TransactionsListTest extends Specification {
         tr_list.addTransaction(new_tr)
 
         then: "transaction added to the list"
-        tr_list.sizeOfList() == 1
+        tr_list.size() == 1
 
     }
 
@@ -93,7 +92,7 @@ class TransactionsListTest extends Specification {
         tr_list.removeTransaction(new Transaction("new_transaction"))
 
         then: "the list became shorter for one transaction"
-        tr_list.sizeOfList() == 1
+        tr_list.size() == 1
 
     }
 
@@ -109,7 +108,7 @@ class TransactionsListTest extends Specification {
         list.addTransaction(tr2)
 
         expect: "size of list = 2"
-        list.sizeOfList() == 2
+        list.size() == 2
     }
 
     /**

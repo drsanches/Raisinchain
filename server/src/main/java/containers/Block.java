@@ -14,7 +14,7 @@ public class Block {
     public static final int MAX_TRANSACTIONS_COUNT = 10;
 
     public Block(TransactionsList transactionsList, String hash) throws BlockException {
-        if (transactionsList.sizeOfList() > MAX_TRANSACTIONS_COUNT)
+        if (transactionsList.size() > MAX_TRANSACTIONS_COUNT)
             throw new BlockException("Too many transactions. Maximum count of transactions is " + MAX_TRANSACTIONS_COUNT);
 
         transactions = transactionsList;
@@ -26,7 +26,7 @@ public class Block {
         String transactionsJsonString = jsonObject.getJSONArray("Transactions").toString();
         TransactionsList transactionsList = new TransactionsList(transactionsJsonString);
 
-        if (transactionsList.sizeOfList() > MAX_TRANSACTIONS_COUNT)
+        if (transactionsList.size() > MAX_TRANSACTIONS_COUNT)
             throw new BlockException("Too many transactions. Maximum count of transactions is " + MAX_TRANSACTIONS_COUNT);
 
         transactions = transactionsList;

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @RestController
-public class AddingBlockController {
+public class AddBlockController {
 
     @RequestMapping(value = "/addblock", method = RequestMethod.POST)
     public ResponseEntity<String> addBlock(WebRequest webrequest) {

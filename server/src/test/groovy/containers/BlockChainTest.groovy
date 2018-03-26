@@ -9,13 +9,27 @@ import spock.lang.Unroll
 /**
  * @author Ilya Kreshkov
  */
-
+@Unroll
 class BlockChainTest extends Specification {
-
     private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
     private static final BLOCKCHAIN2 = BLOCKCHAIN1;
     private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
     private static final BLOCKCHAIN4 = RandomContainerCreator.createBlockChain(5)
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by string works correctly"() {
+        given: "blockchain and his json string"
+        BlockChain blockChain1 = RandomContainerCreator.createBlockChain()
+        String jsonString = blockChain1.getJsonArray().toString()
+
+        when: "user creates blockchain with this string"
+        BlockChain blockChain2 = new BlockChain(jsonString)
+
+        then: "they are equal"
+        blockChain1.equals(blockChain2)
+    }
 
     /**
      * @author Marina Krylova
@@ -29,7 +43,7 @@ class BlockChainTest extends Specification {
         blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
 
         then: "size of blockchain and size of chain are equals"
-        blockChain.sizeOfChain() == 2
+        blockChain.size() == 2
     }
 
     /**
@@ -69,9 +83,6 @@ class BlockChainTest extends Specification {
         b.equals(blockChain.getChain().last())
     }
 
-    /**
-     * @author Alexander Voroshilov
-     */
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -151,12 +162,55 @@ class BlockChainTest extends Specification {
 
     /**
      * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by ArrayList throws an exception"() {
+        given: "wrong ArrayList of blocks"
+        ArrayList<Block> wrongList = RandomContainerCreator.createBlockChain().getChain()
+        wrongList.add(RandomContainerCreator.createBlockWithRandomHashCode())
+
+        when: "user creates blockchain with this list"
+        BlockChain blockChain = new BlockChain(wrongList)
+
+        then: "constructor throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by String throws an exception"() {
+        given: "string of empty json array"
+        String jsonString = "[]"
+
+        when: "user creates blockchain with this string"
+        BlockChain blockChain = new BlockChain(jsonString)
+
+        then: "constructor throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that method add throws an exception"() {
+        given: "blockchain"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain()
+
+        when: "user adds block with incorrect hash-code"
+        blockChain.add(RandomContainerCreator.createBlockWithRandomHashCode())
+
+        then: "method throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
      */
     def "getJsonArray: throwing a json exception"() {
         given: "blockchain with block that throws an exception in getJsonObject method"
         BlockChain blockChain = RandomContainerCreator.createBlockChain()
         def block1 = Mock(Block)
-        block1.getHashCode() >> blockChain.getChain().get(blockChain.sizeOfChain() - 1).calculateHashCode()
+        block1.getHashCode() >> blockChain.getChain().get(blockChain.size() - 1).calculateHashCode()
         block1.getJsonObject() >> { throw new org.json.JSONException("Test") }
         blockChain.add(block1)
 
@@ -198,26 +252,6 @@ class BlockChainTest extends Specification {
         then: "Method throws an exception"
         BlockChainException exception = thrown()
         exception.message == "The chain does not contain this hash"
-    }
-
-    /**
-     * @author Irina Tokareva
-     */
-    def "saveToJsonFile: throwing an exception"() {
-
-        given: "Blockchain, which method getJsonArray throws an exception and a filename"
-        String filemane = "BlockChainTestJsonFile.json"
-        BlockChain blockChain = new BlockChain()
-        Block mockedBlock = Mock{getJsonObject() >> { throw new JSONException("Test") }
-            getHashCode() >> blockChain.getChain().get(0).calculateHashCode()}
-        blockChain.add(mockedBlock)
-
-        when: "We run method saveToJsonFile"
-        blockChain.saveToJsonFile(filemane)
-
-        then: "Method throws an exception"
-        JSONException exception = thrown()
-        exception.message == "Test"
     }
 
     /**

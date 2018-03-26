@@ -100,13 +100,13 @@ public class GetChainControllerTest extends BaseTest {
         blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
         Random random = new Random();
         int randomIndex = 0;
-        if (blockChain.sizeOfChain() - 2 > 0)
-            randomIndex = random.nextInt(blockChain.sizeOfChain() - 2) + 1;
+        if (blockChain.size() - 2 > 0)
+            randomIndex = random.nextInt(blockChain.size() - 2) + 1;
 
         String[] hashCodes = new String[] {
                 blockChain.getChain().get(0).getHashCode(),
                 blockChain.getChain().get(randomIndex).getHashCode(),
-                blockChain.getChain().get(blockChain.sizeOfChain() - 1).getHashCode()
+                blockChain.getChain().get(blockChain.size() - 1).getHashCode()
         };
 
         return new Object[][] {
