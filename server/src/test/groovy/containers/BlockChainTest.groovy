@@ -255,26 +255,6 @@ class BlockChainTest extends Specification {
     }
 
     /**
-     * @author Irina Tokareva
-     */
-    def "saveToJsonFile: throwing an exception"() {
-
-        given: "Blockchain, which method getJsonArray throws an exception and a filename"
-        String filemane = "BlockChainTestJsonFile.json"
-        BlockChain blockChain = new BlockChain()
-        Block mockedBlock = Mock{getJsonObject() >> { throw new JSONException("Test") }
-            getHashCode() >> blockChain.getChain().get(0).calculateHashCode()}
-        blockChain.add(mockedBlock)
-
-        when: "We run method saveToJsonFile"
-        blockChain.saveToJsonFile(filemane)
-
-        then: "Method throws an exception"
-        JSONException exception = thrown()
-        exception.message == "Test"
-    }
-
-    /**
      * @authors Irina Tokareva, Marina Krylova
      */
     def "loadFromJsonFile: throwing an exception"() {
