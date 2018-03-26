@@ -1,6 +1,7 @@
 package containers
 
 import containersExceptions.BlockChainException
+import main.Application
 import org.json.JSONException
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -190,8 +191,8 @@ class BlockChainTest extends Specification {
      */
     def "getPartOfJsonArray: throwing BlockChainException"() {
         given: "Whole blockchain and hash-code from the user's last block, which is not in that chain"
-        List<Block> list = [block(), block(), block()]
-        BlockChain blockChain = new BlockChain(list)
+        BlockChain blockChain = new BlockChain();
+        blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
         String hashCode = "qwerty"
 
         when: "We try to run method getPartOfJsonArray"
@@ -209,8 +210,9 @@ class BlockChainTest extends Specification {
 
         given: "Blockchain, which method getJsonArray throws an exception and a filename"
         String filemane = "BlockChainTestJsonFile.json"
-        Block mockedBlock = Mock{getJsonObject() >> { throw new JSONException("Test") }}
         BlockChain blockChain = new BlockChain()
+        Block mockedBlock = Mock{getJsonObject() >> { throw new JSONException("Test") }
+            getHashCode() >> blockChain.getChain().get(0).calculateHashCode()}
         blockChain.add(mockedBlock)
 
         when: "We run method saveToJsonFile"
