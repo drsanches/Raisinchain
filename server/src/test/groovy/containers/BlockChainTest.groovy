@@ -14,6 +14,11 @@ class BlockChainTest extends Specification {
 
     private static final Random rnd = new Random()
 
+    private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
+    private static final BLOCKCHAIN2 = BLOCKCHAIN1;
+    private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
+    private static final BLOCKCHAIN4 = RandomContainerCreator.createBlockChain(5)
+
     /**
      * @author Marina Krylova
      */
@@ -33,19 +38,19 @@ class BlockChainTest extends Specification {
      * @author Marina Krylova
      */
     def "equals"() {
-        given: "one blockchain with one block"
-        BlockChain blockChain = new BlockChain()
+        given: "Blockchain of 3 blocks"
+        BlockChain blockChain = BLOCKCHAIN1;
 
 
-        when: "add one more block into blockchain and create a new one with one block"
-        TransactionsList tr = new TransactionsList()
-        blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
+        expect: "compare this blockchain with params"
 
-        BlockChain blockChain1 = new BlockChain()
+        result == blockChain.equals(param)
 
-
-        then: "They are not equal"
-        !blockChain.equals(blockChain1)
+        where: "list of parameters and result"
+        param       | result
+        BLOCKCHAIN2 | true  //same blockchain
+        BLOCKCHAIN3 | false //different blockchain with the same length
+        BLOCKCHAIN4 | false //blockchain of different length
 
     }
 

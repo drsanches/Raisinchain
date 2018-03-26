@@ -55,6 +55,7 @@ public class BlockChain {
      */
     @Override
     public boolean equals(Object b) {
+
         BlockChain ch = (BlockChain) b;
         if (this.sizeOfChain() == ch.sizeOfChain()) {
             for (int i=0; i<ch.sizeOfChain(); i++) {
