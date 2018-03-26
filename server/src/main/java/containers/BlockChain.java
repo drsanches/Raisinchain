@@ -22,6 +22,7 @@ public class BlockChain {
         chain.add(Block.createFirstBlock());
     }
 
+
     public BlockChain(ArrayList<Block> ch) throws BlockChainException {
         chain = ch;
 

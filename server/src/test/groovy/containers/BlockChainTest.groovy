@@ -12,70 +12,64 @@ import spock.lang.Unroll
 class BlockChainTest extends Specification {
     private static final Random rnd = new Random()
 
-    private static final List<Block> LIST1 = [block(), block()]
-    private static final List<Block> LIST2 = [*LIST1, block(), block()]
-    private static final List<Block> LIST3 = [block(), block()]
-
-
-    static Block block() {
-        String hash = "${rnd.nextInt()}"
-        new Block(new TransactionsList([new Transaction("t")]), hash)
-    }
 
     /**
-     * @author Alexander Voroshilov
+     * @author Marina Krylova
      */
     def "size"() {
-        given: "BlockChain object"
+        given: "BlockChain with the first block"
         BlockChain blockChain = new BlockChain()
 
-        when: "user adds count of blocks into block chain"
-        int count = 5
-        for (int i = 0; i < count; i++)
-            blockChain.add(Block.createFirstBlock())
+        when: "user adds one more block into blockchain"
+        TransactionsList tr = new TransactionsList()
+        blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
 
         then: "size of blockchain and size of chain are equals"
-            blockChain.sizeOfChain().equals(blockChain.getChain().size())
+        blockChain.sizeOfChain() == 2
     }
 
     /**
      * @author Marina Krylova
      */
     def "equals"() {
-        given: "BlockChain object with count of blocks"
+        given: "one blockchain with one block"
+        BlockChain blockChain = new BlockChain()
+
+
+        when: "add one more block into blockchain and create a new one with one block"
+        TransactionsList tr = new TransactionsList()
+        blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
+
         BlockChain blockChain1 = new BlockChain()
 
 
-        when: "user creates BlockChain object with similar chain"
-        BlockChain blockChain = new BlockChain(LIST1)
-
-        then: "They are equals"
-        result == blockChain.equals(new BlockChain(blocks))
-
-        where: "Check the parameters"
-        blocks | result
-        LIST1  | true   //same chain
-        LIST2  | false  //different length
-        LIST3  | false  //same length, different blocks
+        then: "They are not equal"
+        !blockChain.equals(blockChain1)
 
     }
 
 
 
     /**
+     * @author Marina Krylova
+     */
+    def "Ensure that method adds new block to chain"() {
+
+        given:"Blockchain and a block"
+        BlockChain blockChain = new BlockChain()
+        Block b = new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode())
+
+        when:"add the block to the chain"
+        blockChain.add(b)
+
+
+        then: "Method adds a new block"
+        b.equals(blockChain.getChain().last())
+    }
+
+    /**
      * @author Alexander Voroshilov
      */
-    def "Ensure that method add new block to chain"() {
-        given:"List of blocks and block"
-        BlockChain blockChain = new BlockChain()
-        Block block = block()
-
-        when:"put values to new chain, add new block"
-        blockChain.add(block)
-
-        then: "Method add new block"
-        block.equals(blockChain.getChain().last())
-    }
 
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
@@ -83,7 +77,7 @@ class BlockChainTest extends Specification {
         List<Block> list = new ArrayList<Block>()
 
         when:"put values to new chain"
-        BlockChain Block_Chain= new BlockChain(list)
+        BlockChain Block_Chain = new BlockChain(list)
 
         then: "Method getChain returns value of field ArrayList<Block>"
         list.equals(Block_Chain.getChain())
@@ -93,59 +87,18 @@ class BlockChainTest extends Specification {
         given:
         List<Block> list = new ArrayList<Block>()
         when:
-        BlockChain Block_Chain=new BlockChain(list)
+        BlockChain Block_Chain = new BlockChain(list)
         then:
         list.toString().equals(Block_Chain.getJsonArray().toString())
     }
 
-    def "Ensure that method getPartChain returns field ArrayList<Block>"() {
-        given:"List of blocks"
-//        List<Block> Array_List = [block()]
-        List<Block> list1 = [block()]
-        List<Block> list3 = [block()]
-        List<Block> list4 = [*list3, block()]
-        List<Block> list2 = [*list1, *list4,]
-
-
-        when:"put values to new chain"
-        BlockChain Block_Chain= new BlockChain(list2)
-        String h = list1.get(0).hashCode
-        List<Block> y=Block_Chain.getPartOfChain(h)
-
-        then: "Method getPartChain returns value of field ArrayList<Block>"
-        list4.equals(y)
-    }
-
-    def "getPartOfJsonArray"() {
-        given:"List of blocks"
-        List<Block> list1 = [block()]
-        List<Block> list3 = [block()]
-        List<Block> list4 = [*list3, block()]
-        List<Block> list2 = [*list1, *list4,]
-
-
-        when:"put values to new chain"
-        BlockChain Block_Chain= new BlockChain(list2)
-        String h = list1.get(0).hashCode
-        String y = Block_Chain.getPartOfJsonArray(h).toString()
-        BlockChain w = new BlockChain(list4)
-        BlockChain q = new BlockChain(y)
-
-        then: "Method getPartChain returns value of field ArrayList<Block>"
-        w.equals(q)
-
-    }
+    /**
+     * @author Marina Krylova
+     */
 
     def "Ensure that save and load works correctly"() {
         given: "BlockChain object that contains some blocks"
-        TransactionsList transactionsList = new TransactionsList()
-        transactionsList.addTransaction(new Transaction("tr1"))
-        transactionsList.addTransaction(new Transaction("tr2"))
-
-        BlockChain blockChain = new BlockChain()
-        blockChain.add(new Block(transactionsList, "1"))
-        blockChain.add(new Block(transactionsList, "2"))
-        blockChain.add(new Block(transactionsList, "3"))
+        BlockChain blockChain = RandomContainerCreator.createBlockChain(3)
 
         when: "BlockChain saves to file"
         blockChain.saveToJsonFile("BlockChainTestJsonFile.json")
@@ -157,6 +110,46 @@ class BlockChainTest extends Specification {
         then: "BlockChain objects are equals"
         newBlockChain.equals(blockChain)
     }
+
+
+    def "Ensure that method getPartChain returns field ArrayList<Block>"() {
+
+        given:"List of blocks"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain(3)
+
+        when:"get a part of the chain"
+
+        String h = blockChain.chain.get(0).hashCode
+
+        ArrayList<Block> y = blockChain.getPartOfChain(h)
+        ArrayList<Block> list = new ArrayList<Block>()
+        list.add(blockChain.chain.get(1))
+        list.add(blockChain.chain.get(2))
+
+        then: "Method getPartChain returns a right part of the chain"
+        list.equals(y)
+
+    }
+
+    def "getPartOfJsonArray"() {
+        given:"List of blocks"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain(3)
+
+        when:"put values to new chain"
+        String h = blockChain.chain.get(0).hashCode
+        String y = blockChain.getPartOfJsonArray(h).toString()
+
+        List<Block> w = blockChain.getPartOfChain(h)
+        List<Block> q = new ArrayList<Block>()
+        q.add(blockChain.chain.get(1))
+        q.add(blockChain.chain.get(2))
+
+
+        then: "Method getPartChain returns value of field ArrayList<Block>"
+        w.equals(q)
+
+    }
+
 
     /**
      * @author Irina Tokareva
@@ -235,8 +228,8 @@ class BlockChainTest extends Specification {
 
         given: "Blockchain, which method getJsonArray throws an exception and a filename"
         String filemane = "TestForLoad.json"
-        BlockChain blockChain = new BlockChain()
-        blockChain.add(block())
+        BlockChain blockChain = RandomContainerCreator.createBlockChain(3)
+
 
         when: "We run method saveToJsonFile"
         blockChain.loadFromJsonFile(filemane)

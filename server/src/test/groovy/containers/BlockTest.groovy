@@ -1,7 +1,6 @@
 package containers
 
-import containersExceptions.BlockChainException
-import containersExceptions.BlockException
+
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
@@ -82,51 +81,6 @@ class BlockTest extends Specification {
         CreatedBlock.equals(block)
     }
 
-    /**
-     * @author Alexander Voroshilov
-     * */
-    def "Ensure that one block always has only one hash-code"() {
-        given: "one block"
-        Block block = RandomContainerCreator.createBlockWithRandomHashCode()
-
-        when: "user calculates hash-code twice"
-        String hash1 = block.calculateHashCode()
-        String hash2 = block.calculateHashCode()
-
-        then: "they are equal"
-        hash1.equals(hash2)
-    }
-
-    /**
-     * @author Alexander Voroshilov
-     * */
-    def "Ensure that two different blocks have different hash-codes"() {
-        given: "two different blocks"
-        Block block1 = RandomContainerCreator.createBlockWithRandomHashCode()
-        Block block2 = RandomContainerCreator.createBlockWithRandomHashCode()
-
-        when: "user calculates hash-codes"
-        String hash1 = block1.calculateHashCode()
-        String hash2 = block2.calculateHashCode()
-
-        then: "they are different"
-        !hash1.equals(hash2)
-    }
-
-    /**
-     * @author Alexander Voroshilov
-     * */
-    def "Ensure that two blocks are connected by hash-code"() {
-        given: "one block"
-        Block block1 = RandomContainerCreator.createBlockWithRandomHashCode()
-
-        when: "user creates the next connected block"
-        Block block2 = RandomContainerCreator.createBlock(block1)
-
-        then: "they linked by hash-code of the first block"
-        block2.isCorrect(block1)
-    }
-
     def "getJsonObject: throwing an exception"() {
         given: "Block, which transactions' method getJsonObject throws an exception"
         String hashCode = "qwerty"
@@ -141,17 +95,19 @@ class BlockTest extends Specification {
         exception.message == 'Test'
     }
 
-    /**
-     * @author Alexander Voroshilov
-     * */
-    def "Ensure that constructor throws an exception"() {
-        given: "transactions list that contain more than Block.MAX_TRANSACTIONS_COUNT transactions"
-        TransactionsList transactionsList = RandomContainerCreator.createTransactionsList(Block.MAX_TRANSACTIONS_COUNT + 1)
+//
+//    def "calculate hash-code method"() {
+//        given: "a block"
+//        String hashCode = "qwerty"
+//        TransactionsList transactions = Mock { getJsonArray() >> { throw new JSONException("Test") } }
+//        Block block = new Block(transactions, hashCode)
+//
+//        when: "We try to make json object from the block"
+//        block.getJsonObject()
+//
+//        then: "Method throws an exception"
+//        JSONException exception = thrown()
+//        exception.message == 'Test'
+//    }
 
-        when: "user creates block with this list"
-        Block block = new Block(transactionsList, "hash-code")
-
-        then: "constructor throws BlockException"
-        BlockException exception = thrown()
-    }
 }
