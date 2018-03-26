@@ -73,6 +73,6 @@ public class Block {
     }
 
     public boolean isCorrect(Block previousBlock) {
-        return hashCode == previousBlock.calculateHashCode();
+        return hashCode.equals(previousBlock.calculateHashCode());
     }
 }

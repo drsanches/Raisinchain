@@ -67,6 +67,23 @@ public class RandomContainerCreator {
         }
     }
 
+    public static Block createBlockWithRandomHashCode() {
+        Random random = new Random();
+        int listLength = random.nextInt(Block.MAX_TRANSACTIONS_COUNT) + 1;
+        TransactionsList transactionsList = createTransactionsList(listLength);
+
+        String hashCode = "";
+        for (int i = 0; i < random.nextInt(10) + 5; i++)
+            hashCode += String.valueOf(random.nextInt(10));
+
+        try {
+            return new Block(transactionsList, hashCode);
+        }
+        catch (BlockException e) {
+            return null;
+        }
+    }
+
     public static BlockChain createBlockChain(int length) {
         BlockChain blockChain = new BlockChain();
 
