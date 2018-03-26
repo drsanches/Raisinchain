@@ -43,7 +43,7 @@ class BlockChainTest extends Specification {
         blockChain.add(new Block(new TransactionsList("[transaction]"), blockChain.chain[0].calculateHashCode()))
 
         then: "size of blockchain and size of chain are equals"
-        blockChain.sizeOfChain() == 2
+        blockChain.size() == 2
     }
 
     /**
@@ -210,7 +210,7 @@ class BlockChainTest extends Specification {
         given: "blockchain with block that throws an exception in getJsonObject method"
         BlockChain blockChain = RandomContainerCreator.createBlockChain()
         def block1 = Mock(Block)
-        block1.getHashCode() >> blockChain.getChain().get(blockChain.sizeOfChain() - 1).calculateHashCode()
+        block1.getHashCode() >> blockChain.getChain().get(blockChain.size() - 1).calculateHashCode()
         block1.getJsonObject() >> { throw new org.json.JSONException("Test") }
         blockChain.add(block1)
 

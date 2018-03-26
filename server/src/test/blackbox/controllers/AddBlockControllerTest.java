@@ -1,11 +1,9 @@
 package controllers;
 
 import containers.BlockChain;
-import containers.Transaction;
 import containers.TransactionsList;
 import io.restassured.response.Response;
 import main.Application;
-import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -16,7 +14,7 @@ import java.util.*;
  * @author Irina Tokareva
  * */
 
-public class AddingBlockControllerTest extends BaseTest {
+public class AddBlockControllerTest extends BaseTest {
     @DataProvider
     private Object[][] httpCodesProvider() throws Exception {
         BlockChain blockChain = new BlockChain();
@@ -145,13 +143,13 @@ public class AddingBlockControllerTest extends BaseTest {
             BlockChain blockChain = new BlockChain();
             blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
             String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
-            int chainSize = blockChain.sizeOfChain();
+            int chainSize = blockChain.size();
 
             TransactionsList transactionsList = new TransactionsList();
             transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
             TransactionsList transactions = new TransactionsList();
             transactions.addTransaction(transactionsList.getTransactions().get(0));
-            int transactionsListSize = transactionsList.sizeOfList();
+            int transactionsListSize = transactionsList.size();
 
             ArrayList<HashMap.SimpleEntry<String, String>> query = new ArrayList<>();
             query.add(new HashMap.SimpleEntry<>("Transactions", transactions.getJsonArray().toString()));
@@ -164,10 +162,10 @@ public class AddingBlockControllerTest extends BaseTest {
             String responseBody = response.getBody().asString();
 
             blockChain.loadFromJsonFile(Application.BLOCKCHAIN_FILENAME);
-            int newChainSize = blockChain.sizeOfChain();
+            int newChainSize = blockChain.size();
 
             transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
-            int newTransactionsListSize = transactionsList.sizeOfList();
+            int newTransactionsListSize = transactionsList.size();
 
             Assert.assertEquals(responseStatus, HttpStatus.OK.value(), "error");
             Assert.assertEquals(responseHeader, "*", "error");

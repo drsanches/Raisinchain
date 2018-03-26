@@ -53,7 +53,7 @@ public class BlockChain {
     /**
      * @author Marina Krylova
      */
-    public int sizeOfChain() {
+    public int size() {
         return chain.size();
     }
 
@@ -63,8 +63,8 @@ public class BlockChain {
     @Override
     public boolean equals(Object b) {
         BlockChain ch = (BlockChain) b;
-        if (this.sizeOfChain() == ch.sizeOfChain()) {
-            for (int i=0; i<ch.sizeOfChain(); i++) {
+        if (this.size() == ch.size()) {
+            for (int i = 0; i<ch.size(); i++) {
                 if (!chain.get(i).equals(ch.chain.get(i)))
                     return false;
             }
@@ -124,7 +124,7 @@ public class BlockChain {
     }
 
     public boolean isCorrect() {
-        for (int i = 1; i < sizeOfChain(); i++)
+        for (int i = 1; i < size(); i++)
             if (!chain.get(i).isCorrect(chain.get(i - 1)))
                 return false;
         return true;

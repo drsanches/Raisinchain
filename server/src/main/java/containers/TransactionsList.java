@@ -3,7 +3,6 @@ package containers;
 import containersExceptions.TransactionException;
 import containersExceptions.TransactionsListException;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
@@ -78,15 +77,15 @@ public class TransactionsList{
         transactions.remove(tr);
     }
 
-    public int sizeOfList(){
+    public int size(){
         return transactions.size();
     }
 
     @Override
     public boolean equals(Object tr) {
         TransactionsList trans = (TransactionsList) tr;
-        if (this.sizeOfList() == trans.sizeOfList()){
-            for (int i=0; i<trans.sizeOfList(); i++){
+        if (this.size() == trans.size()){
+            for (int i = 0; i<trans.size(); i++){
                 if (!transactions.get(i).equals(trans.transactions.get(i))) return false;
             }
             return true;

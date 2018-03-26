@@ -3,7 +3,6 @@ package controllers;
 
 
 import containers.TransactionsList;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import main.Application;
 import org.testng.Assert;
@@ -12,7 +11,6 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 
 import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 /**
@@ -71,13 +69,13 @@ public class AddTransactionControllerTest extends BaseTest {
             TransactionsList trList = new TransactionsList();
 
             trList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
-            int size1 = trList.sizeOfList() + 1;
+            int size1 = trList.size() + 1;
 
             Response response = sendPost("/addtransaction", query);
 
 
             trList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
-            int size2 = trList.sizeOfList();
+            int size2 = trList.size();
 
             int responseStatus = response.statusCode();
             String responseHeader = response.getHeader("Access-Control-Allow-Origin");
