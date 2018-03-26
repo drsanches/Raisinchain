@@ -30,8 +30,20 @@ public class MiningController {
         try {
             //return hash-code if webrequest containes only one key "Block" with one String value
             if ((parameters.size() == 1)&&(parameters.containsKey("Block"))&&(parameters.get("Block").length == 1)) {
+
+                try {
+                    Block block = new Block(parameters.get("Block")[0]);
+                }
+                catch (Exception exception) {
+                    return ResponseEntity
+                            .status(HttpStatus.BAD_REQUEST)
+                            .headers(responseHeaders)
+                            .body(exception.getMessage());
+                }
+
+
                 Block block = new Block(parameters.get("Block")[0]);
-               // block.CalculateHashCode();
+
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .headers(responseHeaders)
