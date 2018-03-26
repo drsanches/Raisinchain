@@ -1,6 +1,7 @@
 package containers
 
-
+import containersExceptions.BlockChainException
+import containersExceptions.BlockException
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
@@ -138,5 +139,19 @@ class BlockTest extends Specification {
         then: "Method throws an exception"
         JSONException exception = thrown()
         exception.message == 'Test'
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor throws an exception"() {
+        given: "transactions list that contain more than Block.MAX_TRANSACTIONS_COUNT transactions"
+        TransactionsList transactionsList = RandomContainerCreator.createTransactionsList(Block.MAX_TRANSACTIONS_COUNT + 1)
+
+        when: "user creates block with this list"
+        Block block = new Block(transactionsList, "hash-code")
+
+        then: "constructor throws BlockException"
+        BlockException exception = thrown()
     }
 }
