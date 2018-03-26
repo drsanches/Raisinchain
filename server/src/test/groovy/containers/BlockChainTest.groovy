@@ -9,8 +9,9 @@ import spock.lang.Unroll
 /**
  * @author Ilya Kreshkov
  */
-@Unroll
+
 class BlockChainTest extends Specification {
+
     private static final Random rnd = new Random()
 
     /**
@@ -217,7 +218,7 @@ class BlockChainTest extends Specification {
     }
 
     /**
-     * @author Irina Tokareva
+     * @authors Irina Tokareva, Marina Krylova
      */
     def "loadFromJsonFile: throwing an exception"() {
 
