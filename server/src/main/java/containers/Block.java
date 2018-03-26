@@ -71,7 +71,7 @@ public class Block {
     public String calculateHashCode() {
         return String.valueOf(getJsonObject().toString().hashCode());
     }
-    
+
     public boolean isCorrect(Block previousBlock) {
         return hashCode.equals(previousBlock.calculateHashCode());
     }
