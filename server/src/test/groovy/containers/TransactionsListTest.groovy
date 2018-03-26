@@ -140,7 +140,7 @@ class TransactionsListTest extends Specification {
 
         result == tr1.equals(param)
 
-        where:" parameters and result"
+        where: "parameters and result"
         param | result
         LIST1 | false
         LIST2 | false

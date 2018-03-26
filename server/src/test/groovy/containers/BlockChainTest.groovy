@@ -12,8 +12,6 @@ import spock.lang.Unroll
 
 class BlockChainTest extends Specification {
 
-    private static final Random rnd = new Random()
-
     private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
     private static final BLOCKCHAIN2 = BLOCKCHAIN1;
     private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
