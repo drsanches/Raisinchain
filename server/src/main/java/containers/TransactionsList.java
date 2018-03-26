@@ -3,6 +3,7 @@ package containers;
 import containersExceptions.TransactionException;
 import containersExceptions.TransactionsListException;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
