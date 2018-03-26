@@ -2,9 +2,13 @@ package controllers;
 
 
 import containers.Block;
+import containers.RandomContainerCreator;
 import containers.Transaction;
 import containers.TransactionsList;
 import io.restassured.response.Response;
+import jdk.nashorn.api.scripting.JSObject;
+import main.Application;
+import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -51,29 +55,26 @@ public class MiningControllerTest extends BaseTest {
         Assert.assertEquals(responseStatus, HttpStatus.BAD_REQUEST.value(), "error");
         Assert.assertEquals(responseHeader, "*", "error");
     }
-/*
+
     @Test
     public void checkRequestData() {
-        Response response = sendPost("/gethash");
+        Block block = RandomContainerCreator.createBlockWithRandomHashCode();
+        HashMap<String, String> query = new HashMap<>();
+        query.put("Block", block.getJsonObject().toString());
+        Response response = sendPost("/gethash", query);
 
         int responseStatus = response.getStatusCode();
         String responseHeader = response.getHeader("Access-Control-Allow-Origin");
         String responseBody = response.getBody().asString();
 
         try {
-            TransactionsList transactionsList = new TransactionsList();
-            transactionsList.addTransaction(new Transaction("tr1"));
-            transactionsList.addTransaction(new Transaction("tr2"));
-            Block block = new Block(transactionsList.getJsonArray().toString());
-
             Assert.assertEquals(responseStatus, HttpStatus.OK.value(), "error");
             Assert.assertEquals(responseHeader, "*", "error");
-            Assert.assertEquals(responseBody, block.getJsonObject(), "error");
+            Assert.assertEquals(responseBody, block.calculateHashCode(), "error");
         }
         catch(Exception e) {
             Assert.fail(e.getMessage());
         }
     }
 
-*/
 }
