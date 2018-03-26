@@ -8,6 +8,7 @@ import org.json.JSONObject;
  * @author Alexander Voroshilov
  */
 public class Block {
+
     private TransactionsList transactions;
     private String hashCode;
     public static final int MAX_TRANSACTIONS_COUNT = 10;

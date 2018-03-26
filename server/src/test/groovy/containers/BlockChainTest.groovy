@@ -79,9 +79,6 @@ class BlockChainTest extends Specification {
         b.equals(blockChain.getChain().last())
     }
 
-    /**
-     * @author Alexander Voroshilov
-     */
     def "Ensure that method getChain returns field ArrayList<Block>"() {
         given:"List of blocks"
 //        List<Block> Array_List = [block()]
@@ -246,7 +243,7 @@ class BlockChainTest extends Specification {
     }
 
     /**
-     * @author Irina Tokareva
+     * @authors Irina Tokareva, Marina Krylova
      */
     def "loadFromJsonFile: throwing an exception"() {
 
