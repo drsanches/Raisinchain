@@ -11,6 +11,10 @@ import spock.lang.Unroll
  */
 @Unroll
 class BlockChainTest extends Specification {
+    private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
+    private static final BLOCKCHAIN2 = BLOCKCHAIN1;
+    private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
+    private static final BLOCKCHAIN4 = RandomContainerCreator.createBlockChain(5)
 
     /**
      * @author Alexander Voroshilov
@@ -26,11 +30,6 @@ class BlockChainTest extends Specification {
         then: "they are equal"
         blockChain1.equals(blockChain2)
     }
-
-    private static final BLOCKCHAIN1 = RandomContainerCreator.createBlockChain(3);
-    private static final BLOCKCHAIN2 = BLOCKCHAIN1;
-    private static final BLOCKCHAIN3 = RandomContainerCreator.createBlockChain(3)
-    private static final BLOCKCHAIN4 = RandomContainerCreator.createBlockChain(5)
 
     /**
      * @author Marina Krylova
@@ -173,6 +172,34 @@ class BlockChainTest extends Specification {
         BlockChain blockChain = new BlockChain(wrongList)
 
         then: "constructor throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that constructor by String throws an exception"() {
+        given: "string of empty json array"
+        String jsonString = "[]"
+
+        when: "user creates blockchain with this string"
+        BlockChain blockChain = new BlockChain(jsonString)
+
+        then: "constructor throws an exception"
+        BlockChainException exception = thrown()
+    }
+
+    /**
+     * @author Alexander Voroshilov
+     * */
+    def "Ensure that method add throws an exception"() {
+        given: "blockchain"
+        BlockChain blockChain = RandomContainerCreator.createBlockChain()
+
+        when: "user adds block with incorrect hash-code"
+        blockChain.add(RandomContainerCreator.createBlockWithRandomHashCode())
+
+        then: "method throws an exception"
         BlockChainException exception = thrown()
     }
 

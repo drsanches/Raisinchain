@@ -8,3 +8,4 @@
 server/target/test-classes/containers/BlockChainTest.class
 *.class
 *.class
+*.class
