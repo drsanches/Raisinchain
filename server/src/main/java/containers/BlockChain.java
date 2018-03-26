@@ -130,7 +130,7 @@ public class BlockChain {
         return true;
     }
 
-    public void saveToJsonFile(String filename) throws org.json.JSONException, java.io.IOException {
+    public void saveToJsonFile(String filename) throws java.io.IOException {
         FileWriter writer = new FileWriter(filename);
         writer.write(getJsonArray().toString());
         writer.close();
