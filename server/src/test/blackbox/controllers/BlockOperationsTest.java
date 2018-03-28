@@ -32,10 +32,10 @@ public class BlockOperationsTest extends controllers.BaseTest {
             blockTransactions.addTransaction(transactionsListBefore.getTransactions().get(0));
 
             ArrayList<HashMap.SimpleEntry<String, String>> query3 = new ArrayList<>();
-            query3.add(new HashMap.SimpleEntry<>("Transactions", blockTransactions.getJsonArray().toString()));
             query3.add(new HashMap.SimpleEntry<>("Block", lastBlock.getJsonObject().toString()));
+            query3.add(new HashMap.SimpleEntry<>("TransactionsList", blockTransactions.getJsonArray().toString()));
             Response response3 = sendPost("/mining", query3);
-            String responseBody3 = response3.getBody().toString();
+            String responseBody3 = response3.getBody().asString();
             Block createdBlock = new Block(responseBody3);
 
             ArrayList<HashMap.SimpleEntry<String, String>> query4 = new ArrayList<>();
