@@ -2,11 +2,14 @@ package controllers;
 
 
 import containers.Block;
-import helpers.RandomContainerCreator;
+import containers.RandomContainerCreator;
+import containers.TransactionsList;
 import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+
 import java.util.HashMap;
 
 /**
@@ -20,6 +23,7 @@ public class MiningControllerTest extends BaseTest {
     public void checkWrongParams() {
         HashMap<String, String> query1 = new HashMap<>();
         query1.put("WrongParameter", "Value");
+        query1.put("Block", "Value2");
 
         Response response = sendPost("/mining",query1);
 
@@ -35,7 +39,8 @@ public class MiningControllerTest extends BaseTest {
     public void checkWrongParams2() {
         HashMap<String, String> query2 = new HashMap<>();
         query2.put("Block", "Value1");
-        query2.put("Block2","Value2");
+        query2.put("TransactionsList","Value2");
+        query2.put("Block", "Value3");
 
         Response response = sendPost("/mining",query2);
 
@@ -49,8 +54,10 @@ public class MiningControllerTest extends BaseTest {
     @Test
     public void checkRequestData() {
         Block block = RandomContainerCreator.createBlockWithRandomHashCode();
+        TransactionsList transactionsList = RandomContainerCreator.createTransactionsList(5);
         HashMap<String, String> query = new HashMap<>();
         query.put("Block", block.getJsonObject().toString());
+        query.put("TransactionsList", transactionsList.getJsonArray().toString());
         Response response = sendPost("/mining", query);
 
         int responseStatus = response.getStatusCode();
@@ -58,9 +65,12 @@ public class MiningControllerTest extends BaseTest {
         String responseBody = response.getBody().asString();
 
         try {
+            String hash = block.calculateHashCode();
+            Block new_block = new Block(transactionsList, hash);
+            new_block.mining();
             Assert.assertEquals(responseStatus, HttpStatus.OK.value(), "error");
             Assert.assertEquals(responseHeader, "*", "error");
-            Assert.assertEquals(responseBody, block.calculateHashCode(), "error");
+            Assert.assertEquals(responseBody,new_block.getJsonObject().toString() , "error");
         }
         catch(Exception e) {
             Assert.fail(e.getMessage());
