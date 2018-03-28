@@ -37,21 +37,21 @@ public class AddBlockControllerTest extends BaseTest {
         HashMap<String, String> query3 = new HashMap<String, String>();
         query3.put("Block", "IncorrectJson");
 
+        Block newBlock = new Block(transactions, "IncorrectHash");
+        HashMap<String, String> query4 = new HashMap<String, String>();
+        query4.put("Block", newBlock.getJsonObject().toString());
+
         transactions.addTransaction(new Transaction("ooooooooooooooo"));
         Block block = new Block(transactions, lastBlockHash);
-        HashMap<String, String> query4 = new HashMap<String, String>();
-        query4.put("Block", block.getJsonObject().toString());
-
-        Block newBlock = new Block(transactions, "IncorrectHash");
         HashMap<String, String> query5 = new HashMap<String, String>();
-        query5.put("Transactions", newBlock.getJsonObject().toString());
+        query5.put("Block", block.getJsonObject().toString());
 
         return new Object[][] {
                 {query1, HttpStatus.BAD_REQUEST.value(), "Wrong parameter's name or count of parameters."},
                 {query2, HttpStatus.BAD_REQUEST.value(), "Wrong parameter's name or count of parameters."},
                 {query3, HttpStatus.BAD_REQUEST.value(), "A JSONObject text must begin with '{' at 1 [character 2 line 1]"},
-                {query4, HttpStatus.BAD_REQUEST.value(), "Wrong transactions."},
-                {query5, HttpStatus.BAD_REQUEST.value(), "Wrong hash-code."}
+                {query4, HttpStatus.BAD_REQUEST.value(), "Wrong hash-code."},
+                {query5, HttpStatus.BAD_REQUEST.value(), "Wrong transactions."}
         };
     }
 
@@ -81,8 +81,9 @@ public class AddBlockControllerTest extends BaseTest {
             String hashCode = blockChain.getChain().get(blockChain.getChain().size() - 1).getHashCode();
             TransactionsList transactionsList = new TransactionsList();
             transactionsList.loadFromJsonFile(Application.TRANSACTIONS_FILENAME);
-            transactionsList.addTransaction(transactionsList.getTransactions().get(0));
-            Block block = new Block(transactionsList, hashCode);
+            TransactionsList blockTransactions = new TransactionsList();
+            blockTransactions.addTransaction(transactionsList.getTransactions().get(0));
+            Block block = new Block(blockTransactions, hashCode);
 
             ArrayList<HashMap.SimpleEntry<String, String>> query1 = new ArrayList<>();
             query1.add(new HashMap.SimpleEntry<>("Block", block.getJsonObject().toString()));
@@ -97,57 +98,6 @@ public class AddBlockControllerTest extends BaseTest {
             Assert.assertEquals(responseStatus, HttpStatus.BAD_REQUEST.value(), "error");
             Assert.assertEquals(responseHeader, "*", "error");
             Assert.assertEquals(responseBody, "Wrong parameter's name or count of parameters.", "error");
-        } catch (Exception e) {
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void checkSuccessfulAdding() {
-        try {
-
-            Response response1 = sendPost("/getchain");
-            String responseBody1 = response1.getBody().asString();
-            BlockChain blockChainBefore = new BlockChain(responseBody1);
-            int blockChainSizeBefore = blockChainBefore.size();
-            Block lastBlock = blockChainBefore.getChain().get(blockChainBefore.getChain().size() - 1);
-
-            Response response2 = sendPost("/gettransactions");
-            String responseBody2 = response2.getBody().asString();
-            TransactionsList transactionsListBefore = new TransactionsList(responseBody2);
-            int transactionsListSizeBefore = transactionsListBefore.size();
-            TransactionsList blockTransactions = new TransactionsList();
-            blockTransactions.addTransaction(transactionsListBefore.getTransactions().get(0));
-
-            ArrayList<HashMap.SimpleEntry<String, String>> query3 = new ArrayList<>();
-            query3.add(new HashMap.SimpleEntry<>("Transactions", blockTransactions.getJsonArray().toString()));
-            query3.add(new HashMap.SimpleEntry<>("Block", lastBlock.getJsonObject().toString()));
-            Response response3 = sendPost("/mining", query3);
-            String responseBody3 = response3.getBody().toString();
-            Block createdBlock = new Block(responseBody3);
-
-            ArrayList<HashMap.SimpleEntry<String, String>> query4 = new ArrayList<>();
-            query4.add(new HashMap.SimpleEntry<>("Block", createdBlock.getJsonObject().toString()));
-            Response response4 = sendPost("/addblock", query4);
-            int responseStatus = response4.getStatusCode();
-            String responseHeader = response4.getHeader("Access-Control-Allow-Origin");
-            String responseBody = response4.getBody().asString();
-
-            Response response5 = sendPost("/getchain");
-            String responseBody5 = response5.getBody().asString();
-            BlockChain blockChainAfter = new BlockChain(responseBody5);
-            int blockChainSizeAfter = blockChainAfter.size();
-
-            Response response6 = sendPost("/gettransactions");
-            String responseBody6 = response6.getBody().asString();
-            TransactionsList transactionsListAfter = new TransactionsList(responseBody6);
-            int transactionsListSizeAfter = transactionsListAfter.size();
-
-            Assert.assertEquals(responseStatus, HttpStatus.OK.value(), "error");
-            Assert.assertEquals(responseHeader, "*", "error");
-            Assert.assertEquals(responseBody, "Your block has been connected to chain.", "error");
-            Assert.assertEquals(blockChainSizeAfter, blockChainSizeBefore + 1, "error");
-            Assert.assertEquals(transactionsListSizeAfter, transactionsListSizeBefore - 1, "error");
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
