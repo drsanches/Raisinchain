@@ -12,6 +12,10 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author Irina Tokareva
+ */
+
 public class BlockOperationsTest extends controllers.BaseTest {
 
     @Test
