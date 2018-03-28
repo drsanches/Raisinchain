@@ -1,6 +1,7 @@
 package containers
 
 import containersExceptions.BlockException
+import helpers.RandomContainerCreator
 import org.json.JSONException
 import org.json.JSONObject
 import spock.lang.*
