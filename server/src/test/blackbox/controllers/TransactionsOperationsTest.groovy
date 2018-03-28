@@ -7,17 +7,19 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import static java.net.HttpURLConnection.HTTP_OK;
 
-
+/**
+ * @author Marina Krylova
+ * */
 class TransactionsOperationsTest extends controllers.BaseTest {
 
     @Test
-    public void checkOkRequest() {
+    public void checkSuccessfulTransactionsOperations() {
 
         //send a request to /gettransactions to get an actual list of transactions
         Response responseOfList1 = sendPost("/gettransactions");
         String responseHeader = responseOfList1.getHeader("Access-Control-Allow-Origin");
 
-        Assert.assertEquals(responseOfList1.statusCode(), HTTP_OK, "error");
+        Assert.assertEquals(responseOfList1.statusCode(), HTTP_OK, "error: can't get the list of transactions");
         Assert.assertEquals(responseHeader, "*", "error: wrong header");
 
         String List1 = responseOfList1.getBody().asString();
@@ -32,7 +34,7 @@ class TransactionsOperationsTest extends controllers.BaseTest {
         Response addTransactionResponse = sendPost("/addtransaction", query);
         responseHeader = addTransactionResponse.getHeader("Access-Control-Allow-Origin");
 
-        Assert.assertEquals(addTransactionResponse.statusCode(), HTTP_OK, "error");
+        Assert.assertEquals(addTransactionResponse.statusCode(), HTTP_OK, "error: transaction was not added");
         Assert.assertEquals(responseHeader, "*", "error: wrong header");
 
 
@@ -45,18 +47,12 @@ class TransactionsOperationsTest extends controllers.BaseTest {
 
         String List2 = responseOfList2.getBody().asString();
         TransactionsList list2 = new TransactionsList(List2);
-
         int sizeOfList2 = list2.size();
 
-        String tr = query.get("Transaction");
-
-        boolean isTransactionAdded = list2.contains(new Transaction(tr));
+        boolean isTransactionAdded = list2.contains(new Transaction(query.get("Transaction")));
 
         Assert.assertEquals(sizeOfList2 , sizeOfList1 + 1, "error: transaction was not written");
         Assert.assertEquals(isTransactionAdded , true, "error: transaction was not written");
-
-
-
 
     }
 }
