@@ -15,9 +15,9 @@ class TransactionsOperationsTest extends controllers.BaseTest {
 
         //send a request to /gettransactions to get an actual list of transactions
         Response responseOfList1 = sendPost("/gettransactions");
-        Assert.assertEquals(responseOfList1.statusCode(), HTTP_OK, "error");
         String responseHeader = responseOfList1.getHeader("Access-Control-Allow-Origin");
 
+        Assert.assertEquals(responseOfList1.statusCode(), HTTP_OK, "error");
         Assert.assertEquals(responseHeader, "*", "error: wrong header");
 
         String List1 = responseOfList1.getBody().asString();
