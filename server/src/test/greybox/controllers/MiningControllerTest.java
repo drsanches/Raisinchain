@@ -2,7 +2,7 @@ package controllers;
 
 
 import containers.Block;
-import containers.RandomContainerCreator;
+import helpers.RandomContainerCreator;
 import containers.TransactionsList;
 import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
@@ -53,8 +53,8 @@ public class MiningControllerTest extends BaseTest {
 
     @Test
     public void checkRequestData() {
-        Block block = RandomContainerCreator.createBlockWithRandomHashCode();
-        TransactionsList transactionsList = RandomContainerCreator.createTransactionsList(5);
+        Block block = helpers.RandomContainerCreator.createBlockWithRandomHashCode();
+        TransactionsList transactionsList = helpers.RandomContainerCreator.createTransactionsList(5);
         HashMap<String, String> query = new HashMap<>();
         query.put("Block", block.getJsonObject().toString());
         query.put("TransactionsList", transactionsList.getJsonArray().toString());
