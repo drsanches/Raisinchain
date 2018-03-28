@@ -21,18 +21,18 @@ import java.util.Map;
 @RestController
 public class MiningController {
 
-    @RequestMapping(value = "/calculatehash", method = RequestMethod.POST)
+    @RequestMapping(value = "/mining", method = RequestMethod.POST)
     public ResponseEntity<String> addTransactionListandBlock(WebRequest webrequest) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         Map<String, String[]> parameters = webrequest.getParameterMap();
 
         try {
-            //return hash-code if webrequest containes only one key "Block" with one String value
-            if ((parameters.size() == 1)&&(parameters.containsKey("Block"))&&(parameters.get("Block").length == 1)) {
+            if ((parameters.size() == 2)&&(parameters.containsKey("Block"))&&(parameters.containsKey("TransactionsList"))&&(parameters.get("Block").length == 1)&&(parameters.get("TransactionsList").length == 1)) {
 
                 try {
                     Block block = new Block(parameters.get("Block")[0]);
+                    TransactionsList transactionsList = new TransactionsList(parameters.get("TransactionsList")[0]);
                 }
                 catch (Exception exception) {
                     return ResponseEntity
@@ -43,11 +43,16 @@ public class MiningController {
 
 
                 Block block = new Block(parameters.get("Block")[0]);
+                TransactionsList transactionsList = new TransactionsList(parameters.get("TransactionsList")[0]);
+                String ex_hash = block.calculateHashCode();
+                Block new_block = new Block(transactionsList, ex_hash);
+
+                new_block.mining();
 
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .headers(responseHeaders)
-                        .body(block.calculateHashCode());
+                        .body(new_block.getJsonObject().toString());
 
                 //return bad_request if number of parameters or parameter name are wrong
             } else  return ResponseEntity
