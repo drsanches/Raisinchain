@@ -3,21 +3,13 @@ package controllers;
 
 import containers.Block;
 import containers.RandomContainerCreator;
-import containers.Transaction;
-import containers.TransactionsList;
 import io.restassured.response.Response;
-import jdk.nashorn.api.scripting.JSObject;
-import main.Application;
-import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 import java.util.HashMap;
-
-import static java.net.HttpURLConnection.HTTP_BAD_REQUEST;
-import static java.net.HttpURLConnection.HTTP_OK;
 
 /**
  * @author Anastasiia Shalygina
