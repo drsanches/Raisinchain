@@ -25,6 +25,24 @@ class BlockTest extends Specification {
     }
 
     /**
+     * @author Marina Krylova
+     * */
+    def "getNonce"() {
+        when: "we have a block"
+        TransactionsList transactionsList = new TransactionsList()
+        transactionsList.addTransaction(new Transaction("rt1"))
+        transactionsList.addTransaction(new Transaction("rt2"))
+        transactionsList.addTransaction(new Transaction("rt3"))
+        String hashCode = "hash"
+
+        int n = 5
+        Block b = new Block(transactionsList, hashCode, n)
+
+        then: "getNonce() == 5"
+        b.getNonce() == n
+    }
+
+    /**
      * @author Alexander Voroshilov
      * */
     def "equals"() {

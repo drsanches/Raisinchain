@@ -57,7 +57,7 @@ public class Block {
      */
     @Override
     public boolean equals(Object b){
-        return ((transactions.equals(((Block) b).transactions))&&(hashCode.equals(((Block) b).hashCode)));
+        return ((transactions.equals(((Block) b).transactions))&&(hashCode.equals(((Block) b).hashCode))&&nonce == ((Block) b).nonce);
     }
 
     public TransactionsList getTransactionsList() {
@@ -70,6 +70,10 @@ public class Block {
 
     public int getNonce() {
         return nonce;
+    }
+
+    public void incrementNonce() {
+        nonce++;
     }
 
     public JSONObject getJsonObject() throws org.json.JSONException {
@@ -87,8 +91,8 @@ public class Block {
 
     public void mining() {
         while (!isZerosCountCorrect(BlockChain.FIRST_ZEROS_COUNT)) {
-            nonce++;
-            System.out.println("Nonce: " + String.valueOf(nonce) + ", hash-code: " + calculateHashCode());
+            incrementNonce();
+//            System.out.println("Nonce: " + String.valueOf(nonce) + ", hash-code: " + calculateHashCode());
         }
     }
 
