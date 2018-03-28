@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 public class MiningController {
 
-    @RequestMapping(value = "/gethash", method = RequestMethod.POST)
+    @RequestMapping(value = "/calculatehash", method = RequestMethod.POST)
     public ResponseEntity<String> addTransactionListandBlock(WebRequest webrequest) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");

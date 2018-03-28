@@ -147,7 +147,7 @@ class BlockChainTest extends Specification {
 
         when:"put values to new chain"
         String h = blockChain.chain.get(0).hashCode
-        String y = blockChain.getPartOfJsonArray(h).toString()
+          String y = blockChain.getPartOfJsonArray(h).toString()
 
         List<Block> w = blockChain.getPartOfChain(h)
         List<Block> q = new ArrayList<Block>()
