@@ -76,7 +76,6 @@ public class BlockChain {
     public void add(Block block) throws BlockChainException {
         String a = chain.get(chain.size() - 1).calculateHashCode();
 
-//        TODO: Do something
         if (!block.getHashCode().equals(chain.get(chain.size() - 1).calculateHashCode()))
             throw new BlockChainException("Wrong hash-code.");
 

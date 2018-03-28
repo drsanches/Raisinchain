@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/blackbox" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/greybox" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/Helpers" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
