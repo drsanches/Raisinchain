@@ -3,6 +3,9 @@ package containers;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import org.json.JSONObject;
+import sun.security.krb5.internal.crypto.Nonce;
+
+import java.security.MessageDigest;
 
 /**
  * @author Alexander Voroshilov
@@ -11,6 +14,7 @@ public class Block {
 
     private TransactionsList transactions;
     private String hashCode;
+    private int nonce = 0;
     public static final int MAX_TRANSACTIONS_COUNT = 10;
 
     public Block(TransactionsList transactionsList, String hash) throws BlockException {
@@ -19,6 +23,12 @@ public class Block {
 
         transactions = transactionsList;
         hashCode = hash;
+        nonce = 0;
+    }
+
+    public Block(TransactionsList transactionsList, String hash, int newNonce) throws BlockException {
+        this(transactionsList, hash);
+        nonce = newNonce;
     }
 
     public Block(String jsonObjectString) throws org.json.JSONException, TransactionException, BlockException {
@@ -31,15 +41,17 @@ public class Block {
 
         transactions = transactionsList;
         hashCode = jsonObject.getString("Hash-code");
+        nonce = jsonObject.getInt("Nonce");
     }
 
     public static Block createFirstBlock() {
-        //TODO: Think about it
         try {
-            return new Block(TransactionsList.createFirstTransactionsList(), "First hash");
+            Block block = new Block(TransactionsList.createFirstTransactionsList(), "0000000000000000000000000000000000000000000000000000000000000000");
+            block.mining();
+            return block;
         }
         catch (BlockException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -59,21 +71,44 @@ public class Block {
         return hashCode;
     }
 
+    public int getNonce() {
+        return nonce;
+    }
+
+    public void incrementNonce() {
+        nonce++;
+    }
+
     public JSONObject getJsonObject() throws org.json.JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Transactions", transactions.getJsonArray());
         jsonObject.put("Hash-code", hashCode);
+        jsonObject.put("Nonce", nonce);
         return jsonObject;
     }
 
-    /**
-     * @author Irina Tokareva
-     */
     public String calculateHashCode() {
-        return String.valueOf(getJsonObject().toString().hashCode());
+        String blockString = getJsonObject().toString();
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(blockString);
     }
 
-    public boolean isCorrect(Block previousBlock) {
-        return hashCode.equals(previousBlock.calculateHashCode());
+    public void mining() {
+        while (!isZerosCountCorrect(BlockChain.FIRST_ZEROS_COUNT)) {
+            incrementNonce();
+            System.out.println("Nonce: " + String.valueOf(nonce) + ", hash-code: " + calculateHashCode());
+        }
+    }
+
+    public boolean isZerosCountCorrect(int firstZerosCount) {
+        String thisHashCode = calculateHashCode();
+        for (int i = 0; i < firstZerosCount; i++) {
+            if (thisHashCode.charAt(i) != '0')
+                return false;
+        }
+        return true;
+    }
+
+    public boolean isCorrect(Block previousBlock, int firstZerosCount) {
+        return hashCode.equals(previousBlock.calculateHashCode()) && isZerosCountCorrect(firstZerosCount);
     }
 }

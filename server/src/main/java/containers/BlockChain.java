@@ -4,7 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
 import containersExceptions.BlockChainException;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
@@ -16,6 +15,7 @@ import java.io.*;
  */
 public class BlockChain {
     private ArrayList<Block> chain;
+    public static final int FIRST_ZEROS_COUNT = 2;
 
     public BlockChain() {
         chain = new ArrayList<Block>();
@@ -75,6 +75,8 @@ public class BlockChain {
 
     public void add(Block block) throws BlockChainException {
         String a = chain.get(chain.size() - 1).calculateHashCode();
+
+//        TODO: Do something
         if (!block.getHashCode().equals(chain.get(chain.size() - 1).calculateHashCode()))
             throw new BlockChainException("Wrong hash-code.");
 
@@ -125,7 +127,7 @@ public class BlockChain {
 
     public boolean isCorrect() {
         for (int i = 1; i < size(); i++)
-            if (!chain.get(i).isCorrect(chain.get(i - 1)))
+            if (!chain.get(i).isCorrect(chain.get(i - 1), FIRST_ZEROS_COUNT))
                 return false;
         return true;
     }

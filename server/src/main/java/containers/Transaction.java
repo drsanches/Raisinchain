@@ -34,12 +34,11 @@ public class Transaction{
      * @author Alexander Voroshilov
      */
     public static Transaction createFirstTransaction() {
-        //TODO: Think about it
         try {
             return new Transaction("First transaction");
         }
         catch (TransactionException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
