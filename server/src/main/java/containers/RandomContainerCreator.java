@@ -5,7 +5,6 @@ import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import java.util.Random;
 
-
 /**
  * @author Alexander Voroshilov
  * */
@@ -28,7 +27,7 @@ public class RandomContainerCreator {
             return new Transaction(transaction);
         }
         catch (TransactionException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,10 +59,12 @@ public class RandomContainerCreator {
         String hashCode = previousBlock.calculateHashCode();
 
         try {
-            return new Block(transactionsList, hashCode);
+            Block block = new Block(transactionsList, hashCode);
+            block.mining();
+            return block;
         }
         catch (BlockException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -80,7 +81,7 @@ public class RandomContainerCreator {
             return new Block(transactionsList, hashCode);
         }
         catch (BlockException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -94,7 +95,7 @@ public class RandomContainerCreator {
             return blockChain;
         }
         catch (BlockChainException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

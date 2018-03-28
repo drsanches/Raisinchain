@@ -1,7 +1,6 @@
 package main;
 
 import containers.BlockChain;
-import containers.RandomContainerCreator;
 import containers.TransactionsList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,8 +22,8 @@ public class Application {
             blockChain.loadFromJsonFile(BLOCKCHAIN_FILENAME);
         }
         catch(Exception e) {
-            //TODO: write code
             System.err.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         SpringApplication.run(Application.class, args);
