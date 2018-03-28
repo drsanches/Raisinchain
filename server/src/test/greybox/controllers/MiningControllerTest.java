@@ -21,7 +21,7 @@ public class MiningControllerTest extends BaseTest {
         HashMap<String, String> query1 = new HashMap<>();
         query1.put("WrongParameter", "Value");
 
-        Response response = sendPost("/calculatehash",query1);
+        Response response = sendPost("/mining",query1);
 
         int responseStatus = response.getStatusCode();
         String responseHeader = response.getHeader("Access-Control-Allow-Origin");
@@ -37,7 +37,7 @@ public class MiningControllerTest extends BaseTest {
         query2.put("Block", "Value1");
         query2.put("Block2","Value2");
 
-        Response response = sendPost("/calculatehash",query2);
+        Response response = sendPost("/mining",query2);
 
         int responseStatus = response.getStatusCode();
         String responseHeader = response.getHeader("Access-Control-Allow-Origin");
@@ -51,7 +51,7 @@ public class MiningControllerTest extends BaseTest {
         Block block = RandomContainerCreator.createBlockWithRandomHashCode();
         HashMap<String, String> query = new HashMap<>();
         query.put("Block", block.getJsonObject().toString());
-        Response response = sendPost("/calculatehash", query);
+        Response response = sendPost("/mining", query);
 
         int responseStatus = response.getStatusCode();
         String responseHeader = response.getHeader("Access-Control-Allow-Origin");
