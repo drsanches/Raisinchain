@@ -72,10 +72,6 @@ public class Block {
         return nonce;
     }
 
-    public void incrementNonce() {
-        nonce++;
-    }
-
     public JSONObject getJsonObject() throws org.json.JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("Transactions", transactions.getJsonArray());
@@ -91,7 +87,7 @@ public class Block {
 
     public void mining() {
         while (!isZerosCountCorrect(BlockChain.FIRST_ZEROS_COUNT)) {
-            incrementNonce();
+            nonce++;
 //            System.out.println("Nonce: " + String.valueOf(nonce) + ", hash-code: " + calculateHashCode());
         }
     }
