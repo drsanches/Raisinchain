@@ -1,7 +1,5 @@
 package controllers;
 
-
-
 import containers.TransactionsList;
 import io.restassured.response.Response;
 import main.Application;

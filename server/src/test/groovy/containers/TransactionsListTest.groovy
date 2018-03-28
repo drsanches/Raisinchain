@@ -1,6 +1,7 @@
 package containers
 
 import containersExceptions.TransactionsListException
+import helpers.RandomContainerCreator
 import org.json.JSONArray
 import org.json.JSONException
 import spock.lang.Specification

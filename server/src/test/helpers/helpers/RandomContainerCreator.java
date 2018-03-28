@@ -1,5 +1,9 @@
-package containers;
+package helpers;
 
+import containers.Block;
+import containers.BlockChain;
+import containers.Transaction;
+import containers.TransactionsList;
 import containersExceptions.BlockChainException;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;

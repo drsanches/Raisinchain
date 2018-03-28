@@ -3,9 +3,6 @@ package containers;
 import containersExceptions.BlockException;
 import containersExceptions.TransactionException;
 import org.json.JSONObject;
-import sun.security.krb5.internal.crypto.Nonce;
-
-import java.security.MessageDigest;
 
 /**
  * @author Alexander Voroshilov

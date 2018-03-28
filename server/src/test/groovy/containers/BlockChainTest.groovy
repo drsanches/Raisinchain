@@ -1,6 +1,7 @@
 package containers
 
 import containersExceptions.BlockChainException
+import helpers.RandomContainerCreator
 import main.Application
 import org.json.JSONException
 import spock.lang.Specification

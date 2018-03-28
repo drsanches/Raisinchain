@@ -2,13 +2,11 @@ package controllers;
 
 
 import containers.Block;
-import containers.RandomContainerCreator;
+import helpers.RandomContainerCreator;
 import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-
 import java.util.HashMap;
 
 /**
