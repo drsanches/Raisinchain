@@ -25,14 +25,13 @@ public class AddBlockController {
         Map<String, String[]> parameters = webrequest.getParameterMap();
 
         try {
-            if ((parameters.size() == 2)&&(parameters.containsKey("Transactions"))&&(parameters.get("Transactions").length == 1
-            &&(parameters.containsKey("Hash"))&&(parameters.get("Hash")).length == 1)) {
+            if ((parameters.size() == 1)&&(parameters.containsKey("Block"))&&(parameters.get("Block").length == 1)) {
 
                 BlockChain blockChain = Application.blockChain;
                 TransactionsList transactionsList = Application.transactionsList;
 
                 try {
-                    TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
+                    Block block = new Block(parameters.get("Block")[0]);
                 }
                 catch (Exception exception) {
                     return ResponseEntity
@@ -41,36 +40,33 @@ public class AddBlockController {
                             .body(exception.getMessage());
                 }
 
-                TransactionsList blockTransactions = new TransactionsList(parameters.get("Transactions")[0]);
-                String hashCode = parameters.get("Hash")[0];
-                Block block = new Block(blockTransactions, hashCode);
+                Block block = new Block(parameters.get("Block")[0]);
+                TransactionsList blockTransactions = block.getTransactionsList();
 
-                String lastBlockHash = blockChain.getChain().get(blockChain.getChain().size() - 1).calculateHashCode();
+                for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
+                    if(!transactionsList.contains(blockTransactions.getTransactions().get(i))) {
+                        return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .headers(responseHeaders)
+                                .body("Wrong transactions.");
+                    }
+                }
 
-                // check whether hash code of the last blockchain's block match hash in received block or not
-                if (lastBlockHash.equals(block.getHashCode())) {
-                    //check whether all transactions from received block are in the list of transactions or not
-                    for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                        if(!transactionsList.contains(blockTransactions.getTransactions().get(i))) {
-                            return ResponseEntity
-                                    .status(HttpStatus.BAD_REQUEST)
-                                    .headers(responseHeaders)
-                                    .body("Wrong transactions.");
-                        }
-                    }
-                    for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                        transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
-                    }
-                    transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
+                try {
                     blockChain.add(block);
                     blockChain.saveToJsonFile(Application.BLOCKCHAIN_FILENAME);
                 }
-                else {
+                catch (Exception exception) {
                     return ResponseEntity
-                            .status(HttpStatus.OK)
+                            .status(HttpStatus.BAD_REQUEST)
                             .headers(responseHeaders)
-                            .body("Wrong hash code was sent or block where you wanted to connect has already been connected.");
+                            .body(exception.getMessage());
                 }
+
+                for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
+                    transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
+                }
+                transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
                 return ResponseEntity
                         .status(HttpStatus.OK)
                         .headers(responseHeaders)
