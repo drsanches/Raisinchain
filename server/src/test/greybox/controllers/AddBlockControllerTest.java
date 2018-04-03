@@ -5,7 +5,7 @@ import containers.Block;
 import containers.TransactionsList;
 import containers.Transaction;
 import io.restassured.response.Response;
-import main.Application;
+import application.Application;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;

@@ -2,7 +2,7 @@ package controllers;
 
 import containers.TransactionsList;
 import io.restassured.response.Response;
-import main.Application;
+import application.Application;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

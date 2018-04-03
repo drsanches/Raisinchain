@@ -1,4 +1,4 @@
-package main;
+package application;
 
 import containers.BlockChain;
 import containers.TransactionsList;
@@ -15,6 +15,8 @@ public class Application {
 
     public static TransactionsList transactionsList = new TransactionsList();
     public static BlockChain blockChain = new BlockChain();
+
+    public static int a = 10;
 
     public static void main(String[] args) {
         try {

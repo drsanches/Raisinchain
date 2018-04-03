@@ -1,5 +1,6 @@
-package main;
+package application.controllers;
 
+import application.Application;
 import containers.TransactionsList;
 import containers.Transaction;
 import org.springframework.http.HttpHeaders;

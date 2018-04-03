@@ -1,7 +1,6 @@
-package main;
+package application.controllers;
 
 import containers.Block;
-import containers.Transaction;
 import containers.TransactionsList;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 /**

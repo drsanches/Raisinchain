@@ -2,7 +2,7 @@ package controllers;
 
 import containers.TransactionsList;
 import io.restassured.response.Response;
-import main.Application;
+import application.Application;
 import org.springframework.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;

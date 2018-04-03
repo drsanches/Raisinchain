@@ -1,5 +1,6 @@
-package main;
+package application.controllers;
 
+import application.Application;
 import containersExceptions.BlockChainException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

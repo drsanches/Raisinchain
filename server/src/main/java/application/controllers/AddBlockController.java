@@ -1,5 +1,6 @@
-package main;
+package application.controllers;
 
+import application.Application;
 import containers.Block;
 import containers.BlockChain;
 import containers.TransactionsList;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
-import java.util.List;
 
 /**
  * @author Irina Tokareva

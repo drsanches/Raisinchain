@@ -2,7 +2,7 @@ package containers
 
 import containersExceptions.BlockChainException
 import helpers.RandomContainerCreator
-import main.Application
+import application.Application
 import org.json.JSONException
 import spock.lang.Specification
 import spock.lang.Unroll
