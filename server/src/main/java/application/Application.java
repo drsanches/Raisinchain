@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class Application {
-    public final static String TRANSACTIONS_FILENAME = "transactions.json";
-    public final static String BLOCKCHAIN_FILENAME = "blockchain.json";
+    public final static String TRANSACTIONS_FILENAME = "server/transactions.json";
+    public final static String BLOCKCHAIN_FILENAME = "server/blockchain.json";
 
     public static TransactionsList transactionsList = new TransactionsList();
     public static BlockChain blockChain = new BlockChain();

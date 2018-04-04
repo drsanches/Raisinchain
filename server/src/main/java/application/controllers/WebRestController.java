@@ -1,6 +1,7 @@
 package application.controllers;
 
 import application.Application;
+import application.services.KafkaConsumer;
 import application.services.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ public class WebRestController {
 	
 	@Autowired
     KafkaProducer producer;
+
+	@Autowired
+    KafkaConsumer consumer;
 	
 	@GetMapping(value="/producer")
 	public String producer(@RequestParam("data")String data) {
@@ -23,6 +27,6 @@ public class WebRestController {
 	
 	@GetMapping(value="/consumer")
 	public String getAllRecievedMessage() {
-		return "a = " + Application.a;
+		return "a=" + Application.a;
 	}
 }

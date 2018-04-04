@@ -1,23 +1,27 @@
 package application.controllers;
 
-import application.Application;
-import containers.TransactionsList;
+
+import application.services.*;
 import containers.Transaction;
+import containers.TransactionsList;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.context.request.WebRequest;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+import application.Application;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
-/**
- * @author Marina Krylova
- */
+import java.util.Map;
+
 
 @RestController
 public class AddTransactionController {
+
+    @Autowired
+    KafkaTransactionProducer producer;
 
     @RequestMapping(value = "/addtransaction", method = RequestMethod.POST)
     public ResponseEntity<String> addTransaction(WebRequest webrequest) {
@@ -26,13 +30,13 @@ public class AddTransactionController {
 
         Map<String, String[]> parameters = webrequest.getParameterMap();
 
+
         try {
 //            return ok if webrequest containes only one key 'Transaction" with one String value
             if ((parameters.size() == 1)&&(parameters.containsKey("Transaction"))&&(parameters.get("Transaction").length == 1)) {
                 //get a list of transactions, add a new one and save them all to json file
-                TransactionsList list = Application.transactionsList;
-                list.addTransaction(new Transaction(parameters.get("Transaction")[0]));
-                list.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
+
+                producer.send(parameters.get("Transaction")[0]);
 
                 return ResponseEntity
                         .status(HttpStatus.OK)
@@ -55,4 +59,3 @@ public class AddTransactionController {
 
 
 }
-

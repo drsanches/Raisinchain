@@ -3,6 +3,7 @@ package containers;
 import containersExceptions.TransactionException;
 import containersExceptions.TransactionsListException;
 import org.json.JSONArray;
+import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
@@ -26,6 +27,16 @@ public class TransactionsList{
 
     public TransactionsList(ArrayList<Transaction> tr) {
         transactions = tr;
+    }
+
+    //untested method
+    public ArrayList<String> toArrayList(){
+
+        ArrayList<String> list = new ArrayList<>();
+        for (int i=0; i<this.size(); i++){
+            list.add(transactions.get(i).getTransaction());
+        }
+        return list;
     }
 
     public void addTransaction(Transaction tr) {
