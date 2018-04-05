@@ -9,30 +9,42 @@ Raisinchain is a toy project to understand how the blockchain works.
     .
     └── server
         ├── src
-        │   ├── main                                   
-        │   │   ├── java                                #application sourses
-        │   │   │   ├── containers                      
-        │   │   │   ├── containersExceptions
-        │   │   │   └── main
+        │   ├── main                                application sourses
+        │   │   ├── java
+        │   │   │   ├── application
+        │   │   │   │   ├── configurations          Kafka configurations
+        │   │   │   │   ├── controllers
+        │   │   │   │   └── services
+        │   │   │   ├── containers
+        │   │   │   └── containersExceptions
         │   │   └── resources
-        │   └── test                                    #test sources
-        │       └── groovy
-        │           └── containers
-        └── target                                      #compile sources
+        │   └── test                                test sources
+        │       ├── blackbox                        integration tests
+        │       │   └── controllers
+        │       ├── greybox
+        │       │   └── controllers
+        │       ├── groovy                          unit-tests
+        │       │   └── containers
+        │       └── helpers
+        │           └── helpers
+        └── target                                  compile sources
             ├── classes
+            │   ├── application
+            │   │   ├── configurations
+            │   │   ├── controllers
+            │   │   └── services
             │   ├── containers
-            │   ├── containersExceptions
-            │   └── main
+            │   └── containersExceptions
             ├── generated-sources
             │   └── annotations
             └── test-classes
                 └── containers
 
-
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Spring Boot](https://projects.spring.io/spring-boot/) - Web Application
+* [Apache Kafka](https://kafka.apache.org/) - Distributed peer-to-peer communication
 
  
 
