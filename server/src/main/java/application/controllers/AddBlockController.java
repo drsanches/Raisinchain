@@ -52,15 +52,9 @@ public class AddBlockController {
                         firstThreeTransactions.addTransaction(transactionsList.getTransactions().get(i));
                     }
 
-
                     String hashOfLastBlock = blockChain.getChain().get(blockChain.size() - 1).calculateHashCode();
-
                     Block new_block = new Block(firstThreeTransactions, hashOfLastBlock);
-
                     new_block.mining();
-
-                    blockProducer.send(new_block.getJsonObject().toString());
-
 
                     TransactionsList blockTransactions = new_block.getTransactionsList();
 
@@ -73,6 +67,7 @@ public class AddBlockController {
                         }
                     }
 
+                    blockProducer.send(new_block.getJsonObject().toString());
 
                     for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
                         transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
