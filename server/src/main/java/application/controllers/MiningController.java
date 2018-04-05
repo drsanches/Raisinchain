@@ -28,16 +28,16 @@ public class MiningController {
         try {
             if ((parameters.size() == 2)&&(parameters.containsKey("Block"))&&(parameters.containsKey("TransactionsList"))&&(parameters.get("Block").length == 1)&&(parameters.get("TransactionsList").length == 1)) {
 
-                try {
-                    Block block = new Block(parameters.get("Block")[0]);
-                    TransactionsList transactionsList = new TransactionsList(parameters.get("TransactionsList")[0]);
-                }
-                catch (Exception exception) {
-                    return ResponseEntity
-                            .status(HttpStatus.BAD_REQUEST)
-                            .headers(responseHeaders)
-                            .body(exception.getMessage());
-                }
+//                try {
+//                    Block block = new Block(parameters.get("Block")[0]);
+//                    TransactionsList transactionsList = new TransactionsList(parameters.get("TransactionsList")[0]);
+//                }
+//                catch (Exception exception) {
+//                    return ResponseEntity
+//                            .status(HttpStatus.BAD_REQUEST)
+//                            .headers(responseHeaders)
+//                            .body(exception.getMessage());
+//                }
 
 
                 Block block = new Block(parameters.get("Block")[0]);

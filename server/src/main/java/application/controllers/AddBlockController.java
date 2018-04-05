@@ -1,22 +1,33 @@
 package application.controllers;
 
 import application.Application;
+import application.services.KafkaBlockProducer;
 import containers.Block;
 import containers.BlockChain;
 import containers.TransactionsList;
+import containersExceptions.BlockException;
+import containersExceptions.TransactionException;
+import containersExceptions.TransactionsListException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+
+import java.io.IOException;
 import java.util.Map;
 
 /**
- * @author Irina Tokareva
+ * @authors Irina Tokareva, Marina Krylova
  */
 
 @RestController
 public class AddBlockController {
+
+
+    @Autowired
+    KafkaBlockProducer blockProducer;
 
     @RequestMapping(value = "/addblock", method = RequestMethod.POST)
     public ResponseEntity<String> addBlock(WebRequest webrequest) {
@@ -24,64 +35,68 @@ public class AddBlockController {
         responseHeaders.set("Access-Control-Allow-Origin", "*");
         Map<String, String[]> parameters = webrequest.getParameterMap();
 
+        if (Application.blockChain.size() == 1){
+            String firstBlock = Application.blockChain.getChain().get(0).getJsonObject().toString();
+            blockProducer.send(firstBlock);
+        }
         try {
-            if ((parameters.size() == 1)&&(parameters.containsKey("Block"))&&(parameters.get("Block").length == 1)) {
+            if ((parameters.size() == 0)) {
 
                 BlockChain blockChain = Application.blockChain;
                 TransactionsList transactionsList = Application.transactionsList;
 
-                try {
-                    Block block = new Block(parameters.get("Block")[0]);
-                }
-                catch (Exception exception) {
-                    return ResponseEntity
-                            .status(HttpStatus.BAD_REQUEST)
-                            .headers(responseHeaders)
-                            .body(exception.getMessage());
-                }
+                if (transactionsList.size() >= 3) {
 
-                Block block = new Block(parameters.get("Block")[0]);
-                TransactionsList blockTransactions = block.getTransactionsList();
-
-                for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                    if(!transactionsList.contains(blockTransactions.getTransactions().get(i))) {
-                        return ResponseEntity
-                                .status(HttpStatus.BAD_REQUEST)
-                                .headers(responseHeaders)
-                                .body("Wrong transactions.");
+                    TransactionsList firstThreeTransactions = new TransactionsList();
+                    for (int i = 0; i < 3; i++) {
+                        firstThreeTransactions.addTransaction(transactionsList.getTransactions().get(i));
                     }
-                }
 
-                try {
-                    blockChain.add(block);
-                    blockChain.saveToJsonFile(Application.BLOCKCHAIN_FILENAME);
-                }
-                catch (Exception exception) {
+
+                    String hashOfLastBlock = blockChain.getChain().get(blockChain.size() - 1).calculateHashCode();
+
+                    Block new_block = new Block(firstThreeTransactions, hashOfLastBlock);
+
+                    new_block.mining();
+
+                    blockProducer.send(new_block.getJsonObject().toString());
+
+
+                    TransactionsList blockTransactions = new_block.getTransactionsList();
+
+                    for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
+                        if (!transactionsList.contains(blockTransactions.getTransactions().get(i))) {
+                            return ResponseEntity
+                                    .status(HttpStatus.BAD_REQUEST)
+                                    .headers(responseHeaders)
+                                    .body("Wrong transactions.");
+                        }
+                    }
+
+
+                    for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
+                        transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
+                    }
+                    transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
+
                     return ResponseEntity
-                            .status(HttpStatus.BAD_REQUEST)
+                            .status(HttpStatus.OK)
                             .headers(responseHeaders)
-                            .body(exception.getMessage());
-                }
-
-                for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
-                    transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
-                }
-                transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
-                return ResponseEntity
-                        .status(HttpStatus.OK)
+                            .body("Your block has been connected to chain.");
+                } else return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
                         .headers(responseHeaders)
-                        .body("Your block has been connected to chain.");
+                        .body("Request cannot contain parameters.");
             }
-            else return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .headers(responseHeaders)
-                    .body("Wrong parameter's name or count of parameters.");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
-        catch (Exception exception) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .headers(responseHeaders)
-                    .body(exception.getMessage());
-        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .headers(responseHeaders)
+                .body("Wrong parameter's name or count of parameters.");
     }
 }

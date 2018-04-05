@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
  * @author Marina Krylova
  */
 @Service
-public class KafkaTransactionProducer {
+public class KafkaBlockProducer {
 
     @Autowired
-    private KafkaTemplate<String, String> TransactionProducer;
+    private KafkaTemplate<String, String> BlockProducer;
 
-    String kafkaTopic = "transactions";
+    String kafkaTopic = "blocks";
 
     public void send(String data) {
 
-        TransactionProducer.send(kafkaTopic, data);
+        BlockProducer.send(kafkaTopic, data);
     }
 }
