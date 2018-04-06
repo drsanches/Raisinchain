@@ -29,8 +29,7 @@ public class GetTransactionsController {
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
         if ((parameters.size() == 0)) {
-            Broadcaster broadcaster = new Broadcaster("transactions");
-            String responseBody = broadcaster.getDataFromTopic();
+            String responseBody = Application.transactionsList.getJsonArray().toString();
 
             return ResponseEntity
                     .status(HttpStatus.OK)

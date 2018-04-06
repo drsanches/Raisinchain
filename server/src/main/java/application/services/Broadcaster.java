@@ -1,5 +1,7 @@
 package application.services;
 
+import containers.Block;
+import containers.BlockChain;
 import containers.Transaction;
 import containers.TransactionsList;
 import org.apache.kafka.clients.consumer.*;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.UUID;
@@ -53,11 +56,9 @@ public class Broadcaster {
         }
     }
 
-    public String getDataFromTopic() {
+    public String getTransactions() {
         final int giveUp = 100;   int noRecordsCount = 0;
-
         while (true) {
-
             try {
                 TransactionsList transactionsList = new TransactionsList();
 
@@ -71,7 +72,25 @@ public class Broadcaster {
                 e.printStackTrace();
 
             }
+            consumer.commitAsync();
+        }
+    }
 
+    public String getChain() {
+        final int giveUp = 100;   int noRecordsCount = 0;
+        while (true) {
+            try {
+                ArrayList<Block> list = new ArrayList<Block>();
+                while (true) {
+                    ConsumerRecords<String, String> records = consumer.poll(1000);
+                    for (ConsumerRecord<String, String> record : records)
+                        list.add(new Block(record.value()));
+                    return new BlockChain(list).getJsonArray().toString();
+                }
+            }catch (Throwable e) {
+                e.printStackTrace();
+
+            }
             consumer.commitAsync();
         }
     }

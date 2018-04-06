@@ -29,7 +29,7 @@ public class Application {
 
         Broadcaster transactionsBroadcaster = new Broadcaster("transactions");
         try {
-            String list = transactionsBroadcaster.getDataFromTopic();
+            String list = transactionsBroadcaster.getTransactions();
             transactionsList = new TransactionsList(list);
         }catch (Throwable e) {
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class Application {
 
         Broadcaster blockBroadcaster = new Broadcaster("blocks");
         try {
-            String list = blockBroadcaster.getDataFromTopic();
+            String list = blockBroadcaster.getChain();
             blockChain = new BlockChain(list);
         }catch (Throwable e) {
             e.printStackTrace();
