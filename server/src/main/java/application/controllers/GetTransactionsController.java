@@ -3,6 +3,8 @@ package application.controllers;
 
 
 import application.Application;
+import application.services.Broadcaster;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,8 @@ public class GetTransactionsController {
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
         if ((parameters.size() == 0)) {
-            String responseBody = Application.transactionsList.getJsonArray().toString();
+            Broadcaster broadcaster = new Broadcaster();
+            String responseBody = broadcaster.getDataFromTopic();
 
             return ResponseEntity
                     .status(HttpStatus.OK)

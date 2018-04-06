@@ -1,9 +1,8 @@
 package application.services;
 
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import containers.Transaction;
+import containers.TransactionsList;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +31,9 @@ public class Broadcaster {
         final int giveUp = 100;   int noRecordsCount = 0;
 
         while (true) {
-//            System.out.println("--- consumer poll ---");
 
             try {
                 ConsumerRecords<String, String> consumerRecords = consumer.poll(100);
-//                System.out.println();
 
                 consumerRecords.forEach(record -> {
                     System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
@@ -44,6 +41,29 @@ public class Broadcaster {
                             record.partition(), record.offset());
                 });
             } catch (Throwable e) {
+                e.printStackTrace();
+
+            }
+
+            consumer.commitAsync();
+        }
+    }
+
+    public String getDataFromTopic() {
+        final int giveUp = 100;   int noRecordsCount = 0;
+
+        while (true) {
+
+            try {
+                TransactionsList transactionsList = new TransactionsList();
+
+                while (true) {
+                    ConsumerRecords<String, String> records = consumer.poll(1000);
+                    for (ConsumerRecord<String, String> record : records)
+                        transactionsList.addTransaction(new Transaction(record.value()));
+                    return transactionsList.getJsonArray().toString();
+                }
+            }catch (Throwable e) {
                 e.printStackTrace();
 
             }

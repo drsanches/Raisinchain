@@ -30,16 +30,16 @@ public class KafkaTransactionConsumer {
     public void processMessage(String content) throws IOException, TransactionException {
         log.info("received content = '{}'", content);
 
-        Producer<String, String> producer = createProducer();
-        try {
-            final ProducerRecord<String, String> record =
-                    new ProducerRecord<>("transactions", "Hello Mom " + content);
-
-            producer.send(record);
-        } finally {
-            producer.flush();
-            producer.close();
-        }
+//        Producer<String, String> producer = createProducer();
+//        try {
+//            final ProducerRecord<String, String> record =
+//                    new ProducerRecord<>("transactions", "Hello Mom " + content);
+//
+//            producer.send(record);
+//        } finally {
+//            producer.flush();
+//            producer.close();
+//        }
 
         TransactionsList transactionsList = Application.transactionsList;
         transactionsList.addTransaction(new Transaction(content));

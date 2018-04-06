@@ -1,5 +1,6 @@
 package application;
 
+import application.services.Broadcaster;
 import application.services.KafkaBlockConsumer;
 import application.services.KafkaBlockProducer;
 import application.services.KafkaTransactionProducer;
@@ -26,8 +27,23 @@ public class Application {
 
     public static void main(String[] args) throws BlockException {
 
+//        Broadcaster transactionsBroadcaster = new Broadcaster();
+//        try {
+//            String list = transactionsBroadcaster.getDataFromTopic();
+//            transactionsList = new TransactionsList(list);
+//        }catch (Throwable e) {
+//            e.printStackTrace();
+//
+//        }
+
+//        Broadcaster blockBroadcaster = new Broadcaster();
+//        try {
+//            blockChain = new BlockChain(blockBroadcaster.getDataFromTopic());
+//        }catch (Throwable e) {
+//            e.printStackTrace();
+//
+//        }
+
         SpringApplication.run(Application.class, args);
-
-
     }
 }

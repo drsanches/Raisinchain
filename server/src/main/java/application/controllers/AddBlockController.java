@@ -81,7 +81,7 @@ public class AddBlockController {
                 } else return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
                         .headers(responseHeaders)
-                        .body("Request cannot contain parameters.");
+                        .body("Transactions list containes less than 3 transactions");
             }
 
         } catch (Exception e) {
