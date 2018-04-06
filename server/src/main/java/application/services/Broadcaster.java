@@ -18,7 +18,11 @@ public class Broadcaster {
     private final Consumer<String, String> consumer;
 
     public Broadcaster() {
-        consumer = createConsumer();
+        consumer = createConsumer("transactions");
+    }
+
+    public Broadcaster(String topicName) {
+        consumer = createConsumer(topicName);
     }
 
     @PostConstruct
@@ -77,7 +81,7 @@ public class Broadcaster {
         consumer.close();
     }
 
-    private static Consumer<String, String> createConsumer() {
+    private static Consumer<String, String> createConsumer(String topicName) {
         Properties props = new Properties();
         //write here ip address which you want to connect to
 //        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.1:9092");
@@ -93,7 +97,7 @@ public class Broadcaster {
         Consumer<String, String> consumer = new KafkaConsumer<>(props);
 
         // Subscribe to the topic.
-        consumer.subscribe(Collections.singletonList("transactions"));
+        consumer.subscribe(Collections.singletonList(topicName));
         return consumer;
     }
 }

@@ -27,22 +27,23 @@ public class Application {
 
     public static void main(String[] args) throws BlockException {
 
-//        Broadcaster transactionsBroadcaster = new Broadcaster();
-//        try {
-//            String list = transactionsBroadcaster.getDataFromTopic();
-//            transactionsList = new TransactionsList(list);
-//        }catch (Throwable e) {
-//            e.printStackTrace();
-//
-//        }
+        Broadcaster transactionsBroadcaster = new Broadcaster("transactions");
+        try {
+            String list = transactionsBroadcaster.getDataFromTopic();
+            transactionsList = new TransactionsList(list);
+        }catch (Throwable e) {
+            e.printStackTrace();
 
-//        Broadcaster blockBroadcaster = new Broadcaster();
-//        try {
-//            blockChain = new BlockChain(blockBroadcaster.getDataFromTopic());
-//        }catch (Throwable e) {
-//            e.printStackTrace();
-//
-//        }
+        }
+
+        Broadcaster blockBroadcaster = new Broadcaster("blocks");
+        try {
+            String list = blockBroadcaster.getDataFromTopic();
+            blockChain = new BlockChain(list);
+        }catch (Throwable e) {
+            e.printStackTrace();
+
+        }
 
         SpringApplication.run(Application.class, args);
     }

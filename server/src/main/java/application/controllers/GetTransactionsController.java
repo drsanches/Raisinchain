@@ -29,7 +29,7 @@ public class GetTransactionsController {
         Map<String, String[]> parameters = webRequest.getParameterMap();
 
         if ((parameters.size() == 0)) {
-            Broadcaster broadcaster = new Broadcaster();
+            Broadcaster broadcaster = new Broadcaster("transactions");
             String responseBody = broadcaster.getDataFromTopic();
 
             return ResponseEntity

@@ -72,7 +72,6 @@ public class AddBlockController {
                     for (int i = 0; i < blockTransactions.getTransactions().size(); i++) {
                         transactionsList.removeTransaction(blockTransactions.getTransactions().get(i));
                     }
-                    transactionsList.saveToJsonFile(Application.TRANSACTIONS_FILENAME);
 
                     return ResponseEntity
                             .status(HttpStatus.OK)
